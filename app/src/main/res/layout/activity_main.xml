@@ -41,8 +41,7 @@
                 android:text="@string/random"
                 android:textColor="@color/Text"
                 android:fontFamily="sans-serif-condensed"
-                android:textSize="40dp"
-                android:id="@+id/textView" />
+                android:textSize="40dp" />
         </LinearLayout>
         <LinearLayout
             android:orientation="vertical"
@@ -58,8 +57,7 @@
                 android:text="@string/specific"
                 android:textColor="@color/Text"
                 android:fontFamily="sans-serif-condensed"
-                android:textSize="40dp"
-                android:id="@+id/textView" />
+                android:textSize="40dp" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
