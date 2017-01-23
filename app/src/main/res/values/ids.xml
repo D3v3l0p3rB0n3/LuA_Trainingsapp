@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="randomtasks" type="id">randomtasks</item>
+    <item name="specifictasks" type="id">specifictasks</item>
+    <item name="bool" type="id">BoolscheAlgebra</item>
+    <item name="relational" type="id">Relationenalgebra</item>
+</resources>

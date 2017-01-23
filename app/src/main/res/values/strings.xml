@@ -3,4 +3,9 @@
     <string name="menue">Menü</string>
     <string name="random">Zufällige \nAufgabenauswahl</string>
     <string name="specific">Gezielte \nAufgabenauswahl</string>
+    <string name="random2">Zufällige Aufgabenauswahl</string>
+    <string name="bool">Boolsche Algebra</string>
+    <string name="relation">Relationenalgebra</string>
+    <string name="all">Aufgaben aus allen Themengebieten</string>
+    <string name="listofall">Liste der Aufgaben nach Themengebiet</string>
 </resources>

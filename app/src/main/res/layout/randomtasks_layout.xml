@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
+    android:id="@+id/randomtasks"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.tool.gym.lua_trainingsapp.MainActivity">
+    tools:context="com.tool.gym.lua_trainingsapp.RandomTasks">
     <LinearLayout
         android:layout_gravity="top"
         android:background="@color/Title"
@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="@string/menue"
+            android:text="@string/random2"
             android:textColor="@color/TitleText"
             android:fontFamily="sans-serif-condensed"
             android:textSize="40dp"/>
@@ -31,30 +31,52 @@
             android:layout_height="match_parent"
             android:background="@color/colorPrimary"
             android:layout_width="0dp"
+            android:layout_weight="1"
+            android:onClick="onClick">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/bool"
+                android:textColor="@color/Text"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="40dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_gravity="end"
+            android:layout_height="match_parent"
+            android:background="@color/colorAccent"
+            android:layout_width="0dp"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/relation"
+                android:textColor="@color/Text"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="40dp" />
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="6">
+        <LinearLayout
+            android:id= "@id/randomtasks"
+            android:orientation="vertical"
+            android:layout_gravity="start"
+            android:layout_height="match_parent"
+            android:background="@color/black"
+            android:layout_width="0dp"
             android:layout_weight="5"
             android:onClick="onClick">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="@string/random"
-                android:textColor="@color/Text"
-                android:fontFamily="sans-serif-condensed"
-                android:textSize="40dp" />
-        </LinearLayout>
-        <LinearLayout
-            android:id= "@id/specifictasks"
-            android:orientation="vertical"
-            android:layout_gravity="end"
-            android:layout_height="match_parent"
-            android:background="@color/colorAccent"
-            android:layout_width="0dp"
-            android:layout_weight="5">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="@string/specific"
+                android:text="@string/all"
                 android:textColor="@color/Text"
                 android:fontFamily="sans-serif-condensed"
                 android:textSize="40dp" />
