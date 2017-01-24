@@ -30,6 +30,7 @@
             android:layout_weight="5"
             android:onClick="onClick">
             <TextView
+                android:id="@+id/booltext"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -47,6 +48,7 @@
             android:layout_width="0dp"
             android:layout_weight="5">
             <TextView
+                android:id="@+id/relationaltext"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"

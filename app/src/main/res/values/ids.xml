@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="randomtasks" type="id">randomtasks</item>
-    <item name="specifictasks" type="id">specifictasks</item>
-    <item name="bool" type="id">BoolscheAlgebra</item>
+    <item name="randomtasks" type="id">Zufällige Aufgaben</item>
+    <item name="specifictasks" type="id">Geziehlte Aufgabenauswahl</item>
+    <item name="bool" type="id">Boolsche Algebra</item>
     <item name="relational" type="id">Relationenalgebra</item>
+    <item name="random_all" type="id">Aufgaben aus allen Themengebieten</item>
+    <item name="random_relational" type="id">Zufällige Aufgaben aus der Relationenalgebra</item>
+    <item name="random_bool" type="id">Zufällige Aufgaben aus der Boolschen Algebra</item>
 </resources>

@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="@string/random2"
+            android:text="@string/random"
             android:textColor="@color/TitleText"
             android:fontFamily="sans-serif-condensed"
             android:textSize="40dp"/>
@@ -25,7 +25,7 @@
         android:layout_height="0dp"
         android:layout_weight="7">
         <LinearLayout
-            android:id= "@id/randomtasks"
+            android:id= "@id/random_bool"
             android:orientation="vertical"
             android:layout_gravity="start"
             android:layout_height="match_parent"
@@ -43,6 +43,7 @@
                 android:textSize="40dp" />
         </LinearLayout>
         <LinearLayout
+            android:id= "@id/random_relational"
             android:orientation="vertical"
             android:layout_gravity="end"
             android:layout_height="match_parent"
@@ -64,7 +65,7 @@
         android:layout_height="0dp"
         android:layout_weight="6">
         <LinearLayout
-            android:id= "@id/randomtasks"
+            android:id= "@id/random_all"
             android:orientation="vertical"
             android:layout_gravity="start"
             android:layout_height="match_parent"

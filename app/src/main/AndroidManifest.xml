@@ -28,6 +28,10 @@
             android:name=".SpecificTasks"
             android:screenOrientation="landscape">
         </activity>
+        <activity
+            android:name=".TaskList"
+            android:screenOrientation="landscape">
+        </activity>
     </application>
 
 </manifest>

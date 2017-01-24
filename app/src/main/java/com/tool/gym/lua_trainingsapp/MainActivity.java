@@ -20,15 +20,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         specific.setOnClickListener(this);
     }
 
-        public void onClick(View v) {
-            int id = v.getId();
-            if(id == R.id.randomtasks){
-                Intent i = new Intent(MainActivity.this, RandomTasks.class);
-                startActivity(i);
-            }
-            else if(id == R.id.specifictasks){
-                Intent i = new Intent(MainActivity.this, SpecificTasks.class);
-                startActivity(i);
-            }
+    public void onClick(View v) {
+        int id = v.getId();
+        if(id == R.id.randomtasks){
+            Intent i = new Intent(MainActivity.this, RandomTasks.class);
+            startActivity(i);
         }
+        else if(id == R.id.specifictasks){
+            Intent i = new Intent(MainActivity.this, SpecificTasks.class);
+            startActivity(i);
+        }
+    }
 }
