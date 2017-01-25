@@ -39,6 +39,7 @@ public class TaskAdapter extends ArrayAdapter<Task> {
             holder = new TaskHolder();
             holder.difficulty = (TextView)row.findViewById(R.id.difficulty);
             holder.txtTitle = (TextView)row.findViewById(R.id.txtTitle);
+            holder.status = (TextView)row.findViewById(R.id.status);
 
             row.setTag(holder);
         }
@@ -50,6 +51,8 @@ public class TaskAdapter extends ArrayAdapter<Task> {
         Task task = data[position];
         holder.txtTitle.setText(task.title);
         holder.difficulty.setText(task.difficulty);
+        holder.status.setText(task.status);
+
 
         return row;
     }
@@ -58,5 +61,6 @@ public class TaskAdapter extends ArrayAdapter<Task> {
     {
         TextView difficulty;
         TextView txtTitle;
+        TextView status;
     }
 }

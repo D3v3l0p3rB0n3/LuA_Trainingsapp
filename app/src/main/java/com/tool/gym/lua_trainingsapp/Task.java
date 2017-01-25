@@ -7,13 +7,15 @@ package com.tool.gym.lua_trainingsapp;
 public class Task {
     public String difficulty;
     public String title;
+    public String status;
     public Task(){
         super();
     }
 
-    public Task(String difficultyNew, String titleNew){
+    public Task(String difficultyNew, String titleNew, String statusNew){
         super();
         this.difficulty = difficultyNew;
         this.title = titleNew;
+        this.status = statusNew;
     }
 }
