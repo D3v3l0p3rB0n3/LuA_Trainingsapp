@@ -7,4 +7,5 @@
     <string name="relation">Relationenalgebra</string>
     <string name="all">Aufgaben aus allen Themengebieten</string>
     <string name="listofall">Liste der Aufgaben nach Themengebiet</string>
+    <string name="randomheader">Zufällige Aufgabenauswahl</string>
 </resources>
