@@ -13,11 +13,11 @@
         android:layout_height="@dimen/titlesize">
         <TextView
             android:layout_width="match_parent"
+            android:fontFamily="sans-serif-light"
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="@string/randomheader"
             android:textColor="@color/TitleText"
-            android:fontFamily="sans-serif-condensed"
             android:textStyle="bold"
             android:textSize="45dp"/>
     </LinearLayout>
@@ -38,9 +38,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
+                android:fontFamily="sans-serif-light"
                 android:text="@string/bool"
                 android:textColor="@color/Text"
-                android:fontFamily="sans-serif-condensed"
                 android:textSize="40dp" />
         </LinearLayout>
         <LinearLayout
@@ -57,7 +57,7 @@
                 android:gravity="center"
                 android:text="@string/relation"
                 android:textColor="@color/Text"
-                android:fontFamily="sans-serif-condensed"
+                android:fontFamily="sans-serif-light"
                 android:textSize="40dp" />
         </LinearLayout>
     </LinearLayout>
@@ -80,7 +80,7 @@
                 android:gravity="center"
                 android:text="@string/all"
                 android:textColor="@color/Text"
-                android:fontFamily="sans-serif-condensed"
+                android:fontFamily="sans-serif-light"
                 android:textSize="40dp" />
         </LinearLayout>
     </LinearLayout>
