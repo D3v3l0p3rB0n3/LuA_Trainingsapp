@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-
+    //Test Marcel
     LinearLayout random;
     LinearLayout specific;
     @Override
