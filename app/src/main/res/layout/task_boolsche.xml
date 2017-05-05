@@ -1,6 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/randomtasks"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.tool.gym.lua_trainingsapp.RandomTasks">
+    <LinearLayout
+        android:layout_gravity="top"
+        android:background="@color/Title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/titlesize">
+        <TextView
+            android:layout_width="match_parent"
+            android:fontFamily="sans-serif-light"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/bool"
+            android:textColor="@color/TitleText"
+            android:textStyle="bold"
+            android:textSize="45dp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="7">
+        <LinearLayout
+            android:id= "@id/random_bool"
+            android:orientation="vertical"
+            android:layout_gravity="start"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:onClick="onClick">
+
+        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>
