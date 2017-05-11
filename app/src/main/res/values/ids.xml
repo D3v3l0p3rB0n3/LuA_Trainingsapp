@@ -7,4 +7,7 @@
     <item name="random_all" type="id">Aufgaben aus allen Themengebieten</item>
     <item name="random_relational" type="id">Zufällige Aufgaben aus der Relationenalgebra</item>
     <item name="random_bool" type="id">Zufällige Aufgaben aus der Boolschen Algebra</item>
+    <item name="taskheader" type="id">Aufgabenstellung</item>
+    <item name="relationen" type="id">Relationen</item>
+    <item name="task" type="id">Aufgabe</item>
 </resources>

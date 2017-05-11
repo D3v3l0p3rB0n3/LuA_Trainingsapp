@@ -1,21 +1,25 @@
 package com.tool.gym.lua_trainingsapp;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.LinearLayout;
+import android.widget.TextView;
 
-/**
- * Created by mabr on 23.01.2017.
- */
 public class RelationalTask extends AppCompatActivity implements OnClickListener{
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.relationtask_layout);
+        setTaskdetails("Bitte gebe den Ausdruck der Relationenalgebra an");
+    }
+
+    private void setTaskdetails(String s) {
+        TextView taskheader = (TextView) findViewById(R.id.taskheader);
+        taskheader.setText(s);
+
+
     }
 
     public void onClick(View v) {
