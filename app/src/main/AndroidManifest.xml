@@ -32,6 +32,10 @@
             android:name=".TaskList"
             android:screenOrientation="landscape">
         </activity>
+        <activity
+            android:name=".RelationalTask"
+            android:screenOrientation="landscape">
+        </activity>
     </application>
 
 </manifest>

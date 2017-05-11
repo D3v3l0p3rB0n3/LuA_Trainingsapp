@@ -10,30 +10,21 @@ import android.widget.LinearLayout;
 /**
  * Created by mabr on 23.01.2017.
  */
-public class RandomTasks extends AppCompatActivity implements OnClickListener{
+public class RelationalTask extends AppCompatActivity implements OnClickListener{
 
-    LinearLayout bool_tasks;
-    LinearLayout relation_tasks;
-    LinearLayout all_tasks;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.randomtasks_layout);
-        bool_tasks = (LinearLayout)findViewById(R.id.random_bool);
-        bool_tasks.setOnClickListener(this);
-        relation_tasks = (LinearLayout)findViewById(R.id.random_relational);
-        relation_tasks.setOnClickListener(this);
-        all_tasks = (LinearLayout)findViewById(R.id.random_all);
-        all_tasks.setOnClickListener(this);
+        setContentView(R.layout.relationtask_layout);
     }
 
     public void onClick(View v) {
-        int id = v.getId();
+        /*int id = v.getId();
         if (id == R.id.random_bool) {
             Intent i = new Intent(RandomTasks.this, RelationalTask.class);
             startActivity(i);
         }
-        /*
+
         else if(id == R.id.random_all){
             Intent i = new Intent(RandomTasks.this, BoolTask.class);
             startActivity(i);
