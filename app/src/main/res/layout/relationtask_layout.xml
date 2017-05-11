@@ -11,11 +11,11 @@
         <TextView
             android:id="@id/taskheader"
             android:layout_height="match_parent"
-            android:layout_width="wrap_content"
-            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:gravity="center"
             android:textStyle="bold"
             android:textColor="@color/Text"
-            android:textSize="45sp"/>
+            android:textSize="25sp"/>
     </LinearLayout>
     <LinearLayout
         android:layout_gravity="top"
@@ -31,7 +31,7 @@
             android:text=""
             android:textColor="@color/TitleText"
             android:textStyle="bold"
-            android:textSize="45sp"/>
+            android:textSize="25sp"/>
     </LinearLayout>
     <LinearLayout
         android:layout_gravity="top"
@@ -47,43 +47,37 @@
             android:text=""
             android:textColor="@color/TitleText"
             android:textStyle="bold"
-            android:textSize="45sp"/>
+            android:textSize="25sp"/>
     </LinearLayout>
     <LinearLayout
         android:layout_height="0dp"
-        android:orientation="vertical"
+        android:background="@color/colorPrimary"
         android:layout_width="match_parent"
-        android:layout_weight="4">
-        <LinearLayout
-            android:layout_height="0dp"
-            android:background="@color/colorPrimary"
-            android:layout_width="match_parent"
-            android:layout_weight="5"
-            android:gravity="center">
-            <EditText
-                android:textStyle="italic"
-                android:layout_width="500sp"
-                android:layout_height="30sp"
-                android:textAlignment="center"
-                android:background="@color/Text"
-                android:textColor="@color/black"
-                android:textColorHint="@color/black"
-                android:hint="Bitte gebe deine Lösung ein"
-                android:id="@+id/editText" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_height="0dp"
-            android:background="@color/colorPrimary"
-            android:layout_width="match_parent"
-            android:layout_weight="5"
-            android:gravity="center">
-            <Button
-                android:layout_gravity="center"
-                android:text="Bestätigen"
-                android:layout_width="@dimen/buttonsize"
-                android:layout_height="30sp"
-                android:background="@color/colorAccent"
-                android:id="@+id/button" />
-        </LinearLayout>
+        android:layout_weight="2"
+        android:gravity="center">
+        <EditText
+            android:textStyle="italic"
+            android:layout_width="500sp"
+            android:layout_height="30sp"
+            android:textAlignment="center"
+            android:background="@color/Text"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:hint="Bitte gebe deine Lösung ein"
+            android:id="@+id/editText"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_height="0dp"
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:gravity="center">
+        <Button
+            android:layout_gravity="center"
+            android:text="Bestätigen"
+            android:layout_width="@dimen/buttonsize"
+            android:layout_height="30sp"
+            android:background="@color/colorAccent"
+            android:id="@+id/button" />
     </LinearLayout>
 </LinearLayout>

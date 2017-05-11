@@ -29,7 +29,7 @@ public class RandomTasks extends AppCompatActivity implements OnClickListener{
 
     public void onClick(View v) {
         int id = v.getId();
-        if (id == R.id.random_bool) {
+        if (id == R.id.random_relational) {
             Intent i = new Intent(RandomTasks.this, RelationalTask.class);
             startActivity(i);
         }
