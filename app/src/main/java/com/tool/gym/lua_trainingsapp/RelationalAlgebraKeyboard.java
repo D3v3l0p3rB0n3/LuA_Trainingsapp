@@ -17,11 +17,16 @@ public class RelationalAlgebraKeyboard extends InputMethodService implements Key
 
     private KeyboardView kv;
     private Keyboard keyboard;
+    private Keyboard keyboardsymbols;
+    private boolean standardkeyboad;
+
     private boolean caps = false;
 
     public View onCreateInputView() {
         kv = (KeyboardView) getLayoutInflater().inflate(R.layout.keyboard, null);
-        keyboard = new Keyboard(this,R.xml.keyboard_relational);
+        keyboard = new Keyboard(this,R.xml.qwertz);
+        keyboardsymbols = new Keyboard(this,R.xml.keyboard_relational);
+        standardkeyboad = true;
         kv.setKeyboard(keyboard);
         kv.setOnKeyboardActionListener(this);
         return kv;
@@ -41,7 +46,6 @@ public class RelationalAlgebraKeyboard extends InputMethodService implements Key
 
     @Override
     public void onKey(int i, int[] ints) {
-        String value = "";
         InputConnection ic = getCurrentInputConnection();
         switch (i) {
             case Keyboard.KEYCODE_DELETE:
@@ -55,17 +59,29 @@ public class RelationalAlgebraKeyboard extends InputMethodService implements Key
             case Keyboard.KEYCODE_DONE:
                 ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER));
                 break;
+            case Keyboard.KEYCODE_MODE_CHANGE:
+                handleshift();
+                break;
             default:
                 char code = (char) i;
-                if (code == '1'){
-                    value = "π";
+                if(Character.isLetter(code) && caps)
+                {
+                    code = Character.toUpperCase(code);
                 }
-//                if(Character.isLetter(code) && caps)
-//                {
-//                    code = Character.toUpperCase(code);
-//                    value = String.valueOf(code);
-//                }
-                ic.commitText(value,1);
+                ic.commitText(Character.toString(code),1);
+        }
+    }
+
+    private void handleshift() {
+        if(standardkeyboad)
+        {
+            kv.setKeyboard(keyboardsymbols);
+            standardkeyboad = false;
+        }
+        else
+            {
+            kv.setKeyboard(keyboard);
+                standardkeyboad = true;
         }
     }
 
