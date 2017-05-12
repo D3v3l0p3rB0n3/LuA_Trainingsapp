@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 public class RelationalTask extends AppCompatActivity implements OnClickListener{
@@ -13,6 +14,8 @@ public class RelationalTask extends AppCompatActivity implements OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.relationtask_layout);
         setTaskdetails("Bitte gebe den Ausdruck der Relationenalgebra an");
+        InputMethodManager imeManager = (InputMethodManager) getApplicationContext().getSystemService(INPUT_METHOD_SERVICE);
+        imeManager.showInputMethodPicker();
     }
 
     private void setTaskdetails(String s) {

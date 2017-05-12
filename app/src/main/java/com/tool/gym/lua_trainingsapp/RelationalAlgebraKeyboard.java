@@ -41,6 +41,7 @@ public class RelationalAlgebraKeyboard extends InputMethodService implements Key
 
     @Override
     public void onKey(int i, int[] ints) {
+        String value = "";
         InputConnection ic = getCurrentInputConnection();
         switch (i) {
             case Keyboard.KEYCODE_DELETE:
@@ -56,11 +57,15 @@ public class RelationalAlgebraKeyboard extends InputMethodService implements Key
                 break;
             default:
                 char code = (char) i;
-                if(Character.isLetter(code) && caps)
-                {
-                    code = Character.toUpperCase(code);
+                if (code == '1'){
+                    value = "π";
                 }
-                ic.commitText(String.valueOf(code),1);
+//                if(Character.isLetter(code) && caps)
+//                {
+//                    code = Character.toUpperCase(code);
+//                    value = String.valueOf(code);
+//                }
+                ic.commitText(value,1);
         }
     }
 
