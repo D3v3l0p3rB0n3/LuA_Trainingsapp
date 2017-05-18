@@ -30,7 +30,7 @@
             android:id="@id/relationen"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity=""
+            android:gravity="center|left"
             android:textColor="@color/Text"
             android:textSize="25sp"
             android:paddingLeft="@dimen/padding"
