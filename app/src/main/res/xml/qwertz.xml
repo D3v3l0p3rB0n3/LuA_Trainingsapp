@@ -51,11 +51,11 @@
             <Key android:codes="46" android:keyLabel="." android:keyEdgeFlags="right"/>
         </Row>
         <Row android:rowEdgeFlags="bottom">
-            <Key android:codes="-2" android:keyLabel="SWITCH" android:keyEdgeFlags="left"/>
+            <Key android:codes="-2" android:keyLabel="Switch" android:keyEdgeFlags="left"/>
             <Key android:codes="47" android:keyLabel="/" android:keyWidth="10%p"/>
-            <Key android:codes="32" android:keyLabel="SPACE" android:keyWidth="40%p" android:isRepeatable="true"/>
-            <Key android:codes="-5" android:keyLabel="DEL" android:keyWidth="20%p" android:isRepeatable="true"/>
-            <Key android:codes="-3" android:keyLabel="DONE" android:keyWidth="20%p" android:keyEdgeFlags="right"/>
+            <Key android:codes="32" android:keyLabel="Space" android:keyWidth="40%p" android:isRepeatable="true"/>
+            <Key android:codes="-3" android:keyLabel="Hide"/>
+            <Key android:codes="-5" android:keyLabel="DEL" android:keyWidth="20%p" android:isRepeatable="true" android:keyEdgeFlags="right"/>
         </Row>
     </Row>
 </Keyboard>

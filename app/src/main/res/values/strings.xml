@@ -8,6 +8,7 @@
     <string name="all">Aufgaben aus allen Themengebieten</string>
     <string name="listofall">Liste der Aufgaben nach Themengebiet</string>
     <string name="randomheader">Zufällige Aufgabenauswahl</string>
-    <string name="relationalkeyboard">Tastatur für die Relationale Algebra</string>
-    <string name="sybtype_en_US">English (US)</string>
+    <string name="relationalkeyboard">Tastatur für die Aufgaben zu Logik und Algebra</string>
+    <string name="keyboard">Logik und Algebra</string>
+    <string name="hint_rel_algebra">Bitte gebe deine Lösung ein</string>
 </resources>
