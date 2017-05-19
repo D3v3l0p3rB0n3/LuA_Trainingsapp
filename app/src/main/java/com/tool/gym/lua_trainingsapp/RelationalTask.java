@@ -1,5 +1,6 @@
 package com.tool.gym.lua_trainingsapp;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -13,6 +14,7 @@ import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class RelationalTask extends AppCompatActivity implements OnClickListener {
@@ -122,6 +124,7 @@ public class RelationalTask extends AppCompatActivity implements OnClickListener
                              "Ausgeliehen(<u>Signatur</u>, <u>ID</u>, VonDatum, BisDatum)";
         taskinformation[2] = "Geben Sie die Titel der Bücher an, die im Jahr 2010 erschienen sind und mehr als 300 Seiten haben.";
         taskinformation[3] = "π(Buch,(Seiten,Autor))";
+        taskinformation[4] = "3";
         return taskinformation;
     }
 
@@ -144,7 +147,18 @@ public class RelationalTask extends AppCompatActivity implements OnClickListener
         setDifficulty(difficulty);
     }
 
+    @SuppressLint("NewApi")
     private void setDifficulty(String difficulty ) {
+        LinearLayout diff_png = (LinearLayout) findViewById(R.id.difficulty);
+        if (difficulty.equals("1")) {
+            diff_png.setBackgroundResource(R.drawable.schwierigkeit1);
+        }
+        else if (difficulty.equals("2")) {
+            diff_png.setBackgroundResource(R.drawable.schwierigkeit2);
+        }
+        else {
+            diff_png.setBackgroundResource(R.drawable.schwierigkeit3);
+        }
         
     }
 
