@@ -74,7 +74,7 @@ public class WahrheitstabellenTask extends AppCompatActivity implements OnClickL
         taskinformation[0] = "Fülle die Wahrheitstabelle mit den Werten 1 und 0 aus";
         taskinformation[1] = "a * b + c";
         taskinformation[2] = "Tabelle";
-        taskinformation[3] = "2";
+        taskinformation[3] = "3";
         taskinformation[4] = "2";
         return taskinformation;
     }
@@ -89,13 +89,14 @@ public class WahrheitstabellenTask extends AppCompatActivity implements OnClickL
         createTable(taskdetails[3]);
     }
 
+    //Wahrheitstabelle erstellen
     private void createTable(String arguments) {
         LinearLayout tablelayout = (LinearLayout) findViewById(R.id.tabelle);
         tablelayout.addView(Wahrheitstabelle.createTable(this, arguments));
 
     }
 
-    @SuppressLint("NewApi")
+    //Bild für den Schwierigkeitsgrad festlegen
     private void setDifficulty(String difficulty ) {
         LinearLayout diff_png = (LinearLayout) findViewById(R.id.difficulty);
         if (difficulty.equals("1")) {
