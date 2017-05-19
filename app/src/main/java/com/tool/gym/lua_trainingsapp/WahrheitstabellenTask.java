@@ -74,8 +74,8 @@ public class WahrheitstabellenTask extends AppCompatActivity implements OnClickL
         taskinformation[0] = "Fülle die Wahrheitstabelle mit den Werten 1 und 0 aus";
         taskinformation[1] = "a * b + c";
         taskinformation[2] = "Tabelle";
-        taskinformation[3] = "1";
-        taskinformation[4] = "1";
+        taskinformation[3] = "2";
+        taskinformation[4] = "2";
         return taskinformation;
     }
 
