@@ -5,4 +5,6 @@
     <dimen name="titlesize">130dp</dimen>
     <dimen name="buttonsize">120dp</dimen>
     <dimen name="padding">50dp</dimen>
+    <dimen name="help">30dp</dimen>
+    <dimen name="help_button">50dp</dimen>
 </resources>

@@ -28,7 +28,6 @@
         <Key android:codes="61" android:keyLabel="="/>
         <Key android:codes="47" android:keyLabel="/" android:keyEdgeFlags="right"/>
     </Row>
-
     <Row>
         <Key android:codes="40" android:keyLabel="(" android:keyEdgeFlags="left"/>
         <Key android:codes="41" android:keyLabel=")"/>
@@ -41,9 +40,8 @@
         <Key android:codes="8804" android:keyLabel="\u2264"/>
         <Key android:codes="60" android:keyLabel="\u003C"/>
     </Row>
-
     <Row  android:rowEdgeFlags="bottom">
-        <Key android:codes="-2" android:keyLabel="SWITCH" android:keyEdgeFlags="left"/>
+        <Key android:codes="-2" android:keyLabel="Switch" android:keyEdgeFlags="left"/>
         <Key android:codes="960" android:keyLabel="π"/>
         <Key android:codes="963" android:keyLabel="σ"/>
         <Key android:codes="966" android:keyLabel="φ"/>
@@ -52,7 +50,6 @@
         <Key android:codes="10198" android:keyLabel="\u27D6"/>
         <Key android:codes="10199" android:keyLabel="\u27D7"/>
         <Key android:codes="8805" android:keyLabel="\u2265"/>
-        <Key android:codes="62" android:keyLabel="\u003E"/>
-        <Key android:codes="44" android:keyLabel="," android:keyWidth="15%p" android:keyEdgeFlags="right"/>
+        <Key android:codes="62" android:keyLabel="\u003E" android:keyEdgeFlags="right"/>
     </Row>
 </Keyboard>

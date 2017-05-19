@@ -1,6 +1,7 @@
 package com.tool.gym.lua_trainingsapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,9 @@ public class RelationalTask extends AppCompatActivity implements OnClickListener
     EditText result;
     TextWatcher watcher;
     String loesung;
+    Button next_tast_button;
+    Button help_button;
+
     private Runnable colourDefault = new Runnable() {
         public void run() {
             result.setBackgroundColor(Color.parseColor("#FFFFFF"));
@@ -34,6 +38,10 @@ public class RelationalTask extends AppCompatActivity implements OnClickListener
         //Listener für Button
         commitbutton = (Button) findViewById(R.id.commitbutton);
         commitbutton.setOnClickListener(this);
+        next_tast_button = (Button) findViewById(R.id.next_task);
+        next_tast_button.setOnClickListener(this);
+        help_button = (Button) findViewById(R.id.helpbutton);
+        help_button.setOnClickListener(this);
 
         result = (EditText) findViewById(R.id.relationalresult);
 
@@ -48,12 +56,12 @@ public class RelationalTask extends AppCompatActivity implements OnClickListener
                     result.setBackgroundColor(Color.parseColor("#FFFFFF"));
                 }
                 else if(loesung.startsWith(charSequence.toString())){
-                    result.setBackgroundColor(Color.parseColor("#00FF00"));
-                    result.postDelayed(colourDefault, 100);
+                    result.setBackgroundColor(Color.parseColor("#BCED91"));
+                    result.postDelayed(colourDefault, 150);
                 }
                 else {
-                    result.setBackgroundColor(Color.parseColor("#FF0000"));
-                    result.postDelayed(colourDefault, 100);
+                    result.setBackgroundColor(Color.parseColor("#FF4040"));
+                    result.postDelayed(colourDefault, 150);
                 }
             }
         };
@@ -77,12 +85,28 @@ public class RelationalTask extends AppCompatActivity implements OnClickListener
         setTask();
     }
 
+    //Button Click verarbeiten
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id){
+            case R.id.commitbutton:
+                checkInput();
+                break;
+            case R.id.next_task:
+                Intent i = new Intent(RelationalTask.this, RelationalTask.class);
+                startActivity(i);
+                break;
+            case R.id.helpbutton:
+                break;
+        }
+    }
+
     //Ermittelt die zu bearbeitende Aufgabe und zeigt diese an
     private void setTask() {
         String[] taskinformation;
         taskinformation = getTask();
         loesung = taskinformation[3];
-        setTaskdetails(taskinformation[0], taskinformation[1], taskinformation[2]);
+        setTaskdetails(taskinformation[0], taskinformation[1], taskinformation[2], taskinformation[4]);
     }
 
 
@@ -101,7 +125,7 @@ public class RelationalTask extends AppCompatActivity implements OnClickListener
 
     //Zeigt die Aufgabenstellung auf der Oberfläche an
     @SuppressWarnings("deprecation")
-    private void setTaskdetails(String title, String relations, String task) {
+    private void setTaskdetails(String title, String relations, String task, String difficulty) {
         TextView taskheader = (TextView) findViewById(R.id.taskheader);
         taskheader.setText(title);
         TextView relation = (TextView) findViewById(R.id.relationen);
@@ -112,18 +136,14 @@ public class RelationalTask extends AppCompatActivity implements OnClickListener
         } else {
             relation.setText(Html.fromHtml(relations));
         }
-
         TextView tasktext = (TextView) findViewById(R.id.task);
         tasktext.setText(task);
+
+        setDifficulty(difficulty);
     }
 
-    public void onClick(View v) {
-        int id = v.getId();
-        switch (id){
-            case R.id.commitbutton:
-                checkInput();
-                break;
-        }
+    private void setDifficulty(String difficulty ) {
+        
     }
 
     //Nach Bestätigung Überprüfung des Ergebnisses
@@ -134,7 +154,7 @@ public class RelationalTask extends AppCompatActivity implements OnClickListener
     }
 
     //Hilfsmethode um Tastatur auszublenden
-    public void hideKeyboard(View view) {
+    private void hideKeyboard(View view) {
         InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }

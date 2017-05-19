@@ -12,4 +12,5 @@
     <string name="keyboard">Logik und Algebra</string>
     <string name="hint_rel_algebra">Bitte gebe deine Lösung ein</string>
     <string name="correct_answer">Die Antwort ist korrekt</string>
+    <string name="help">\?</string>
 </resources>
