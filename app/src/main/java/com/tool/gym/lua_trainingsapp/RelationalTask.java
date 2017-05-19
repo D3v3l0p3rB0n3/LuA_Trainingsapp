@@ -97,6 +97,8 @@ public class RelationalTask extends AppCompatActivity implements OnClickListener
                 startActivity(i);
                 break;
             case R.id.helpbutton:
+                Intent help = new Intent(RelationalTask.this, HelpPopUp.class);
+                startActivity(help);
                 break;
         }
     }

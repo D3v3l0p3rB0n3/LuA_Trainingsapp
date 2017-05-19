@@ -35,8 +35,12 @@
             android:name=".RelationalTask"
             android:screenOrientation="landscape">
         </activity>
-        
-        
+        <activity
+            android:name=".HelpPopUp"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme.PopUpTheme">
+        </activity>
+
         <service
             android:name=".RelationalAlgebraKeyboard"
             android:label="@string/relationalkeyboard"

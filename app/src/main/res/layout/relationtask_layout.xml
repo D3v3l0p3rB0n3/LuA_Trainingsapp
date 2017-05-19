@@ -20,7 +20,7 @@
                 android:layout_width="@dimen/help_button"
                 android:layout_height="@dimen/help_button"
                 android:text="@string/help"
-                android:background="@color/colorAccent"
+                android:background="@drawable/button"
                 android:textSize="@dimen/help" />
         </LinearLayout>
         <LinearLayout
@@ -121,7 +121,7 @@
                 android:layout_gravity="center"
                 android:layout_width="@dimen/buttonsize"
                 android:layout_height="30sp"
-                android:background="@color/colorAccent"
+                android:background="@drawable/button"
                 android:id="@+id/commitbutton" />
         </LinearLayout>
         <LinearLayout
@@ -136,7 +136,7 @@
                 android:id="@+id/next_task"
                 android:layout_width="@dimen/buttonsize"
                 android:layout_height="30sp"
-                android:background="@color/colorAccent"
+                android:background="@drawable/button"
                 android:text="Weiter" />
             </LinearLayout>
     </LinearLayout>
