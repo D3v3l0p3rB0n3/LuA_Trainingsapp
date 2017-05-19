@@ -33,11 +33,11 @@ public class RandomTasks extends AppCompatActivity implements OnClickListener{
             Intent i = new Intent(RandomTasks.this, RelationalTask.class);
             startActivity(i);
         }
-        /*
-        else if(id == R.id.random_all){
-            Intent i = new Intent(RandomTasks.this, BoolTask.class);
+        else if (id == R.id.random_bool){
+            Intent i = new Intent(RandomTasks.this, WahrheitstabellenTask.class);
             startActivity(i);
         }
+        /*
         else if(id == R.id.random_relational){
             Intent i = new Intent(RandomTasks.this, All_Tasks.class);
             startActivity(i);

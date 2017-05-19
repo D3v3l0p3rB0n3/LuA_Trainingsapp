@@ -12,7 +12,7 @@ import android.view.inputmethod.InputConnection;
  * Created by matthiasbrandel on 11.05.17.
  */
 
-public class RelationalAlgebraKeyboard extends InputMethodService implements KeyboardView.OnKeyboardActionListener {
+public class LogikUndAlgebraKeyboard extends InputMethodService implements KeyboardView.OnKeyboardActionListener {
 
 
     private KeyboardView kv;
