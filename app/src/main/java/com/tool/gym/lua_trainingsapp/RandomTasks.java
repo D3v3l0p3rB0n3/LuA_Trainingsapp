@@ -35,6 +35,7 @@ public class RandomTasks extends AppCompatActivity implements OnClickListener{
         }
         else if (id == R.id.random_bool){
             Intent i = new Intent(RandomTasks.this, WahrheitstabellenTask.class);
+            //Intent i= new Intent(RandomTasks.this, TermVereinfachenTask.class);
             startActivity(i);
         }
         /*

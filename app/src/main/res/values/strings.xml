@@ -13,4 +13,5 @@
     <string name="hint_rel_algebra">Bitte gebe deine Lösung ein</string>
     <string name="correct_answer">Die Antwort ist korrekt</string>
     <string name="help">\?</string>
+    <string name="hint_bool_term">Bitte gebe deinen Vereinfachungsschritt ein</string>
 </resources>

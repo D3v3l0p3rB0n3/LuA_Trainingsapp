@@ -44,6 +44,10 @@
             android:name=".WahrheitstabellenTask"
             android:screenOrientation="landscape">
         </activity>
+        <activity
+            android:name=".TermVereinfachenTask"
+            android:screenOrientation="landscape">
+        </activity>
 
         <service
             android:name=".LogikUndAlgebraKeyboard"
