@@ -42,24 +42,6 @@ public class WahrheitstabellenTask extends AppCompatActivity implements OnClickL
         setTask();
     }
 
-    //Button Click verarbeiten
-    public void onClick(View v) {
-        int id = v.getId();
-        switch (id){
-            case R.id.commitbutton:
-                checkInput();
-                break;
-            case R.id.next_task:
-                Intent i = new Intent(WahrheitstabellenTask.this, WahrheitstabellenTask.class);
-                startActivity(i);
-                break;
-            case R.id.helpbutton:
-                Intent help = new Intent(WahrheitstabellenTask.this, HelpPopUp.class);
-                startActivity(help);
-                break;
-        }
-    }
-
     //Ermittelt die zu bearbeitende Aufgabe und zeigt diese an
     private void setTask() {
         String[] taskinformation;
@@ -74,7 +56,7 @@ public class WahrheitstabellenTask extends AppCompatActivity implements OnClickL
         taskinformation[0] = "Fülle die Wahrheitstabelle mit den Werten 1 und 0 aus";
         taskinformation[1] = "a * b + c";
         taskinformation[2] = "Tabelle";
-        taskinformation[3] = "3";
+        taskinformation[3] = "4";
         taskinformation[4] = "2";
         return taskinformation;
     }
@@ -92,7 +74,10 @@ public class WahrheitstabellenTask extends AppCompatActivity implements OnClickL
     //Wahrheitstabelle erstellen
     private void createTable(String arguments) {
         LinearLayout tablelayout = (LinearLayout) findViewById(R.id.tabelle);
-        tablelayout.addView(Wahrheitstabelle.createTable(this, arguments));
+        Wahrheitstabelle table = new Wahrheitstabelle();
+        View v = table.createTable(this, arguments);
+        tablelayout.addView(v);
+
 
     }
 
@@ -114,5 +99,183 @@ public class WahrheitstabellenTask extends AppCompatActivity implements OnClickL
     //Nach Bestätigung Überprüfung des Ergebnisses
     private void checkInput() {
 
+    }
+
+    //Button Click verarbeiten
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id){
+            case R.id.commitbutton:
+                checkInput();
+                break;
+            case R.id.next_task:
+                Intent i = new Intent(WahrheitstabellenTask.this, WahrheitstabellenTask.class);
+                startActivity(i);
+                break;
+            case R.id.helpbutton:
+                Intent help = new Intent(WahrheitstabellenTask.this, HelpPopUp.class);
+                startActivity(help);
+                break;
+            case R.id.row1:
+                TextView field = (TextView) findViewById(R.id.row1);
+                if (field.getText().toString().equals("1")) {
+                    field.setText("0");
+                }
+                else
+                {
+                    field.setText("1");
+                }
+                break;
+            case R.id.row2:
+                field = (TextView) findViewById(R.id.row2);
+                if (field.getText().toString().equals("1")) {
+                    field.setText("0");
+                }
+                else
+                {
+                    field.setText("1");
+                }
+                break;
+            case R.id.row3:
+                field = (TextView) findViewById(R.id.row3);
+                if (field.getText().toString().equals("1")) {
+                    field.setText("0");
+                }
+                else
+                {
+                    field.setText("1");
+                }
+                break;
+            case R.id.row4:
+                field = (TextView) findViewById(R.id.row4);
+                if (field.getText().toString().equals("1")) {
+                    field.setText("0");
+                }
+                else
+                {
+                    field.setText("1");
+                }
+                break;
+            case R.id.row5:
+                field = (TextView) findViewById(R.id.row5);
+                if (field.getText().toString().equals("1")) {
+                    field.setText("0");
+                }
+                else
+                {
+                    field.setText("1");
+                }
+                break;
+            case R.id.row6:
+                field = (TextView) findViewById(R.id.row6);
+                if (field.getText().toString().equals("1")) {
+                    field.setText("0");
+                }
+                else
+                {
+                    field.setText("1");
+                }
+                break;
+            case R.id.row7:
+                field = (TextView) findViewById(R.id.row7);
+                if (field.getText().toString().equals("1")) {
+                    field.setText("0");
+                }
+                else
+                {
+                    field.setText("1");
+                }
+                break;
+            case R.id.row8:
+                field = (TextView) findViewById(R.id.row8);
+                if (field.getText().toString().equals("1")) {
+                    field.setText("0");
+                }
+                else
+                {
+                    field.setText("1");
+                }
+                break;
+            case R.id.row9:
+                field = (TextView) findViewById(R.id.row9);
+                if (field.getText().toString().equals("1")) {
+                    field.setText("0");
+                }
+                else
+                {
+                    field.setText("1");
+                }
+                break;case R.id.row10:
+                field = (TextView) findViewById(R.id.row10);
+                if (field.getText().toString().equals("1")) {
+                    field.setText("0");
+                }
+                else
+                {
+                    field.setText("1");
+                }
+                break;
+            case R.id.row11:
+                field = (TextView) findViewById(R.id.row11);
+                if (field.getText().toString().equals("1")) {
+                    field.setText("0");
+                }
+                else
+                {
+                    field.setText("1");
+                }
+                break;
+            case R.id.row12:
+                field = (TextView) findViewById(R.id.row12);
+                if (field.getText().toString().equals("1")) {
+                    field.setText("0");
+                }
+                else
+                {
+                    field.setText("1");
+                }
+                break;
+            case R.id.row13:
+                field = (TextView) findViewById(R.id.row13);
+                if (field.getText().toString().equals("1")) {
+                    field.setText("0");
+                }
+                else
+                {
+                    field.setText("1");
+                }
+                break;
+            case R.id.row14:
+                field = (TextView) findViewById(R.id.row14);
+                if (field.getText().toString().equals("1")) {
+                    field.setText("0");
+                }
+                else
+                {
+                    field.setText("1");
+                }
+                break;
+            case R.id.row15:
+                field = (TextView) findViewById(R.id.row15);
+                if (field.getText().toString().equals("1")) {
+                    field.setText("0");
+                }
+                else
+                {
+                    field.setText("1");
+                }
+                break;
+            case R.id.row16:
+                field = (TextView) findViewById(R.id.row16);
+                if (field.getText().toString().equals("1")) {
+                    field.setText("0");
+                }
+                else
+                {
+                    field.setText("1");
+                }
+                break;
+
+        }
     }
 }

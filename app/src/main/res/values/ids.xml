@@ -10,4 +10,20 @@
     <item name="taskheader" type="id">Aufgabenstellung</item>
     <item name="relationen" type="id">Relationen</item>
     <item name="task" type="id">Aufgabe</item>
+    <item name="row1" type="id">row1</item>
+    <item name="row2" type="id">row2</item>
+    <item name="row3" type="id">row3</item>
+    <item name="row4" type="id">row4</item>
+    <item name="row5" type="id">row5</item>
+    <item name="row6" type="id">row6</item>
+    <item name="row7" type="id">row7</item>
+    <item name="row8" type="id">row8</item>
+    <item name="row9" type="id">row9</item>
+    <item name="row10" type="id">row10</item>
+    <item name="row11" type="id">row11</item>
+    <item name="row12" type="id">row12</item>
+    <item name="row13" type="id">row13</item>
+    <item name="row14" type="id">row14</item>
+    <item name="row15" type="id">row15</item>
+    <item name="row16" type="id">row16</item>
 </resources>

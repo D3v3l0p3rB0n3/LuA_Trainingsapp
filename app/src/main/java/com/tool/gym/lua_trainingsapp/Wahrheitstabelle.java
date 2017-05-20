@@ -1,12 +1,15 @@
 package com.tool.gym.lua_trainingsapp;
 
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-public class Wahrheitstabelle {
+public class Wahrheitstabelle extends AppCompatActivity {
 
-    public static TableLayout createTable(WahrheitstabellenTask task, String arguments) {
+    public TableLayout createTable(WahrheitstabellenTask task, String arguments) {
         TableLayout table = null;
         switch (arguments) {
             case "2":
@@ -19,12 +22,11 @@ public class Wahrheitstabelle {
                 table = getTable4Arguments(task);
                 break;
         }
-
         return table;
     }
 
     //Wahrheitstabelle für 2 Variablen erstellen
-    private static TableLayout getTable2Arguments(WahrheitstabellenTask task) {
+    private TableLayout getTable2Arguments(WahrheitstabellenTask task) {
         TableLayout table = new TableLayout(task);
         TableRow[] row = new TableRow[5];
         TextView[][] columns = new TextView[5][3];
@@ -41,6 +43,20 @@ public class Wahrheitstabelle {
             for (int j = 0; j <= 2; j++){
                 columns[i][j] = new TextView(task);
                 columns[i][j].setText(array[i][j]);
+                columns[i][j].setTextSize(25);
+                columns[i][j].setWidth(150);
+                columns[i][j].setHeight(90);
+                columns[i][j].setPadding(0,10,0,0);
+                if (i == 0) {
+                    columns[i][j].setTypeface(null, Typeface.BOLD);
+                }
+                if (j == 2 && i > 0) {
+                    columns[i][j].setOnClickListener(task);
+                    String name = "row" + i;
+                    int id = task.getResources().getIdentifier(name, "id", task.getPackageName());
+                    columns[i][j].setId(id);
+                }
+                columns[i][j].setTextColor(Color.parseColor("#FFFFFF"));
                 row[i].addView(columns[i][j]);
             }
             table.addView(row[i]);
@@ -49,7 +65,7 @@ public class Wahrheitstabelle {
     }
 
     //Wahrheitstabelle für 3 Variablen erstellen
-    private static TableLayout getTable3Arguments(WahrheitstabellenTask task) {
+    private TableLayout getTable3Arguments(WahrheitstabellenTask task) {
         TableLayout table = new TableLayout(task);
         TableRow[] row = new TableRow[9];
         TextView[][] columns = new TextView[9][4];
@@ -70,6 +86,20 @@ public class Wahrheitstabelle {
             for (int j = 0; j <= 3; j++){
                 columns[i][j] = new TextView(task);
                 columns[i][j].setText(array[i][j]);
+                columns[i][j].setTextSize(25);
+                columns[i][j].setWidth(150);
+                columns[i][j].setHeight(90);
+                columns[i][j].setPadding(0,10,0,0);
+                if (i == 0) {
+                    columns[i][j].setTypeface(null, Typeface.BOLD);
+                }
+                if (j == 3) {
+                    columns[i][j].setOnClickListener(task);
+                    String name = "row" + i;
+                    int id = task.getResources().getIdentifier(name, "id", task.getPackageName());
+                    columns[i][j].setId(id);
+                }
+                columns[i][j].setTextColor(Color.parseColor("#FFFFFF"));
                 row[i].addView(columns[i][j]);
             }
             table.addView(row[i]);
@@ -78,7 +108,7 @@ public class Wahrheitstabelle {
     }
 
     //Wahrheitstabelle für 4 Variablen erstellen
-    private static TableLayout getTable4Arguments(WahrheitstabellenTask task) {
+    private TableLayout getTable4Arguments(WahrheitstabellenTask task) {
         TableLayout table = new TableLayout(task);
         TableRow[] row = new TableRow[17];
         TextView[][] columns = new TextView[17][5];
@@ -108,6 +138,20 @@ public class Wahrheitstabelle {
             for (int j = 0; j <= 4; j++){
                 columns[i][j] = new TextView(task);
                 columns[i][j].setText(array[i][j]);
+                columns[i][j].setTextSize(25);
+                columns[i][j].setWidth(150);
+                columns[i][j].setHeight(90);
+                columns[i][j].setPadding(0,10,0,0);
+                if (i == 0) {
+                    columns[i][j].setTypeface(null, Typeface.BOLD);
+                }
+                if (j == 4) {
+                    columns[i][j].setOnClickListener(task);
+                    String name = "row" + i;
+                    int id = task.getResources().getIdentifier(name, "id", task.getPackageName());
+                    columns[i][j].setId(id);
+                }
+                columns[i][j].setTextColor(Color.parseColor("#FFFFFF"));
                 row[i].addView(columns[i][j]);
             }
             table.addView(row[i]);
