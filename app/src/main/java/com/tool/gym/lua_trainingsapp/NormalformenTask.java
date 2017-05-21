@@ -31,7 +31,7 @@ public class NormalformenTask extends AppCompatActivity implements OnClickListen
         super.onCreate(savedInstanceState);
 
         //Layout laden
-        setContentView(R.layout.task_bool_termv);
+        setContentView(R.layout.task_bool_normalformen);
 
         //Buttons => Listener anmelden
         checkbutton = (Button) findViewById(R.id.checkbutton);
