@@ -15,18 +15,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 /**
- * Created by Marcel on 20.05.2017.
+ * Created by Marcel on 21.05.2017.
  */
 
-
-public class TermVereinfachenTask extends AppCompatActivity implements OnClickListener {
-
+public class NormalformenTask extends AppCompatActivity implements OnClickListener{
     private Button checkbutton;
     private Button commitbutton;
     private Button help_button;
     private EditText result;
 
-       String log_tag = TermVereinfachenTask.class.getSimpleName();
+    String log_tag = TermVereinfachenTask.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +73,7 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
                 break;
 
             case R.id.helpbutton:
-                Intent help = new Intent(TermVereinfachenTask.this, HelpPopUp.class);
+                Intent help = new Intent(NormalformenTask.this, HelpPopUp.class);
                 startActivity(help);
                 break;
         }
@@ -93,9 +91,9 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
     //Führt den Select auf die Datenbank aus, um die Aufgabe zu ermitteln
     private String[] getTask() {
         String[] taskinformation = new String[5];
-        taskinformation[0] = "Vereinfache den folgenden Term soweit wie möglich";
-        taskinformation[1] = "( a + ¬(b*a)) * (c+(d+c))";
-        taskinformation[2] = "2"; // Schwierigkeit
+        taskinformation[0] = "Wandeln Sie folgende Formel in die kanonische disjunktive Normalform um.";
+        taskinformation[1] = "((A → C) → B)  ";
+        taskinformation[2] = "3"; // Schwierigkeit
         return taskinformation;
     }
 
@@ -132,7 +130,7 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
     //Korrektheit der Umformumg prüfen
     private void checkInput()
     {
-        Toast.makeText(getApplication(), "Vereinfachung wird geprüft...", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplication(), "Umformumg wird geprüft...", Toast.LENGTH_SHORT).show();
     }
 
     //Lösung prüfen

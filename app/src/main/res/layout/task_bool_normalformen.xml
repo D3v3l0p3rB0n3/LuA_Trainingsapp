@@ -79,7 +79,7 @@
             android:background="@color/Text"
             android:textColor="@color/black"
             android:textColorHint="@color/black"
-            android:hint="@string/hint_bool_term"
+            android:hint="@string/hint_bool_norm"
             android:id="@+id/bool_term_result"
             android:imeOptions="flagNoExtractUi"/>
     </LinearLayout>
@@ -112,7 +112,7 @@
                 android:layout_width="@dimen/buttonsize"
                 android:layout_height="30sp"
                 android:background="@drawable/button"
-                 />
+                />
         </LinearLayout>
         <LinearLayout
             android:layout_height="match_parent"

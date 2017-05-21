@@ -48,6 +48,10 @@
             android:name=".TermVereinfachenTask"
             android:screenOrientation="landscape">
         </activity>
+        <activity
+            android:name=".NormalformenTask"
+            android:screenOrientation="landscape">
+        </activity>
 
         <service
             android:name=".LogikUndAlgebraKeyboard"

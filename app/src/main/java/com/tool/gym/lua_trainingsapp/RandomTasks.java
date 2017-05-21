@@ -37,20 +37,24 @@ public class RandomTasks extends AppCompatActivity implements OnClickListener{
         else if (id == R.id.random_bool){
 
             // Zufällig Term / Wahrheitstabelle
-            Double x = Math.random();
-            //Log.d(RandomTasks.class.getSimpleName(), x.toString() );
+            Double x = Math.random() * 2;
+            Integer zufall = (int) Math.round(x);
+            Log.d(RandomTasks.class.getSimpleName(), x.toString() + "...." + zufall.toString() );
 
-            Intent i;
-            //if (x > 0.5)
-            //{
-              //  i = new Intent(RandomTasks.this, WahrheitstabellenTask.class);
-            //}
+            Intent i = null;
+            switch (zufall)
+            {
+                case 0:
+                    i = new Intent(RandomTasks.this, WahrheitstabellenTask.class);
+                    break;
+                case 1:
+                    i = new Intent(RandomTasks.this, TermVereinfachenTask.class);
+                    break;
+                case 2:
+                    i = new Intent(RandomTasks.this, NormalformenTask.class);
+                    break;
 
-            //else
-            //{
-                i = new Intent(RandomTasks.this, TermVereinfachenTask.class);
-            //}
-
+            }
             startActivity(i);
         }
 
