@@ -3,6 +3,7 @@ package com.tool.gym.lua_trainingsapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
@@ -34,14 +35,24 @@ public class RandomTasks extends AppCompatActivity implements OnClickListener{
             startActivity(i);
         }
         else if (id == R.id.random_bool){
-            Intent i = new Intent(RandomTasks.this, WahrheitstabellenTask.class);
-            //Intent i= new Intent(RandomTasks.this, TermVereinfachenTask.class);
+
+            // Zufällig Term / Wahrheitstabelle
+            Double x = Math.random();
+            //Log.d(RandomTasks.class.getSimpleName(), x.toString() );
+
+            Intent i;
+            //if (x > 0.5)
+            //{
+              //  i = new Intent(RandomTasks.this, WahrheitstabellenTask.class);
+            //}
+
+            //else
+            //{
+                i = new Intent(RandomTasks.this, TermVereinfachenTask.class);
+            //}
+
             startActivity(i);
         }
-        /*
-        else if(id == R.id.random_relational){
-            Intent i = new Intent(RandomTasks.this, All_Tasks.class);
-            startActivity(i);
-    }*/
+
     }
 }
