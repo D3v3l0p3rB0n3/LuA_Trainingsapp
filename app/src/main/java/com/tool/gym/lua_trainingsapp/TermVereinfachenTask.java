@@ -11,6 +11,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -74,6 +75,7 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
                 checkSolution();
                 break;
 
+
             case R.id.helpbutton:
                 Intent help = new Intent(TermVereinfachenTask.this, HelpPopUp.class);
                 startActivity(help);
@@ -136,10 +138,29 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
     }
 
     //Lösung prüfen
-    private void checkSolution()
+    private void checkSolution() //Testlauf mit den Buttons
     {
         Toast.makeText(getApplication(), "Lösung wird geprüft...", Toast.LENGTH_SHORT).show();
-        BoolscheAlgebraTasks task = new BoolscheAlgebraTasks(getApplicationContext());
-        task.nextTask();
+        EditText eingabe = (EditText) findViewById(R.id.bool_term_result);
+        eingabe.setVisibility(View.VISIBLE);
+        if (eingabe.isEnabled())
+        {
+            //eingabe.setEnabled(false);
+            //.setInputType(InputType.None);
+        }
+
+        else
+        {
+            eingabe.setEnabled(true);
+        }
+
+        LinearLayout container = (LinearLayout) findViewById(R.id.eingabe_bool_term_vereinfachen);
+        EditText neuesfeld = new EditText(this);
+        neuesfeld.setHeight(30);
+        neuesfeld.setWidth(500);
+        neuesfeld.setHint("Test");
+        container.addView(neuesfeld);
+        //BoolscheAlgebraTasks task = new BoolscheAlgebraTasks(getApplicationContext());
+        //task.nextTask();
     }
 }
