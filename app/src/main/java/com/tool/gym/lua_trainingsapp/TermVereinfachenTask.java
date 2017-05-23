@@ -136,7 +136,7 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
     {
         Toast.makeText(getApplication(), "Vereinfachung wird geprüft...", Toast.LENGTH_SHORT).show();
     }
-
+    
     //Lösung prüfen
     private void checkSolution() //Testlauf mit den Buttons
     {
