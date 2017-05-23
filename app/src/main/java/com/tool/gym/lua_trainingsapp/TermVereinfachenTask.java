@@ -139,5 +139,7 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
     private void checkSolution()
     {
         Toast.makeText(getApplication(), "Lösung wird geprüft...", Toast.LENGTH_SHORT).show();
+        BoolscheAlgebraTasks task = new BoolscheAlgebraTasks(getApplicationContext());
+        task.nextTask();
     }
 }

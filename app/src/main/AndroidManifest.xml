@@ -52,6 +52,9 @@
             android:name=".NormalformenTask"
             android:screenOrientation="landscape">
         </activity>
+        <activity
+            android:name=".BoolscheAlgebraTasks">
+        </activity>
 
         <service
             android:name=".LogikUndAlgebraKeyboard"

@@ -35,27 +35,8 @@ public class RandomTasks extends AppCompatActivity implements OnClickListener{
             startActivity(i);
         }
         else if (id == R.id.random_bool){
-
-            // Zufällig Term / Wahrheitstabelle
-            Double x = Math.random() * 2;
-            Integer zufall = (int) Math.round(x);
-            Log.d(RandomTasks.class.getSimpleName(), x.toString() + "...." + zufall.toString() );
-
-            Intent i = null;
-            switch (zufall)
-            {
-                case 0:
-                    i = new Intent(RandomTasks.this, WahrheitstabellenTask.class);
-                    break;
-                case 1:
-                    i = new Intent(RandomTasks.this, TermVereinfachenTask.class);
-                    break;
-                case 2:
-                    i = new Intent(RandomTasks.this, NormalformenTask.class);
-                    break;
-
-            }
-            startActivity(i);
+            BoolscheAlgebraTasks task = new BoolscheAlgebraTasks(getApplicationContext());
+            task.nextTask();
         }
 
     }

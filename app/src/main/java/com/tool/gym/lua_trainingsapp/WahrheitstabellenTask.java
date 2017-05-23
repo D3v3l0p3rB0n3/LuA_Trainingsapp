@@ -1,22 +1,12 @@
 package com.tool.gym.lua_trainingsapp;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
-import android.text.Html;
-import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 
 public class WahrheitstabellenTask extends AppCompatActivity implements OnClickListener {
@@ -98,7 +88,8 @@ public class WahrheitstabellenTask extends AppCompatActivity implements OnClickL
 
     //Nach Bestätigung Überprüfung des Ergebnisses
     private void checkInput() {
-
+        BoolscheAlgebraTasks task = new BoolscheAlgebraTasks(getApplicationContext());
+        task.nextTask();
     }
 
     //Button Click verarbeiten
@@ -109,8 +100,8 @@ public class WahrheitstabellenTask extends AppCompatActivity implements OnClickL
                 checkInput();
                 break;
             case R.id.next_task:
-                Intent i = new Intent(WahrheitstabellenTask.this, WahrheitstabellenTask.class);
-                startActivity(i);
+                BoolscheAlgebraTasks task = new BoolscheAlgebraTasks(getApplicationContext());
+                task.nextTask();
                 break;
             case R.id.helpbutton:
                 Intent help = new Intent(WahrheitstabellenTask.this, HelpPopUp.class);

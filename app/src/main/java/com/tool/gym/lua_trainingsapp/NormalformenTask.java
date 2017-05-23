@@ -137,5 +137,7 @@ public class NormalformenTask extends AppCompatActivity implements OnClickListen
     private void checkSolution()
     {
         Toast.makeText(getApplication(), "Lösung wird geprüft...", Toast.LENGTH_SHORT).show();
+        BoolscheAlgebraTasks task = new BoolscheAlgebraTasks(getApplicationContext());
+        task.nextTask();
     }
 }
