@@ -35,10 +35,10 @@ public class RandomTasks extends AppCompatActivity implements OnClickListener{
             startActivity(i);
         }
         else if (id == R.id.random_bool){
-            //BoolscheAlgebraTasks task = new BoolscheAlgebraTasks(getApplicationContext());
-            //task.nextTask();
-            Intent i = new Intent(RandomTasks.this, TermVereinfachenTask.class);
-            startActivity(i);
+            BoolscheAlgebraTasks task = new BoolscheAlgebraTasks(getApplicationContext());
+            task.nextTask();
+//            Intent i = new Intent(RandomTasks.this, TermVereinfachenTask.class);
+//            startActivity(i);
         }
 
     }
