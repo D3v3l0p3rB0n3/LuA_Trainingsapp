@@ -17,8 +17,7 @@ public class BoolscheAlgebraTasks extends Activity {
         Double x = Math.random() * 2;
         Integer zufall = (int) Math.round(x);
         Intent i = null;
-        switch (zufall)
-        {
+        switch (zufall) {
             case 0:
                 i = new Intent(context, WahrheitstabellenTask.class);
                 break;
@@ -28,8 +27,8 @@ public class BoolscheAlgebraTasks extends Activity {
             case 2:
                 i = new Intent(context, NormalformenTask.class);
                 break;
-
         }
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(i);
     }
 }

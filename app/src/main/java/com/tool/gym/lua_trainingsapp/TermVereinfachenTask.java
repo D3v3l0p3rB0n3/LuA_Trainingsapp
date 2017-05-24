@@ -2,11 +2,17 @@ package com.tool.gym.lua_trainingsapp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -136,7 +142,7 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
     {
         Toast.makeText(getApplication(), "Vereinfachung wird geprüft...", Toast.LENGTH_SHORT).show();
     }
-    
+
     //Lösung prüfen
     private void checkSolution() //Testlauf mit den Buttons
     {
@@ -156,11 +162,30 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
 
         LinearLayout container = (LinearLayout) findViewById(R.id.eingabe_bool_term_vereinfachen);
         EditText neuesfeld = new EditText(this);
-        neuesfeld.setHeight(30);
-        neuesfeld.setWidth(500);
+
+        //neues Textfeld anpassen
+        neuesfeld.setHeight(getPixel(30));
+        neuesfeld.setWidth(getPixel(500));
         neuesfeld.setHint("Test");
-        container.addView(neuesfeld);
+        neuesfeld.setBackgroundColor(Color.WHITE);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.setMargins(0,0,0,getPixel(20));
+        neuesfeld.setLayoutParams(params);
+        neuesfeld.setGravity(Gravity.CENTER_HORIZONTAL);
+        neuesfeld.setHint("Textfeld eingefügt");
+
+
+        Integer anzahl = container.getChildCount();
+        //Toast.makeText(getApplication(), "Anzahl an Eingabefeldern: " + anzahl.toString(), Toast.LENGTH_SHORT).show();
         //BoolscheAlgebraTasks task = new BoolscheAlgebraTasks(getApplicationContext());
         //task.nextTask();
     }
+
+    public int getPixel (int sp)
+    {
+        float textsize = sp * getResources().getDisplayMetrics().scaledDensity;
+        return (int) textsize;
+    }
+
 }
+

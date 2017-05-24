@@ -83,8 +83,9 @@
                 android:id="@+id/eingabe_bool_term_vereinfachen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="center_horizontal">
+                android:orientation="vertical"
+                android:layout_gravity="center_horizontal"
+                >
                 <EditText
                     android:id="@+id/bool_term_result"
                     android:layout_width="500sp"
@@ -96,21 +97,8 @@
                     android:textColor="@color/black"
                     android:textColorHint="@color/black"
                     android:textStyle="italic"
-                    android:layout_gravity="center_horizontal"/>
-
-                <EditText
-                    android:id="@+id/editText5"
-                    android:layout_width="500sp"
-                    android:layout_height="30sp"
                     android:layout_gravity="center_horizontal"
-                    android:layout_weight="1"
-                    android:background="@color/Text"
-                    android:hint="@string/hint_bool_norm"
-                    android:imeOptions="flagNoExtractUi"
-                    android:textAlignment="center"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black"
-                    android:textStyle="italic" />
+                    android:layout_marginBottom="20sp"/>
 
             </LinearLayout>
 
