@@ -94,7 +94,8 @@
             android:textColorHint="@color/black"
             android:hint="@string/hint_rel_algebra"
             android:id="@+id/relationalresult"
-            android:imeOptions="flagNoExtractUi"/>
+            android:imeOptions="flagNoExtractUi"
+            android:layout_marginTop="10sp"/>
     </LinearLayout>
     <LinearLayout
         android:layout_height="0dp"
