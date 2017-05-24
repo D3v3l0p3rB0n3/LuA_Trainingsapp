@@ -93,12 +93,12 @@
                     android:background="@color/Text"
                     android:hint="@string/hint_bool_norm"
                     android:imeOptions="flagNoExtractUi"
-                    android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black"
                     android:textStyle="italic"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="20sp"/>
+                    android:layout_marginBottom="20sp"
+                    android:gravity="center"/>
 
             </LinearLayout>
 

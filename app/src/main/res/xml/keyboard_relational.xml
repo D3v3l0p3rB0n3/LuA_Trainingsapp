@@ -32,7 +32,7 @@
         <Key android:codes="40" android:keyLabel="(" android:keyEdgeFlags="left"/>
         <Key android:codes="41" android:keyLabel=")"/>
         <Key android:codes="34" android:keyLabel="&quot;"/>
-        <Key android:codes="8976" android:keyLabel="\u2310" />
+        <Key android:codes="172" android:keyLabel="\u00AC" />
         <Key android:codes="8594" android:keyLabel="\u2192" />
         <Key android:codes="10231" android:keyLabel="\u2194" />
         <Key android:codes="8897" android:keyLabel="\u22C1"/>
