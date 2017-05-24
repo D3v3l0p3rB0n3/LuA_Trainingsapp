@@ -174,6 +174,8 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
         neuesfeld.setGravity(Gravity.CENTER_HORIZONTAL);
         neuesfeld.setHint("Textfeld eingefügt");
 
+        container.addView(neuesfeld);
+
 
         Integer anzahl = container.getChildCount();
         //Toast.makeText(getApplication(), "Anzahl an Eingabefeldern: " + anzahl.toString(), Toast.LENGTH_SHORT).show();
