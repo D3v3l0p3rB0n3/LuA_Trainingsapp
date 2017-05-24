@@ -13,6 +13,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -173,8 +174,10 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
         neuesfeld.setLayoutParams(params);
         neuesfeld.setGravity(Gravity.CENTER_HORIZONTAL);
         neuesfeld.setHint("Textfeld eingefügt");
+        neuesfeld.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI);
 
         container.addView(neuesfeld);
+        container.setGravity(Gravity.CENTER_HORIZONTAL);
 
 
         Integer anzahl = container.getChildCount();
