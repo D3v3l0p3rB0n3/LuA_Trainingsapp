@@ -141,6 +141,8 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
     //Lösung
     private void checkSolution() {
         Toast.makeText(getApplication(), "Vereinfachung wird geprüft...", Toast.LENGTH_SHORT).show();
+        BoolscheAlgebraTasks task = new BoolscheAlgebraTasks(getApplicationContext());
+        task.nextTask();
     }
 
     //Korrektheit der Umformung prüfen
@@ -167,6 +169,10 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
             //neues Textfeld hinzufügen
             container.addView(neuesfeld);
             container.setGravity(Gravity.CENTER_HORIZONTAL);
+
+            // Scroll-View immer ganz nach unten schieben
+            ScrollView scroll = (ScrollView) findViewById(R.id.eingabe_term);
+            scroll.fullScroll(ScrollView.FOCUS_DOWN);
 
 
             Integer anzahl = container.getChildCount();
