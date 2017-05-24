@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -34,7 +36,7 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
     private Button help_button;
     private EditText result;
 
-       String log_tag = TermVereinfachenTask.class.getSimpleName();
+    String LOG_TAG = TermVereinfachenTask.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +76,7 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
     public void onClick(View v) {
         int id = v.getId();
 
-        switch (id){
+        switch (id) {
             case R.id.checkbutton: // Umforumung prüfen
                 checkInput();
                 break;
@@ -118,15 +120,13 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
     }
 
     //Bild für den Schwierigkeitsgrad festlegen
-    private void setDifficulty(String difficulty ) {
+    private void setDifficulty(String difficulty) {
         LinearLayout diff_png = (LinearLayout) findViewById(R.id.difficulty);
         if (difficulty.equals("1")) {
             diff_png.setBackgroundResource(R.drawable.schwierigkeit1);
-        }
-        else if (difficulty.equals("2")) {
+        } else if (difficulty.equals("2")) {
             diff_png.setBackgroundResource(R.drawable.schwierigkeit2);
-        }
-        else {
+        } else {
             diff_png.setBackgroundResource(R.drawable.schwierigkeit3);
         }
 
@@ -134,60 +134,70 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
 
     //Hilfsmethode um Tastatur auszublenden
     private void hideKeyboard(View view) {
-        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    //Korrektheit der Umformumg prüfen
-    private void checkInput()
-    {
+    //Lösung
+    private void checkSolution() {
         Toast.makeText(getApplication(), "Vereinfachung wird geprüft...", Toast.LENGTH_SHORT).show();
     }
 
-    //Lösung prüfen
-    private void checkSolution() //Testlauf mit den Buttons
-    {
-        Toast.makeText(getApplication(), "Lösung wird geprüft...", Toast.LENGTH_SHORT).show();
-        EditText eingabe = (EditText) findViewById(R.id.bool_term_result);
-        eingabe.setVisibility(View.VISIBLE);
-        if (eingabe.isEnabled())
+    //Korrektheit der Umformung prüfen
+    private void checkInput() {
+        if (!result.getText().toString().isEmpty())
         {
-            //eingabe.setEnabled(false);
-            //.setInputType(InputType.None);
-        }
+            //Textfeld nicht leer => Prüfung geht weiter
 
+            // Container suchen + neues Textfeld anpassen
+            LinearLayout container = (LinearLayout) findViewById(R.id.eingabe_bool_term_vereinfachen);
+            TextView neuesfeld = new TextView(this);
+
+            //neues Textfeld anpassen
+            neuesfeld.setHeight(getPixel(35));
+            neuesfeld.setWidth(getPixel(500));
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            params.setMargins(0, 0, 0, getPixel(20));
+            neuesfeld.setLayoutParams(params);
+            neuesfeld.setTextColor(ResourcesCompat.getColor(getResources(), R.color.Text, null));
+            neuesfeld.setGravity(Gravity.CENTER);
+            neuesfeld.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
+            neuesfeld.setText(result.getText());
+
+            //neues Textfeld hinzufügen
+            container.addView(neuesfeld);
+            container.setGravity(Gravity.CENTER_HORIZONTAL);
+
+
+            Integer anzahl = container.getChildCount();
+            Log.d(LOG_TAG, anzahl.toString());
+
+//        for (int i = 0; i<=anzahl; i++)
+//        {
+//            TextView feld = (TextView) container.getChildAt(i);
+//            if (feld != null)
+//            {
+//                if (i < anzahl-1)
+//                {
+//                    feld.setTextColor(Color.GREEN);
+//                    feld.setEnabled(false);
+//
+//                }
+//            }
+//
+//        }
+
+            //Toast.makeText(getApplication(), "Anzahl an Eingabefeldern: " + anzahl.toString(), Toast.LENGTH_SHORT).show();
+            //BoolscheAlgebraTasks task = new BoolscheAlgebraTasks(getApplicationContext());
+            //task.nextTask();
+        }
         else
         {
-            eingabe.setEnabled(true);
+            Toast.makeText(getApplication(), "Textfeld leer - bitte befüllen!", Toast.LENGTH_SHORT).show();
         }
-
-        LinearLayout container = (LinearLayout) findViewById(R.id.eingabe_bool_term_vereinfachen);
-        EditText neuesfeld = new EditText(this);
-
-        //neues Textfeld anpassen
-        neuesfeld.setHeight(getPixel(30));
-        neuesfeld.setWidth(getPixel(500));
-        neuesfeld.setHint("Test");
-        neuesfeld.setBackgroundColor(Color.WHITE);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.setMargins(0,0,0,getPixel(20));
-        neuesfeld.setLayoutParams(params);
-        neuesfeld.setGravity(Gravity.CENTER_HORIZONTAL);
-        neuesfeld.setHint("Textfeld eingefügt");
-        neuesfeld.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI);
-
-        container.addView(neuesfeld);
-        container.setGravity(Gravity.CENTER_HORIZONTAL);
-
-
-        Integer anzahl = container.getChildCount();
-        //Toast.makeText(getApplication(), "Anzahl an Eingabefeldern: " + anzahl.toString(), Toast.LENGTH_SHORT).show();
-        //BoolscheAlgebraTasks task = new BoolscheAlgebraTasks(getApplicationContext());
-        //task.nextTask();
     }
 
-    public int getPixel (int sp)
-    {
+    public int getPixel(int sp) {
         float textsize = sp * getResources().getDisplayMetrics().scaledDensity;
         return (int) textsize;
     }

@@ -9,7 +9,7 @@
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2">
+        android:layout_weight="1.14">
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -53,7 +53,7 @@
         android:layout_height="0dp"
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"
-        android:layout_weight="2"
+        android:layout_weight="1.24"
         android:paddingLeft="@dimen/padding"
         android:paddingRight="@dimen/padding">
 
@@ -86,19 +86,6 @@
                 android:orientation="vertical"
                 android:layout_gravity="center_horizontal"
                 >
-                <EditText
-                    android:id="@+id/bool_term_result"
-                    android:layout_width="500sp"
-                    android:layout_height="30sp"
-                    android:background="@color/Text"
-                    android:hint="@string/hint_bool_norm"
-                    android:imeOptions="flagNoExtractUi"
-                    android:textAlignment="center"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black"
-                    android:textStyle="italic"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="20sp"/>
 
             </LinearLayout>
 
@@ -106,6 +93,28 @@
         </ScrollView>
 
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/colorPrimary">
+
+        <EditText
+            android:id="@+id/bool_term_result"
+            android:layout_width="500sp"
+            android:layout_height="30sp"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/Text"
+            android:hint="@string/hint_bool_norm"
+            android:imeOptions="flagNoExtractUi"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:textStyle="italic"
+            android:layout_marginTop="20sp"/>
+    </LinearLayout>
+
     <LinearLayout
         android:layout_height="0dp"
         android:background="@color/colorPrimary"
