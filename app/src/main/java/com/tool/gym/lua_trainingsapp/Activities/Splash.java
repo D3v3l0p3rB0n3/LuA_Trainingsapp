@@ -1,9 +1,11 @@
-package com.tool.gym.lua_trainingsapp;
+package com.tool.gym.lua_trainingsapp.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+
+import com.tool.gym.lua_trainingsapp.R;
 
 /**
  * Created by mabr on 23.01.2017.

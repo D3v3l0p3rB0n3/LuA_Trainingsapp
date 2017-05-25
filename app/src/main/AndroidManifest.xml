@@ -8,7 +8,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity
-            android:name=".Splash"
+            android:name=".Activities.Splash"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -16,19 +16,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".Activities.MainActivity"
             android:screenOrientation="landscape">
         </activity>
         <activity
-            android:name=".RandomTasks"
+            android:name=".Activities.RandomTasks"
             android:screenOrientation="landscape">
         </activity>
         <activity
-            android:name=".SpecificTasks"
+            android:name=".Activities.SpecificTasks"
             android:screenOrientation="landscape">
         </activity>
         <activity
-            android:name=".TaskList"
+            android:name=".Activities.TaskList"
             android:screenOrientation="landscape">
         </activity>
         <activity

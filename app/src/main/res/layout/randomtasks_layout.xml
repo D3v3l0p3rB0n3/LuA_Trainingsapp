@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.tool.gym.lua_trainingsapp.RandomTasks">
+    tools:context="com.tool.gym.lua_trainingsapp.Activities.RandomTasks">
     <LinearLayout
         android:layout_gravity="top"
         android:background="@color/Title"

@@ -1,4 +1,4 @@
-package com.tool.gym.lua_trainingsapp;
+package com.tool.gym.lua_trainingsapp.Activities;
 
 /**
  * Created by mabr on 25.01.2017.
