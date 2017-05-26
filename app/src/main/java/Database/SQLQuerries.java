@@ -79,6 +79,9 @@ public class SQLQuerries {
         inserts.add("INSERT INTO Relationen VALUES ('Verlag(VerlagID, VerlagName, Verlagort)','1')");
         inserts.add("INSERT INTO Relationen VALUES ('Ausleiher(ID, Name, Geburtsdatum, Ort)','1')");
         inserts.add("INSERT INTO Relationen VALUES ('Ausgeliehen(Signatur, ID, VonDatum, BisDatum)','1')");
+        inserts.add("INSERT INTO Termvereinfachung VALUES ('30', '( a + ¬(b*a)) * (c+(d+c))', '2', 'c+d')");
+        inserts.add("INSERT INTO Termvereinfachung VALUES ('31', '¬a + ¬(a + ¬ab) + ¬(¬a + b)', '2', '¬a + ¬b')");
+
 
     }
 
