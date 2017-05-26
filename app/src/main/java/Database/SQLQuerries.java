@@ -16,8 +16,8 @@ public class SQLQuerries {
                                                         "Schwierigkeitsgrad TEXT NOT NULL, " +
                                                         "Aufgabenstellung TEXT NOT NULL, " +
                                                         "Hilfe TEXT, " +
-                                                        "Benutzername TEXT NOT NULL" +
-                                                        "FOREIGN KEY(Benutzername) REFERENCES Benutzer(Name)," +
+                                                        "Benutzername TEXT NOT NULL, " +
+                                                        "FOREIGN KEY(Benutzername) REFERENCES Benutzer(Name)" +
                                                         ")";
 
     protected static final String createTableAufgabenzustand =     "CREATE TABLE Aufgabenzustand (" +
@@ -32,7 +32,7 @@ public class SQLQuerries {
                                                                     "Relationennummer TEXT NOT NULL, " +
                                                                     "Aufgabenbeschreibung TEXT, " +
                                                                     "Lösung TEXT NOT NULL, " +
-                                                                    "FOREIGN KEY(ID) REFERENCES Aufgabe(ID)," +
+                                                                    "FOREIGN KEY(ID) REFERENCES Aufgabe(ID)" +
                                                                     ")";
 
     protected static final String createTableRelation =        "CREATE TABLE Relation (" +
@@ -46,7 +46,7 @@ public class SQLQuerries {
                                                                     "Term TEXT NOT NULL, " +
                                                                     "Anzahl_Argumente_der_Lösung TEXT NOT NULL, " +
                                                                     "Lösung TEXT NOT NULL, " +
-                                                                    "FOREIGN KEY(ID) REFERENCES Aufgabe(ID)," +
+                                                                    "FOREIGN KEY(ID) REFERENCES Aufgabe(ID)" +
                                                                     ")";
 
     protected static final String createTableNormalformen =        "CREATE TABLE Normalformen (" +
@@ -55,14 +55,14 @@ public class SQLQuerries {
                                                                 "Term TEXT NOT NULL, " +
                                                                 "Anzahl_Argumente_der_Lösung TEXT NOT NULL, " +
                                                                 "Lösung TEXT NOT NULL, " +
-                                                                "FOREIGN KEY(ID) REFERENCES Aufgabe(ID)," +
+                                                                "FOREIGN KEY(ID) REFERENCES Aufgabe(ID)" +
                                                                 ")";
 
     protected static final String createTableWahrheitstabellen =       "CREATE TABLE Wahrheitstabellen (" +
                                                                     "ID TEXT PRIMARY KEY NOT NULL, " +
                                                                     "Anzahl_Argumente TEXT NOT NULL, " +
                                                                     "Term TEXT NOT NULL, " +
-                                                                    "FOREIGN KEY(ID) REFERENCES Aufgabe(ID)," +
+                                                                    "FOREIGN KEY(ID) REFERENCES Aufgabe(ID)" +
                                                                     ")";
 
     ArrayList<String> inserts = new ArrayList<String>();
@@ -74,11 +74,11 @@ public class SQLQuerries {
         inserts.add("INSERT INTO Relationenschema VALUES ('4','1','Geben Sie alle Namen aller Personen an, die aus Heilbronn oder Augsburg kommen und das Buch „Faust“ im Jahr 2010 ausgeliehen hatten.','')");
         inserts.add("INSERT INTO Relationenschema VALUES ('5','1','Geben Sie die Titel der Bücher an, die in Ravensburg veröffentlicht und von „Mayer“ nach 2006 ausgeliehen wurden.','')");
         inserts.add("INSERT INTO Relationenschema VALUES ('6','1','Geben Sie den Titel aller Bücher an, die noch nie ausgeliehen wurden.','')");
-        inserts.add("INSERT INTO Relationenschema VALUES ('7','1','Geben Sie alle Titel von Büchern an, die von minderjährigen Studenten ausgeliehen wurden.';'')");
-        inserts.add("INSERT INTO Relationen VALUES ('Buch(Signatur, ISBN, Titel, Autor, Jahr, VerlagID, AnzahlSeiten)','1')");
-        inserts.add("INSERT INTO Relationen VALUES ('Verlag(VerlagID, VerlagName, Verlagort)','1')");
-        inserts.add("INSERT INTO Relationen VALUES ('Ausleiher(ID, Name, Geburtsdatum, Ort)','1')");
-        inserts.add("INSERT INTO Relationen VALUES ('Ausgeliehen(Signatur, ID, VonDatum, BisDatum)','1')");
+        inserts.add("INSERT INTO Relationenschema VALUES ('7','1','Geben Sie alle Titel von Büchern an, die von minderjährigen Studenten ausgeliehen wurden.','')");
+        inserts.add("INSERT INTO Relation VALUES ('Buch(Signatur, ISBN, Titel, Autor, Jahr, VerlagID, AnzahlSeiten)','1')");
+        inserts.add("INSERT INTO Relation VALUES ('Verlag(VerlagID, VerlagName, Verlagort)','1')");
+        inserts.add("INSERT INTO Relation VALUES ('Ausleiher(ID, Name, Geburtsdatum, Ort)','1')");
+        inserts.add("INSERT INTO Relation VALUES ('Ausgeliehen(Signatur, ID, VonDatum, BisDatum)','1')");
         inserts.add("INSERT INTO Termvereinfachung VALUES ('30', '( a + ¬(b*a)) * (c+(d+c))', '2', 'c+d')");
         inserts.add("INSERT INTO Termvereinfachung VALUES ('31', '¬a + ¬(a + ¬ab) + ¬(¬a + b)', '2', '¬a + ¬b')");
 

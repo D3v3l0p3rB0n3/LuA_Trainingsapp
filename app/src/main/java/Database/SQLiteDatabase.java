@@ -24,6 +24,17 @@ public class SQLiteDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(android.database.sqlite.SQLiteDatabase db) {
+
+        //Testausgabe der CREATE - Table - Befehle
+        Log.d(SQLiteDatabase.class.getSimpleName(), SQLQuerries.createTableBenutzer);
+        Log.d(SQLiteDatabase.class.getSimpleName(), SQLQuerries.createTableAufgabe);
+        Log.d(SQLiteDatabase.class.getSimpleName(), SQLQuerries.createTableRelationenschema);
+        Log.d(SQLiteDatabase.class.getSimpleName(), SQLQuerries.createTableAufgabenzustand);
+        Log.d(SQLiteDatabase.class.getSimpleName(), SQLQuerries.createTableRelation);
+        Log.d(SQLiteDatabase.class.getSimpleName(), SQLQuerries.createTableTermvereinfachung);
+        Log.d(SQLiteDatabase.class.getSimpleName(), SQLQuerries.createTableNormalformen);
+        Log.d(SQLiteDatabase.class.getSimpleName(), SQLQuerries.createTableWahrheitstabellen);
+
         //create Tables
         db.execSQL(SQLQuerries.createTableBenutzer);
         db.execSQL(SQLQuerries.createTableAufgabe);
@@ -35,10 +46,11 @@ public class SQLiteDatabase extends SQLiteOpenHelper {
         db.execSQL(SQLQuerries.createTableWahrheitstabellen);
 
         Log.d(SQLiteDatabase.class.getSimpleName(),"DB anlegen....");
+
         //inserts
         SQLQuerries querries = new SQLQuerries();
 
-        for(int x=1; x<= querries.inserts.size(); x++ ){
+        for(int x=1; x< querries.inserts.size(); x++ ){
             db.execSQL(querries.inserts.get(x));
         }
 
