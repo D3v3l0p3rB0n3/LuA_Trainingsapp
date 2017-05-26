@@ -4,6 +4,7 @@ import java.sql.*;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 
 /**
@@ -33,12 +34,14 @@ public class SQLiteDatabase extends SQLiteOpenHelper {
         db.execSQL(SQLQuerries.createTableNormalformen);
         db.execSQL(SQLQuerries.createTableWahrheitstabellen);
 
+        Log.d(SQLiteDatabase.class.getSimpleName(),"DB anlegen....");
         //inserts
         SQLQuerries querries = new SQLQuerries();
 
         for(int x=1; x<= querries.inserts.size(); x++ ){
             db.execSQL(querries.inserts.get(x));
         }
+
 
     }
 
