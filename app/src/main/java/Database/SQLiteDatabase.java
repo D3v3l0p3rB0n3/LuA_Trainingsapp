@@ -20,6 +20,7 @@ public class SQLiteDatabase extends SQLiteOpenHelper {
 
     public SQLiteDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        getWritableDatabase();
     }
 
     @Override

@@ -14,13 +14,16 @@ import Database.SQLiteDatabase;
  */
 
 public class Splash extends AppCompatActivity {
+
+    public SQLiteDatabase db;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
 
         //DB physisch anlegen
-        SQLiteDatabase db = new SQLiteDatabase(this);
-        db.getWritableDatabase();
+        db = new SQLiteDatabase(this);
+
 
         int secondsDelayed = 1;
         new Handler().postDelayed(new Runnable() {
