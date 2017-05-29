@@ -71,8 +71,8 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
                 }
             }
         });
-        InputMethodManager imeManager = (InputMethodManager) getApplicationContext().getSystemService(INPUT_METHOD_SERVICE);
-        imeManager.showInputMethodPicker();
+        //InputMethodManager imeManager = (InputMethodManager) getApplicationContext().getSystemService(INPUT_METHOD_SERVICE);
+        //imeManager.showInputMethodPicker();
 
         //Aufgabe laden
         setTask();

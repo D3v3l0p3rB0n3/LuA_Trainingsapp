@@ -85,8 +85,8 @@ public class RelationalTask extends AppCompatActivity implements OnClickListener
                 }
             }
         });
-        InputMethodManager imeManager = (InputMethodManager) getApplicationContext().getSystemService(INPUT_METHOD_SERVICE);
-        imeManager.showInputMethodPicker();
+        //InputMethodManager imeManager = (InputMethodManager) getApplicationContext().getSystemService(INPUT_METHOD_SERVICE);
+        //imeManager.showInputMethodPicker();
 
         //Listener für das Eingabefeld
         result.addTextChangedListener(watcher);

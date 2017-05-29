@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.view.inputmethod.InputMethodManager;
 
 import com.tool.gym.lua_trainingsapp.R;
 
@@ -23,6 +24,8 @@ public class Splash extends AppCompatActivity {
 
         //DB physisch anlegen
         db = new SQLiteDatabase(this);
+        InputMethodManager imeManager = (InputMethodManager) getApplicationContext().getSystemService(INPUT_METHOD_SERVICE);
+        imeManager.showInputMethodPicker();
 
 
         int secondsDelayed = 1;
