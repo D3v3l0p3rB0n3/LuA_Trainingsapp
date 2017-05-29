@@ -8,7 +8,6 @@ import android.widget.LinearLayout;
 
 import com.tool.gym.lua_trainingsapp.R;
 
-
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     //Test Marcel
     LinearLayout random;

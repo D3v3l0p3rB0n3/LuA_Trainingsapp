@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.tool.gym.lua_trainingsapp.R;
 
 import com.tool.gym.lua_trainingsapp.Activities.TaskList;
+import com.tool.gym.lua_trainingsapp.R;
 
 /**
  * Created by mabr on 23.01.2017.
