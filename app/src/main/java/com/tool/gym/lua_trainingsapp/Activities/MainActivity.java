@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.tool.gym.lua_trainingsapp.R;
-import com.tool.gym.lua_trainingsapp.SpecificTasks;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     //Test Marcel

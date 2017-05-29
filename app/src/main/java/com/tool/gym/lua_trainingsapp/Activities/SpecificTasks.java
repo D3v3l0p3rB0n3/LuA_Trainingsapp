@@ -1,4 +1,4 @@
-package com.tool.gym.lua_trainingsapp;
+package com.tool.gym.lua_trainingsapp.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.tool.gym.lua_trainingsapp.Activities.TaskList;
+import com.tool.gym.lua_trainingsapp.R;
 
 /**
  * Created by mabr on 23.01.2017.
