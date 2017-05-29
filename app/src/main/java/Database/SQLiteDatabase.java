@@ -18,25 +18,13 @@ public class SQLiteDatabase extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "LuADatabase.db";
-    public static android.database.sqlite.SQLiteDatabase database;
 
     public SQLiteDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        database = getWritableDatabase();
     }
 
     @Override
     public void onCreate(android.database.sqlite.SQLiteDatabase db) {
-        //Testausgabe der CREATE - Table - Befehle
-        Log.d(SQLiteDatabase.class.getSimpleName(), SQLQuerries.createTableBenutzer);
-        Log.d(SQLiteDatabase.class.getSimpleName(), SQLQuerries.createTableAufgabe);
-        Log.d(SQLiteDatabase.class.getSimpleName(), SQLQuerries.createTableRelationenschema);
-        Log.d(SQLiteDatabase.class.getSimpleName(), SQLQuerries.createTableAufgabenzustand);
-        Log.d(SQLiteDatabase.class.getSimpleName(), SQLQuerries.createTableRelation);
-        Log.d(SQLiteDatabase.class.getSimpleName(), SQLQuerries.createTableTermvereinfachung);
-        Log.d(SQLiteDatabase.class.getSimpleName(), SQLQuerries.createTableNormalformen);
-        Log.d(SQLiteDatabase.class.getSimpleName(), SQLQuerries.createTableWahrheitstabellen);
-
         //create Tables
         db.execSQL(SQLQuerries.createTableBenutzer);
         db.execSQL(SQLQuerries.createTableAufgabe);
@@ -48,11 +36,10 @@ public class SQLiteDatabase extends SQLiteOpenHelper {
         db.execSQL(SQLQuerries.createTableWahrheitstabellen);
 
         Log.d(SQLiteDatabase.class.getSimpleName(),"DB anlegen....");
-
         //inserts
         SQLQuerries querries = new SQLQuerries();
 
-        for(int x=1; x< querries.inserts.size(); x++ ){
+        for(int x=1; x<= querries.inserts.size(); x++ ){
             db.execSQL(querries.inserts.get(x));
         }
 
@@ -61,11 +48,13 @@ public class SQLiteDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(android.database.sqlite.SQLiteDatabase db, int oldVersion, int newVersion) {
+
     }
 
-    public Cursor query(String query){
-        Cursor c = database.rawQuery(query,null);
+    public Cursor select (android.database.sqlite.SQLiteDatabase db, String sqlstatement, String [] selectionArgs)
+    {
+        Cursor c = db.rawQuery (sqlstatement, selectionArgs);
         return c;
-    }
 
+    }
 }
