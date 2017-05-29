@@ -15,4 +15,5 @@
     <string name="help">\?</string>
     <string name="hint_bool_term">Bitte gebe deinen Vereinfachungsschritt ein</string>
     <string name="hint_bool_norm">Bitte gebe einen Umformungsschritt ein</string>
+    <string name="wrong_answer">Falsche Antwort</string>
 </resources>

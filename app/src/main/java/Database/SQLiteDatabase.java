@@ -3,6 +3,7 @@ package Database;
 import java.sql.*;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
@@ -17,15 +18,15 @@ public class SQLiteDatabase extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "LuADatabase.db";
+    public static android.database.sqlite.SQLiteDatabase database;
 
     public SQLiteDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        getWritableDatabase();
+        database = getWritableDatabase();
     }
 
     @Override
     public void onCreate(android.database.sqlite.SQLiteDatabase db) {
-
         //Testausgabe der CREATE - Table - Befehle
         Log.d(SQLiteDatabase.class.getSimpleName(), SQLQuerries.createTableBenutzer);
         Log.d(SQLiteDatabase.class.getSimpleName(), SQLQuerries.createTableAufgabe);
@@ -60,6 +61,11 @@ public class SQLiteDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(android.database.sqlite.SQLiteDatabase db, int oldVersion, int newVersion) {
-
     }
+
+    public Cursor query(String query){
+        Cursor c = database.rawQuery(query,null);
+        return c;
+    }
+
 }

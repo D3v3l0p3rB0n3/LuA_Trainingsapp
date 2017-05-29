@@ -2,7 +2,9 @@ package com.tool.gym.lua_trainingsapp;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,13 +19,19 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import Database.SQLiteDatabase;
+
 public class RelationalTask extends AppCompatActivity implements OnClickListener {
-    Button commitbutton;
-    EditText result;
-    TextWatcher watcher;
-    String loesung;
-    Button next_tast_button;
-    Button help_button;
+
+    private Button commitbutton;
+    private EditText result;
+    private TextWatcher watcher;
+    private String loesung;
+    private Button next_tast_button;
+    private Button help_button;
+    private String taskid;
+    private String taskhelp;
+    SQLiteDatabase db;
 
     private Runnable colourDefault = new Runnable() {
         public void run() {
@@ -33,7 +41,8 @@ public class RelationalTask extends AppCompatActivity implements OnClickListener
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        db = new SQLiteDatabase(this);
+        db.getReadableDatabase();
         //Layout
         setContentView(R.layout.relationtask_layout);
 
@@ -44,7 +53,6 @@ public class RelationalTask extends AppCompatActivity implements OnClickListener
         next_tast_button.setOnClickListener(this);
         help_button = (Button) findViewById(R.id.helpbutton);
         help_button.setOnClickListener(this);
-
         result = (EditText) findViewById(R.id.relationalresult);
 
         //Textwatcher erfasst jede Eingabe auf Tastatur für die Farbänderung
@@ -99,8 +107,9 @@ public class RelationalTask extends AppCompatActivity implements OnClickListener
                 startActivity(i);
                 break;
             case R.id.helpbutton:
-                Intent help = new Intent(RelationalTask.this, HelpPopUp.class);
-                startActivity(help);
+                Intent helppopup = new Intent(RelationalTask.this, HelpPopUp.class);
+                helppopup.putExtra("text", taskhelp);
+                startActivity(helppopup);
                 break;
         }
     }
@@ -110,27 +119,72 @@ public class RelationalTask extends AppCompatActivity implements OnClickListener
         String[] taskinformation;
         taskinformation = getTask();
         loesung = taskinformation[3];
-        setTaskdetails(taskinformation[0], taskinformation[1], taskinformation[2], taskinformation[4]);
+        setTaskdetails(taskinformation[0], taskinformation[1], taskinformation[2], taskinformation[4], taskinformation[5]);
     }
 
 
     //Führt den Select auf die Datenbank aus, um die Aufgabe zu ermitteln
     private String[] getTask() {
-        String[] taskinformation = new String[5];
-        taskinformation[0] = "Verfasse die Anfrage als Ausdruck der Relationenalgebra";
-        taskinformation[1] = "Buch(<u>Signatur</u>, ISBN, Titel, Autor, Jahr, VerlagID, AnzahlSeiten)<br>" +
-                             "Verlag(<u>VerlagID</u>, VerlagName, Verlagort)<br>" +
-                             "Ausleiher(<u>ID</u>, Name, Geburtsdatum, Ort)<br>" +
-                             "Ausgeliehen(<u>Signatur</u>, <u>ID</u>, VonDatum, BisDatum)";
-        taskinformation[2] = "Geben Sie die Titel der Bücher an, die im Jahr 2010 erschienen sind und mehr als 300 Seiten haben.";
-        taskinformation[3] = "π(Buch,(Seiten,Autor))";
-        taskinformation[4] = "3";
+        String[] taskinformation = new String[6];
+        Cursor anzahl = db.query("SELECT MIN(Aufgabenzustand.Anzahl_der_Bearbeitungen) " +
+                                 "FROM Aufgabenzustand INNER JOIN Aufgabe ON Aufgabenzustand.ID=Aufgabe.ID " +
+                                 "INNER JOIN Relationenschema ON Aufgabe.ID=Relationenschema.ID ");
+        anzahl.moveToFirst();
+        Integer anzbearbeitungen = anzahl.getInt(0);
+
+        System.out.println(anzbearbeitungen);
+
+        Cursor cursor = db.query("SELECT * " +
+                                 "FROM Aufgabenzustand az INNER JOIN Aufgabe a on az.ID = a.ID " +
+                                 "INNER JOIN Relationenschema r ON a.id = r.id " +
+                                 "WHERE az.Anzahl_der_Bearbeitungen = " + anzbearbeitungen.toString() + ";");
+        cursor.moveToFirst();
+
+
+        int id = cursor.getColumnIndex("ID");
+        int hilfe = cursor.getColumnIndex("Hilfe");
+        int aufgabenstellung = cursor.getColumnIndex("Aufgabenstellung");
+        int schwierigkeitsgrad = cursor.getColumnIndex("Schwierigkeitsgrad");
+        int aufgabenbeschreibung = cursor.getColumnIndex("Aufgabenbeschreibung");
+        int loesung = cursor.getColumnIndex("Lösung");
+        int relationennummer = cursor.getColumnIndex("Relationennummer");
+
+        taskid = cursor.getString(id);
+        taskhelp = cursor.getString(hilfe);
+
+        String relationen = getRelationen(cursor.getString(relationennummer));
+
+        taskinformation[0] = cursor.getString(aufgabenstellung);
+        taskinformation[1] = relationen;
+        taskinformation[2] = cursor.getString(aufgabenbeschreibung);
+        taskinformation[3] = cursor.getString(loesung);
+        taskinformation[4] = cursor.getString(schwierigkeitsgrad);
+        cursor.close();
+
         return taskinformation;
+    }
+
+    private String getRelationen(String relationennummer) {
+        String relationen = "";
+        Cursor cursor = db.query("SELECT Relation FROM Relation WHERE Relationennummer=" + relationennummer);
+        cursor.moveToFirst();
+        int colId;
+
+        while(!cursor.isAfterLast()) {
+            colId = cursor.getColumnIndex("Relation");
+            relationen = relationen + " " + cursor.getString(colId);
+            cursor.moveToNext();
+        }
+
+        cursor.close();
+
+
+        return relationen;
     }
 
     //Zeigt die Aufgabenstellung auf der Oberfläche an
     @SuppressWarnings("deprecation")
-    private void setTaskdetails(String title, String relations, String task, String difficulty) {
+    private void setTaskdetails(String title, String relations, String task, String difficulty, String help) {
         TextView taskheader = (TextView) findViewById(R.id.taskheader);
         taskheader.setText(title);
         TextView relation = (TextView) findViewById(R.id.relationen);
@@ -166,6 +220,13 @@ public class RelationalTask extends AppCompatActivity implements OnClickListener
     private void checkInput() {
         if(result.getText().toString().equals(loesung)) {
             result.setText(R.string.correct_answer);
+            result.setBackgroundColor(Color.parseColor("#BCED91"));
+            db.query("UPDATE Aufgabenzustand SET Status = 'Richtig', Anzahl_der_Bearbeitungen = Anzahl_der_Bearbeitungen + 1" );
+        }
+        else {
+            result.setBackgroundColor(Color.parseColor("#FF4040"));
+            result.setText(R.string.wrong_answer);
+            db.query("UPDATE Aufgabenzustand SET Status = 'Falsch', Anzahl_der_Bearbeitungen = Anzahl_der_Bearbeitungen + 1" );
         }
     }
 

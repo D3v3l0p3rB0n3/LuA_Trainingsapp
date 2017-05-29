@@ -11,7 +11,7 @@ public class SQLQuerries {
     protected static final String createTableBenutzer =    "CREATE TABLE Benutzer (" +
                                                         "Name TEXT PRIMARY KEY NOT NULL)";
 
-    protected static final String createTableAufgabe =     "CREATE TABLE Aufgabe (" +
+    protected static final String createTableAufgabe =     "CREATE TABLE Aufgabe ( " +
                                                         "ID TEXT PRIMARY KEY NOT NULL, " +
                                                         "Schwierigkeitsgrad TEXT NOT NULL, " +
                                                         "Aufgabenstellung TEXT NOT NULL, " +
@@ -20,14 +20,15 @@ public class SQLQuerries {
                                                         "FOREIGN KEY(Benutzername) REFERENCES Benutzer(Name)" +
                                                         ")";
 
-    protected static final String createTableAufgabenzustand =     "CREATE TABLE Aufgabenzustand (" +
+    protected static final String createTableAufgabenzustand =     "CREATE TABLE Aufgabenzustand ( " +
+                                                                "Id TEXT PRIMARY KEY NOT NULL, " +
                                                                 "Status TEXT NOT NULL, " +
                                                                 "Anzahl_der_Bearbeitungen TEXT NOT NULL, " +
                                                                 "Benutzername TEXT NOT NULL, " +
                                                                 "FOREIGN KEY(Benutzername) REFERENCES Benutzer(Name)" +
                                                                 ")";
 
-    protected static final String createTableRelationenschema =        "CREATE TABLE Relationenschema (" +
+    protected static final String createTableRelationenschema =        "CREATE TABLE Relationenschema ( " +
                                                                     "ID TEXT PRIMARY KEY NOT NULL, " +
                                                                     "Relationennummer TEXT NOT NULL, " +
                                                                     "Aufgabenbeschreibung TEXT, " +
@@ -68,8 +69,12 @@ public class SQLQuerries {
     ArrayList<String> inserts = new ArrayList<String>();
 
     public SQLQuerries (){
-        inserts.add("INSERT INTO Relationenschema VALUES ('1','1','Geben Sie die Titel der Bücher an, die im Jahr 2010 erschienen sind und mehr als 300 Seiten haben.','')");
-        inserts.add("INSERT INTO Relationenschema VALUES ('2','1','Geben Sie die Verlagsnamen an, die in München ihren Sitz haben und ein Buch von „Müller“ veröffentlicht haben.','')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES ('1', 'Offen', '0', 'Troy')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES ('2', 'Offen', '8', 'Troy')");
+        inserts.add("INSERT INTO Aufgabe VALUES ('1', '2', 'Bitte mache blablabla', 'Hilfe', 'Troy')");
+        inserts.add("INSERT INTO Aufgabe VALUES ('2', '2', 'Bitte mache blablabla', 'Hilfe', 'Troy')");
+        inserts.add("INSERT INTO Relationenschema VALUES ('1','1','Geben Sie die Titel der Bücher an, die im Jahr 2010 erschienen sind und mehr als 300 Seiten haben.','Lösung')");
+        inserts.add("INSERT INTO Relationenschema VALUES ('2','1','Geben Sie die Verlagsnamen an, die in München ihren Sitz haben und ein Buch von „Müller“ veröffentlicht haben.','Lösung')");
         inserts.add("INSERT INTO Relationenschema VALUES ('3','1','Geben Sie den Titel und das Veröffentlichungsjahr aller Bücher an, die zwischen 2005 und 2006 ausgeliehen wurden.','')");
         inserts.add("INSERT INTO Relationenschema VALUES ('4','1','Geben Sie alle Namen aller Personen an, die aus Heilbronn oder Augsburg kommen und das Buch „Faust“ im Jahr 2010 ausgeliehen hatten.','')");
         inserts.add("INSERT INTO Relationenschema VALUES ('5','1','Geben Sie die Titel der Bücher an, die in Ravensburg veröffentlicht und von „Mayer“ nach 2006 ausgeliehen wurden.','')");
