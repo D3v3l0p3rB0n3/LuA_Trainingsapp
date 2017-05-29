@@ -97,7 +97,7 @@
             android:layout_width="500sp"
             android:layout_height="30sp"
             android:background="@color/Text"
-            android:hint="@string/hint_bool_norm"
+            android:hint="@string/hint_bool_term"
             android:imeOptions="flagNoExtractUi"
             android:textAlignment="center"
             android:textColor="@color/black"

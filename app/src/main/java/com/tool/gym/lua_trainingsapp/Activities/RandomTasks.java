@@ -9,8 +9,10 @@ import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 
 import com.tool.gym.lua_trainingsapp.BoolscheAlgebraTasks;
+import com.tool.gym.lua_trainingsapp.NormalformenTask;
 import com.tool.gym.lua_trainingsapp.R;
 import com.tool.gym.lua_trainingsapp.RelationalTask;
+import com.tool.gym.lua_trainingsapp.TermVereinfachenTask;
 
 /**
  * Created by mabr on 23.01.2017.
@@ -41,8 +43,8 @@ public class RandomTasks extends AppCompatActivity implements OnClickListener{
         else if (id == R.id.random_bool){
             BoolscheAlgebraTasks task = new BoolscheAlgebraTasks(getApplicationContext());
             task.nextTask();
-//            Intent i = new Intent(RandomTasks.this, TermVereinfachenTask.class);
-//            startActivity(i);
+            //Intent i = new Intent(RandomTasks.this, NormalformenTask.class);
+            //startActivity(i);
         }
 
     }

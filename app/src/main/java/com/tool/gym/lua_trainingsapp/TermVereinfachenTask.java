@@ -3,6 +3,7 @@ package com.tool.gym.lua_trainingsapp;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -24,6 +25,9 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import Database.SQLiteDatabase;
+
+
 /**
  * Created by Marcel on 20.05.2017.
  */
@@ -35,12 +39,15 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
     private Button commitbutton;
     private Button help_button;
     private EditText result;
+    SQLiteDatabase db;
 
     String LOG_TAG = TermVereinfachenTask.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        db = new Database.SQLiteDatabase(this);
+        db.getReadableDatabase();
 
         //Layout laden
         setContentView(R.layout.task_bool_termv);
@@ -103,10 +110,55 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
 
     //Führt den Select auf die Datenbank aus, um die Aufgabe zu ermitteln
     private String[] getTask() {
+
         String[] taskinformation = new String[5];
-        taskinformation[0] = "Vereinfache den folgenden Term soweit wie möglich";
-        taskinformation[1] = "( a + ¬(b*a)) * (c+(d+c))";
-        taskinformation[2] = "2"; // Schwierigkeit
+
+        // Kleinste Bearbeitungszahl ermitteln
+        String sql = "SELECT MAX(Aufgabenzustand.Anzahl_der_Bearbeitungen) " +
+                "FROM Aufgabenzustand INNER JOIN Aufgabe ON Aufgabenzustand.ID=Aufgabe.ID " +
+                "INNER JOIN Termvereinfachung ON Aufgabe.ID=Termvereinfachung.ID ";
+
+        Log.d(TermVereinfachenTask.class.getSimpleName(), sql);
+        Cursor c = db.query(sql);
+
+        c.moveToFirst();
+        Integer anzahl = c.getInt(0);
+        Log.d(TermVereinfachenTask.class.getSimpleName(), "Anzahl an Bearbeitungen: " + anzahl.toString());
+
+        // Aufgaben mit kleinster Bearbeitungszahl aus DB holen
+        sql = "SELECT * " +
+                "FROM Aufgabenzustand az INNER JOIN Aufgabe a on az.ID = a.ID " +
+                "INNER JOIN Termvereinfachung t ON a.id = t.id " +
+                "WHERE az.Anzahl_der_Bearbeitungen = " + anzahl.toString() + ";";
+        Log.d(TermVereinfachenTask.class.getSimpleName(), sql);
+        c = db.query(sql);
+
+        c.moveToFirst();
+
+        // Spaltennummer herausfinden
+        int id = c.getColumnIndex("ID");
+        int hilfe = c.getColumnIndex("Hilfe");
+        int term = c.getColumnIndex("Term");
+        int schwierigkeitsgrad = c.getColumnIndex("Schwierigkeitsgrad");
+        int aufgabenstellung = c.getColumnIndex("Aufgabenstellung");
+        int loesung = c.getColumnIndex("Lösung");
+
+        //Testweise Ausgabe der Infos im Debugger
+        Log.d(TermVereinfachenTask.class.getSimpleName(), "Aufgabenstellung " + c.getString(aufgabenstellung));
+        Log.d(TermVereinfachenTask.class.getSimpleName(), "Term: " + c.getString(term));
+        Log.d(TermVereinfachenTask.class.getSimpleName(), "Schwierigkeitsgrad: " + c.getString(schwierigkeitsgrad));
+
+        //Zuweisung der Infos aus der DB
+        taskinformation[0] = c.getString(aufgabenstellung);
+        taskinformation[1] = c.getString(term);
+        taskinformation[2] = c.getString(schwierigkeitsgrad);
+
+
+        //taskinformation[0] = "Vereinfache den folgenden Term soweit wie möglich";
+        //taskinformation[1] = "( a + ¬(b*a)) * (c+(d+c))";
+        //taskinformation[2] = "2"; // Schwierigkeit
+
+
         return taskinformation;
     }
 
@@ -140,15 +192,14 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
 
     //Lösung
     private void checkSolution() {
-        Toast.makeText(getApplication(), "Vereinfachung wird geprüft...", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplication(), "Lösung wird geprüft...", Toast.LENGTH_SHORT).show();
         BoolscheAlgebraTasks task = new BoolscheAlgebraTasks(getApplicationContext());
         task.nextTask();
     }
 
     //Korrektheit der Umformung prüfen
     private void checkInput() {
-        if (!result.getText().toString().isEmpty())
-        {
+        if (!result.getText().toString().isEmpty()) {
             //Textfeld nicht leer => Prüfung geht weiter
 
             // Container suchen + neues Textfeld anpassen
@@ -178,27 +229,7 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
             Integer anzahl = container.getChildCount();
             Log.d(LOG_TAG, anzahl.toString());
 
-//        for (int i = 0; i<=anzahl; i++)
-//        {
-//            TextView feld = (TextView) container.getChildAt(i);
-//            if (feld != null)
-//            {
-//                if (i < anzahl-1)
-//                {
-//                    feld.setTextColor(Color.GREEN);
-//                    feld.setEnabled(false);
-//
-//                }
-//            }
-//
-//        }
-
-            //Toast.makeText(getApplication(), "Anzahl an Eingabefeldern: " + anzahl.toString(), Toast.LENGTH_SHORT).show();
-            //BoolscheAlgebraTasks task = new BoolscheAlgebraTasks(getApplicationContext());
-            //task.nextTask();
-        }
-        else
-        {
+        } else {
             Toast.makeText(getApplication(), "Textfeld leer - bitte befüllen!", Toast.LENGTH_SHORT).show();
         }
     }
