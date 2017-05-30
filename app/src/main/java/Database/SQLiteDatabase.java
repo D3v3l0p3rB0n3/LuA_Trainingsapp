@@ -25,6 +25,7 @@ public class SQLiteDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(android.database.sqlite.SQLiteDatabase db) {
+
         //create Tables
         db.execSQL(SQLQuerries.createTableBenutzer);
         db.execSQL(SQLQuerries.createTableAufgabe);
@@ -51,9 +52,9 @@ public class SQLiteDatabase extends SQLiteOpenHelper {
 
     }
 
-    public Cursor select (android.database.sqlite.SQLiteDatabase db, String sqlstatement, String [] selectionArgs)
+    public Cursor query (android.database.sqlite.SQLiteDatabase db, String sqlstatement)
     {
-        Cursor c = db.rawQuery (sqlstatement, selectionArgs);
+        Cursor c = db.rawQuery (sqlstatement, null);
         return c;
 
     }

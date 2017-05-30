@@ -23,7 +23,7 @@ public class SQLQuerries {
     protected static final String createTableAufgabenzustand =     "CREATE TABLE Aufgabenzustand ( " +
                                                                 "Id TEXT PRIMARY KEY NOT NULL, " +
                                                                 "Status TEXT NOT NULL, " +
-                                                                "Anzahl_der_Bearbeitungen TEXT NOT NULL, " +
+                                                                "Anzahl_der_Bearbeitungen INT NOT NULL, " +
                                                                 "Benutzername TEXT NOT NULL, " +
                                                                 "FOREIGN KEY(Benutzername) REFERENCES Benutzer(Name)" +
                                                                 ")";

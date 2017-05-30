@@ -47,7 +47,7 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         db = new Database.SQLiteDatabase(this);
-        db.getReadableDatabase();
+
 
         //Layout laden
         setContentView(R.layout.task_bool_termv);
@@ -119,7 +119,7 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
                 "INNER JOIN Termvereinfachung ON Aufgabe.ID=Termvereinfachung.ID ";
 
         Log.d(TermVereinfachenTask.class.getSimpleName(), sql);
-        Cursor c = db.query(sql);
+        Cursor c = db.query(db.getWritableDatabase(), sql);
 
         c.moveToFirst();
         Integer anzahl = c.getInt(0);
@@ -131,7 +131,7 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
                 "INNER JOIN Termvereinfachung t ON a.id = t.id " +
                 "WHERE az.Anzahl_der_Bearbeitungen = " + anzahl.toString() + ";";
         Log.d(TermVereinfachenTask.class.getSimpleName(), sql);
-        c = db.query(sql);
+        c = db.query(db.getWritableDatabase(), sql);
 
         c.moveToFirst();
 

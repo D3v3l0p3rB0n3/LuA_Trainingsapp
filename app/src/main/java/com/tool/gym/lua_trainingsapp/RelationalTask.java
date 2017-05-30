@@ -42,7 +42,7 @@ public class RelationalTask extends AppCompatActivity implements OnClickListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         db = new SQLiteDatabase(this);
-        db.getReadableDatabase();
+        db.getWritableDatabase();
         //Layout
         setContentView(R.layout.relationtask_layout);
 
@@ -125,8 +125,11 @@ public class RelationalTask extends AppCompatActivity implements OnClickListener
 
     //Führt den Select auf die Datenbank aus, um die Aufgabe zu ermitteln
     private String[] getTask() {
+
+
+
         String[] taskinformation = new String[6];
-        Cursor anzahl = db.query("SELECT MIN(Aufgabenzustand.Anzahl_der_Bearbeitungen) " +
+        Cursor anzahl = db.query(db.getWritableDatabase(), "SELECT MIN(Aufgabenzustand.Anzahl_der_Bearbeitungen) " +
                                  "FROM Aufgabenzustand INNER JOIN Aufgabe ON Aufgabenzustand.ID=Aufgabe.ID " +
                                  "INNER JOIN Relationenschema ON Aufgabe.ID=Relationenschema.ID ");
         anzahl.moveToFirst();
@@ -134,7 +137,7 @@ public class RelationalTask extends AppCompatActivity implements OnClickListener
 
         System.out.println(anzbearbeitungen);
 
-        Cursor cursor = db.query("SELECT * " +
+        Cursor cursor = db.query(db.getWritableDatabase(),"SELECT * " +
                                  "FROM Aufgabenzustand az INNER JOIN Aufgabe a on az.ID = a.ID " +
                                  "INNER JOIN Relationenschema r ON a.id = r.id " +
                                  "WHERE az.Anzahl_der_Bearbeitungen = " + anzbearbeitungen.toString() + ";");
@@ -166,7 +169,7 @@ public class RelationalTask extends AppCompatActivity implements OnClickListener
 
     private String getRelationen(String relationennummer) {
         String relationen = "";
-        Cursor cursor = db.query("SELECT Relation FROM Relation WHERE Relationennummer=" + relationennummer);
+        Cursor cursor = db.query(db.getWritableDatabase(),"SELECT Relation FROM Relation WHERE Relationennummer=" + relationennummer);
         cursor.moveToFirst();
         int colId;
 
@@ -221,12 +224,12 @@ public class RelationalTask extends AppCompatActivity implements OnClickListener
         if(result.getText().toString().equals(loesung)) {
             result.setText(R.string.correct_answer);
             result.setBackgroundColor(Color.parseColor("#BCED91"));
-            db.query("UPDATE Aufgabenzustand SET Status = 'Richtig', Anzahl_der_Bearbeitungen = Anzahl_der_Bearbeitungen + 1" );
+            db.query(db.getWritableDatabase(),"UPDATE Aufgabenzustand SET Status = 'Richtig', Anzahl_der_Bearbeitungen = Anzahl_der_Bearbeitungen + 1" );
         }
         else {
             result.setBackgroundColor(Color.parseColor("#FF4040"));
             result.setText(R.string.wrong_answer);
-            db.query("UPDATE Aufgabenzustand SET Status = 'Falsch', Anzahl_der_Bearbeitungen = Anzahl_der_Bearbeitungen + 1" );
+            db.query(db.getWritableDatabase(),"UPDATE Aufgabenzustand SET Status = 'Falsch', Anzahl_der_Bearbeitungen = Anzahl_der_Bearbeitungen + 1" );
         }
     }
 
