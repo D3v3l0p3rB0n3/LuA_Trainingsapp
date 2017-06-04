@@ -101,6 +101,7 @@ public class TaskList extends AppCompatActivity {
                     //String test = (String) view parent.getItemAtPosition(position).toString();
                     Log.d(TaskList.class.getSimpleName(), "Test");
 
+
                 }
 
             });

@@ -1,59 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clickable="true"
-    android:focusableInTouchMode="true" >
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
     <LinearLayout
-        android:layout_gravity="top"
-        android:background="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2">
+        android:layout_gravity="top"
+        android:layout_weight="2"
+        android:background="@color/colorPrimary">
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center">
+
             <Button
                 android:id="@+id/helpbutton"
                 android:layout_width="@dimen/help_button"
                 android:layout_height="@dimen/help_button"
-                android:text="@string/help"
                 android:background="@drawable/button"
+                android:text="@string/help"
                 android:textSize="@dimen/help" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="8">
+
             <TextView
                 android:id="@id/taskheader"
-                android:layout_height="match_parent"
                 android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:gravity="center"
-                android:textStyle="bold"
+                android:paddingLeft="@dimen/padding"
+                android:paddingRight="@dimen/padding"
                 android:textColor="@color/Text"
                 android:textSize="25sp"
-                android:paddingLeft="@dimen/padding"
-                android:paddingRight="@dimen/padding" />
+                android:textStyle="bold" />
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/difficulty"
-            android:orientation="horizontal"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1">
-        </LinearLayout>
+            android:layout_weight="1"
+            android:orientation="horizontal"></LinearLayout>
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_gravity="top"
-        android:layout_height="0dp"
-        android:background="@color/colorPrimary"
         android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="top"
         android:layout_weight="2"
+        android:background="@color/colorPrimary"
         android:paddingLeft="@dimen/padding"
         android:paddingRight="@dimen/padding">
 
@@ -65,86 +71,93 @@
             android:textColor="@color/Text"
             android:textSize="25sp" />
     </LinearLayout>
+
     <LinearLayout
-        android:layout_height="0dp"
-        android:background="@color/colorPrimary"
         android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="4"
+        android:background="@color/colorPrimary"
         android:gravity="center">
+
         <ScrollView
             android:id="@+id/eingabe_term"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:contextClickable="true"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            android:contextClickable="true">
+
             <LinearLayout
                 android:id="@+id/eingabe_bool_term_vereinfachen"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_gravity="center_horizontal">
-            </LinearLayout>
+                android:layout_gravity="center_horizontal"
+                android:orientation="vertical"></LinearLayout>
         </ScrollView>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2"
-        android:gravity="center"
-        android:background="@color/colorPrimary">
+        android:background="@color/colorPrimary"
+        android:gravity="center">
+
         <EditText
             android:id="@+id/bool_term_result"
             android:layout_width="500sp"
             android:layout_height="30sp"
+            android:layout_marginTop="10sp"
             android:background="@color/Text"
             android:hint="@string/hint_bool_term"
             android:imeOptions="flagNoExtractUi"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textColorHint="@color/black"
-            android:textStyle="italic"
-            android:layout_marginTop="10sp"/>
+            android:textStyle="italic" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_height="0dp"
-        android:background="@color/colorPrimary"
         android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:paddingBottom="10dp"
-        android:gravity="center">
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:paddingBottom="10dp">
+
         <LinearLayout
-            android:layout_height="match_parent"
-            android:background="@color/colorPrimary"
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:paddingBottom="10dp"
-            android:gravity="center">
-        </LinearLayout>
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:paddingBottom="10dp"></LinearLayout>
+
         <LinearLayout
-            android:layout_height="match_parent"
-            android:background="@color/colorPrimary"
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:paddingBottom="10dp"
-            android:gravity="center">
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:paddingBottom="10dp">
+
             <Button
                 android:id="@+id/checkbutton"
-                android:text="Schritt prüfen"
-                android:layout_gravity="center"
                 android:layout_width="@dimen/buttonsize"
                 android:layout_height="30sp"
+                android:layout_gravity="center"
                 android:background="@drawable/button"
-                 />
+                android:text="Schritt prüfen" />
         </LinearLayout>
+
         <LinearLayout
-            android:layout_height="match_parent"
-            android:background="@color/colorPrimary"
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:paddingBottom="10dp"
+            android:background="@color/colorPrimary"
             android:gravity="right|center"
+            android:paddingBottom="10dp"
             android:paddingRight="60dp">
+
             <Button
                 android:id="@+id/commitbutton"
                 android:layout_width="@dimen/buttonsize"

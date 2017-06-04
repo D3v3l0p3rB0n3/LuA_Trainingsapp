@@ -41,7 +41,6 @@ public class TaskAdapter extends ArrayAdapter<Task> {
             row = inflater.inflate(layoutResourceId, parent, false);
 
             holder = new TaskHolder();
-            //holder.difficulty = (LinearLayout) row.findViewById(R.id.difficulty_tasklist);
             holder.difficulty = (TextView) row.findViewById(R.id.difficulty);
             holder.txtTitle = (TextView)row.findViewById(R.id.txtTitle);
             holder.status = (TextView)row.findViewById(R.id.status);
@@ -56,21 +55,21 @@ public class TaskAdapter extends ArrayAdapter<Task> {
 
         Task task = data[position];
         holder.txtTitle.setText(task.title);
-        holder.difficulty.setText(task.difficulty);
+        //holder.difficulty.setText(task.difficulty);
         holder.status.setText(task.status);
         holder.number.setText(task.number);
-//        if (holder.number.equals("1"))
-//        {
-//            holder.number.setBackgroundResource(R.drawable.schwierigkeit1);
-//        }
-//        else if (holder.number.equals("2"))
-//        {
-//            holder.number.setBackgroundResource(R.drawable.schwierigkeit2);
-//        }
-//        else
-//        {
-//            holder.number.setBackgroundResource(R.drawable.schwierigkeit3);
-//        }
+        if (task.number.equals("1"))
+        {
+            //holder.difficulty.setBackgroundResource(R.drawable.schwierigkeit1);
+        }
+        else if (task.number.equals("2"))
+        {
+            //holder.difficulty.setBackgroundResource(R.drawable.schwierigkeit2);
+        }
+        else
+        {
+            //holder.difficulty.setBackgroundResource(R.drawable.schwierigkeit3);
+        }
 
 
         return row;
@@ -80,7 +79,6 @@ public class TaskAdapter extends ArrayAdapter<Task> {
 
     static class TaskHolder
     {
-        //LinearLayout difficulty;
         TextView difficulty;
         TextView txtTitle;
         TextView status;
