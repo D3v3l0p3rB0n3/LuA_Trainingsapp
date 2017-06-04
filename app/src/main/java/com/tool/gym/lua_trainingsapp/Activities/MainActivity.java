@@ -10,7 +10,6 @@ import android.widget.LinearLayout;
 import com.tool.gym.lua_trainingsapp.Activities.SpecificTasks;
 import com.tool.gym.lua_trainingsapp.R;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-    //Test Marcel
     LinearLayout random;
     LinearLayout specific;
     @Override
@@ -32,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         else if(id == R.id.specifictasks){
             Intent i = new Intent(MainActivity.this, SpecificTasks.class);
             startActivity(i);
+
         }
     }
 }

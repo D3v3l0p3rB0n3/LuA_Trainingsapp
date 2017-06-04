@@ -71,10 +71,14 @@ public class SQLQuerries {
     public SQLQuerries (){
         inserts.add("INSERT INTO Aufgabenzustand VALUES ('1', 'Offen', '0', 'Troy')");
         inserts.add("INSERT INTO Aufgabenzustand VALUES ('2', 'Offen', '8', 'Troy')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES ('3', 'Offen', '0', 'Troy')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES ('4', 'Offen', '0', 'Troy')");
         inserts.add("INSERT INTO Aufgabenzustand VALUES ('30', 'Offen', '0', 'Troy')");
         inserts.add("INSERT INTO Aufgabenzustand VALUES ('31', 'Offen', '8', 'Troy')");
         inserts.add("INSERT INTO Aufgabe VALUES ('1', '2', 'Bitte mache blablabla', 'Hilfe', 'Troy')");
         inserts.add("INSERT INTO Aufgabe VALUES ('2', '2', 'Bitte mache blablabla', 'Hilfe', 'Troy')");
+        inserts.add("INSERT INTO Aufgabe VALUES ('3', '1', 'Bitte mache blablabla', 'Hilfe', 'Troy')");
+        inserts.add("INSERT INTO Aufgabe VALUES ('4', '3', 'Bitte mache blablabla', 'Hilfe', 'Troy')");
         inserts.add("INSERT INTO Aufgabe VALUES ('30', '1', 'Vereinfache den folgenden Term soweit wie möglich', 'Hilfe', 'Marcel')");
         inserts.add("INSERT INTO Aufgabe VALUES ('31', '2', 'Vereinfache den folgenden Term soweit wie möglich', 'Hilfe', 'Marcel')");
         inserts.add("INSERT INTO Relationenschema VALUES ('1','1','Geben Sie die Titel der Bücher an, die im Jahr 2010 erschienen sind und mehr als 300 Seiten haben.','Lösung')");
