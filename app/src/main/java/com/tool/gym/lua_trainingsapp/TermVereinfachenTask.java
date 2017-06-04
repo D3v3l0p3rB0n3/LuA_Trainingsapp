@@ -114,7 +114,7 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
         String[] taskinformation = new String[5];
 
         // Kleinste Bearbeitungszahl ermitteln
-        String sql = "SELECT MAX(Aufgabenzustand.Anzahl_der_Bearbeitungen) " +
+        String sql = "SELECT MIN(Aufgabenzustand.Anzahl_der_Bearbeitungen) " +
                 "FROM Aufgabenzustand INNER JOIN Aufgabe ON Aufgabenzustand.ID=Aufgabe.ID " +
                 "INNER JOIN Termvereinfachung ON Aufgabe.ID=Termvereinfachung.ID ";
 

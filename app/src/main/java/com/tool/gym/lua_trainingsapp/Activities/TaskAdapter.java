@@ -6,9 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.tool.gym.lua_trainingsapp.R;
+
+import org.w3c.dom.Text;
 
 /**
  * Created by mabr on 25.01.2017.
@@ -38,9 +41,10 @@ public class TaskAdapter extends ArrayAdapter<Task> {
             row = inflater.inflate(layoutResourceId, parent, false);
 
             holder = new TaskHolder();
-            holder.difficulty = (TextView)row.findViewById(R.id.difficulty);
+            holder.difficulty = (TextView) row.findViewById(R.id.difficulty);
             holder.txtTitle = (TextView)row.findViewById(R.id.txtTitle);
             holder.status = (TextView)row.findViewById(R.id.status);
+            holder.number = (TextView)row.findViewById(R.id.idaufgabe);
 
             row.setTag(holder);
         }
@@ -51,17 +55,37 @@ public class TaskAdapter extends ArrayAdapter<Task> {
 
         Task task = data[position];
         holder.txtTitle.setText(task.title);
-        holder.difficulty.setText(task.difficulty);
+        //holder.difficulty.setText(task.difficulty);
         holder.status.setText(task.status);
+        holder.number.setText(task.number);
+        if (task.number.equals("1"))
+        {
+            //holder.difficulty.setBackgroundResource(R.drawable.schwierigkeit1);
+            holder.difficulty.setText(task.difficulty);
+        }
+        else if (task.number.equals("2"))
+        {
+            //holder.difficulty.setBackgroundResource(R.drawable.schwierigkeit2);
+            holder.difficulty.setText(task.difficulty);
+        }
+        else
+        {
+            //holder.difficulty.setBackgroundResource(R.drawable.schwierigkeit3);
+            holder.difficulty.setText(task.difficulty);
+        }
 
 
         return row;
     }
+
+
 
     static class TaskHolder
     {
         TextView difficulty;
         TextView txtTitle;
         TextView status;
+        TextView number;
     }
 }
+

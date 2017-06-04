@@ -40,7 +40,8 @@ public class SQLiteDatabase extends SQLiteOpenHelper {
         //inserts
         SQLQuerries querries = new SQLQuerries();
 
-        for(int x=1; x<= querries.inserts.size(); x++ ){
+        for(int x=0; x< querries.inserts.size(); x++ ){
+            Log.d(SQLiteDatabase.class.getSimpleName(), querries.inserts.get(x).toString());
             db.execSQL(querries.inserts.get(x));
         }
 
