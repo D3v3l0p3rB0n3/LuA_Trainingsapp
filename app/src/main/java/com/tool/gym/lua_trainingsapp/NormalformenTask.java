@@ -39,7 +39,7 @@ public class NormalformenTask extends AppCompatActivity implements OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         db = new Database.SQLiteDatabase(this);
-        db.getReadableDatabase();
+
 
         //Layout laden
         setContentView(R.layout.task_bool_normalformen);
