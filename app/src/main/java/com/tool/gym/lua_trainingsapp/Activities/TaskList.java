@@ -17,13 +17,14 @@ import android.widget.TextView;
 import com.tool.gym.lua_trainingsapp.R;
 
 
-
 import Database.SQLiteDatabase;
 
 public class TaskList extends AppCompatActivity {
     ListView listview;
     SQLiteDatabase db;
     Task[] tasklist;
+    Cursor c;
+    Integer counter;
 
 
     @Override
@@ -45,41 +46,71 @@ public class TaskList extends AppCompatActivity {
             if (topic.equals(getString(R.string.bool))) //boolsche Algebra
             {
                 Log.d(TaskList.class.getSimpleName(), "boolsche Algebra gewählt");
+                sql = "SELECT * " +
+                        "FROM Aufgabenzustand az INNER JOIN Aufgabe a on az.ID = a.ID " +
+                        "INNER JOIN Wahrheitstabellen w on w.id = a.id ";
 
-           tasklist = new Task[]
-            {
-                new Task("1","1","Aufgabe1", "Richtig"),
-                new Task("2","2","Aufgabe2", "Falsch"),
-                new Task("3","3","Aufgabe3", ""),
-                new Task("4","2","Aufgabe4", ""),
-                new Task("5","1","Aufgabe5", "Richtig")
-            };
+                Log.d(TaskList.class.getSimpleName(), sql.toString());
+
+                c = db.query(db.getReadableDatabase(), sql);
+                tasklist = new Task[c.getCount()];
+                counter = 0;
+
+                while (c.moveToNext())
+                {
+                    Integer id = c.getInt(c.getColumnIndex("ID"));
+                    String aufgabe = c.getString(c.getColumnIndex("Term"));
+                    String schwierigkeitsgrad = c.getString(c.getColumnIndex("Schwierigkeitsgrad"));
+                    String status = c.getString(c.getColumnIndex("Status"));
+
+                    tasklist[counter] = new Task(id.toString(), schwierigkeitsgrad, aufgabe, status);
+                    Log.d(TaskList.class.getSimpleName(), id.toString() + " , " + aufgabe.toString() + " , " + schwierigkeitsgrad.toString() + " , " + status.toString());
+                    counter++;
+                }
+
+//                sql = "SELECT * " +
+//                        "FROM Aufgabenzustand az INNER JOIN Aufgabe a on az.ID = a.ID " +
+//                        "INNER JOIN Termvereinfachung t on t.id = a.id ";
+//
+//                c = db.query(db.getReadableDatabase(), sql);
+//
+//                while (c.moveToNext())
+//                {
+//                    Integer id = c.getInt(c.getColumnIndex("ID"));
+//                    String aufgabe = c.getString(c.getColumnIndex("Term"));
+//                    String schwierigkeitsgrad = c.getString(c.getColumnIndex("Schwierigkeitsgrad"));
+//                    String status = c.getString(c.getColumnIndex("Status"));
+//
+//                    tasklist[counter] = new Task(id.toString(), schwierigkeitsgrad, aufgabe, status);
+//                    Log.d(TaskList.class.getSimpleName(), id.toString() + " , " + aufgabe.toString() + " , " + schwierigkeitsgrad.toString() + " , " + status.toString());
+//                    counter++;
+//                }
+
 
             }
 
             if (topic.equals(getString(R.string.relation))) //Relationenalgebra
             {
                 Log.d(TaskList.class.getSimpleName(), "Relationenalgebra");
-                sql =  "SELECT * " +
-                       "FROM Aufgabenzustand az INNER JOIN Aufgabe a on az.ID = a.ID " +
-                       "INNER JOIN Relationenschema r ON a.id = r.id ";
+                sql = "SELECT * " +
+                        "FROM Aufgabenzustand az INNER JOIN Aufgabe a on az.ID = a.ID " +
+                        "INNER JOIN Relationenschema r ON a.id = r.id ";
 
 
                 Log.d(TaskList.class.getSimpleName(), sql.toString());
 
-                Cursor c = db.query(db.getReadableDatabase(),sql);
+                c = db.query(db.getReadableDatabase(), sql);
                 tasklist = new Task[c.getCount()];
 
-                Integer counter = 0;
+                counter = 0;
 
-                while (c.moveToNext())
-                {
+                while (c.moveToNext()) {
                     Integer id = c.getInt(c.getColumnIndex("ID"));
-                    String aufgabe= c.getString(c.getColumnIndex("Aufgabenbeschreibung"));
+                    String aufgabe = c.getString(c.getColumnIndex("Aufgabenbeschreibung"));
                     String schwierigkeitsgrad = c.getString(c.getColumnIndex("Schwierigkeitsgrad"));
                     String status = c.getString(c.getColumnIndex("Status"));
 
-                    tasklist[counter] = new Task(id.toString(),schwierigkeitsgrad,aufgabe,status);
+                    tasklist[counter] = new Task(id.toString(), schwierigkeitsgrad, aufgabe, status);
 
                     Log.d(TaskList.class.getSimpleName(), id.toString() + " , " + aufgabe.toString() + " , " + schwierigkeitsgrad.toString() + " , " + status.toString());
                     counter++;
@@ -89,25 +120,23 @@ public class TaskList extends AppCompatActivity {
             }
 
 
-
-
-
             ListAdapter adapter = new TaskAdapter(this, R.layout.listview_item, tasklist);
-            listview = (ListView)findViewById(R.id.list_view);
+            listview = (ListView) findViewById(R.id.list_view);
             listview.setAdapter(adapter);
-            listview.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     //String test = (String) view parent.getItemAtPosition(position).toString();
-                    Log.d(TaskList.class.getSimpleName(), "Test");
+                    Task t = (Task) parent.getItemAtPosition(position);
+                    String aufgabe = t.number.toString();
 
+                    Log.d(TaskList.class.getSimpleName(), "ausgewählte Aufgabe: " + aufgabe);
 
                 }
 
             });
         }
     }
-
 
 
 }

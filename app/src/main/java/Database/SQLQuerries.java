@@ -75,12 +75,16 @@ public class SQLQuerries {
         inserts.add("INSERT INTO Aufgabenzustand VALUES ('4', 'Offen', '0', 'Troy')");
         inserts.add("INSERT INTO Aufgabenzustand VALUES ('30', 'Offen', '0', 'Troy')");
         inserts.add("INSERT INTO Aufgabenzustand VALUES ('31', 'Offen', '8', 'Troy')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES ('39', 'Offen', '0', 'Troy')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES ('40', 'Offen', '8', 'Troy')");
         inserts.add("INSERT INTO Aufgabe VALUES ('1', '2', 'Bitte mache blablabla', 'Hilfe', 'Troy')");
         inserts.add("INSERT INTO Aufgabe VALUES ('2', '2', 'Bitte mache blablabla', 'Hilfe', 'Troy')");
         inserts.add("INSERT INTO Aufgabe VALUES ('3', '1', 'Bitte mache blablabla', 'Hilfe', 'Troy')");
         inserts.add("INSERT INTO Aufgabe VALUES ('4', '3', 'Bitte mache blablabla', 'Hilfe', 'Troy')");
         inserts.add("INSERT INTO Aufgabe VALUES ('30', '1', 'Vereinfache den folgenden Term soweit wie möglich', 'Hilfe', 'Marcel')");
         inserts.add("INSERT INTO Aufgabe VALUES ('31', '2', 'Vereinfache den folgenden Term soweit wie möglich', 'Hilfe', 'Marcel')");
+        inserts.add("INSERT INTO Aufgabe VALUES ('39', '1', 'Fülle folgende Wahrheitstabelle aus', 'Hilfe', 'Marcel')");
+        inserts.add("INSERT INTO Aufgabe VALUES ('40', '2', 'Fülle folgende Wahrheitstabelle aus', 'Hilfe', 'Marcel')");
         inserts.add("INSERT INTO Relationenschema VALUES ('1','1','Geben Sie die Titel der Bücher an, die im Jahr 2010 erschienen sind und mehr als 300 Seiten haben.','Lösung')");
         inserts.add("INSERT INTO Relationenschema VALUES ('2','1','Geben Sie die Verlagsnamen an, die in München ihren Sitz haben und ein Buch von „Müller“ veröffentlicht haben.','Lösung')");
         inserts.add("INSERT INTO Relationenschema VALUES ('3','1','Geben Sie den Titel und das Veröffentlichungsjahr aller Bücher an, die zwischen 2005 und 2006 ausgeliehen wurden.','')");
@@ -94,6 +98,8 @@ public class SQLQuerries {
         inserts.add("INSERT INTO Relation VALUES ('Ausgeliehen(Signatur, ID, VonDatum, BisDatum)','1')");
         inserts.add("INSERT INTO Termvereinfachung VALUES ('30', '( a + ¬(b*a)) * (c+(d+c))', '2', 'c+d')");
         inserts.add("INSERT INTO Termvereinfachung VALUES ('31', '¬a + ¬(a + ¬ab) + ¬(¬a + b)', '2', '¬a + ¬b')");
+        inserts.add("INSERT INTO Wahrheitstabellen VALUES ('39', '3', '¬(A*B) + (A*C)')");
+        inserts.add("INSERT INTO Wahrheitstabellen VALUES ('40', '3', '¬(A+B) * (A+C)')");
 
 
     }
