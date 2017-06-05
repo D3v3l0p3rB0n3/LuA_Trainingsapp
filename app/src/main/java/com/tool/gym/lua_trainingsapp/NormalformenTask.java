@@ -20,6 +20,9 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tool.gym.lua_trainingsapp.Activities.RandomTasks;
+import com.tool.gym.lua_trainingsapp.Activities.TaskList;
+
 import Database.SQLiteDatabase;
 
 /**
@@ -32,6 +35,9 @@ public class NormalformenTask extends AppCompatActivity implements OnClickListen
     private Button help_button;
     private EditText result;
     SQLiteDatabase db;
+    Cursor c;
+    Bundle extras;
+    String sql, taskhelp;
 
     String LOG_TAG = TermVereinfachenTask.class.getSimpleName();
 
@@ -39,6 +45,7 @@ public class NormalformenTask extends AppCompatActivity implements OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         db = new Database.SQLiteDatabase(this);
+        extras = getIntent().getExtras();
 
 
         //Layout laden
@@ -86,6 +93,7 @@ public class NormalformenTask extends AppCompatActivity implements OnClickListen
 
             case R.id.helpbutton:
                 Intent help = new Intent(NormalformenTask.this, HelpPopUp.class);
+                help.putExtra("text", taskhelp);
                 startActivity(help);
                 break;
         }
@@ -103,56 +111,65 @@ public class NormalformenTask extends AppCompatActivity implements OnClickListen
     //Führt den Select auf die Datenbank aus, um die Aufgabe zu ermitteln
     private String[] getTask() {
 
+        if (extras!=null)
+        {
+            String choser = extras.getString("startactivity");
+
+            if (choser.equals(TaskList.class.getSimpleName())) // Aufgabe aus der gezielten Aufgabenauswahl gewählt
+            {
+                String aufgabe = extras.getString("choice");
+
+                sql = "SELECT * " +
+                        "FROM Aufgabenzustand az INNER JOIN Aufgabe a on az.ID = a.ID " +
+                        "INNER JOIN Normalformen n ON a.id = n.id " +
+                        "WHERE a.id =  " + aufgabe + ";";
+
+            }
+            else if (choser.equals(BoolscheAlgebraTasks.class.getSimpleName())) //Zufällige Aufgabenauswahl => zuerst noch geringste Bearbeitungszahl ermitteln
+            {
+
+                // Kleinste Bearbeitungszahl ermitteln
+                sql = "SELECT MIN(az.Anzahl_der_Bearbeitungen) " +
+                        "FROM Aufgabenzustand az INNER JOIN Aufgabe a ON az.ID=a.ID " +
+                        "INNER JOIN Normalformen n ON a.ID = n.ID ";
+
+                Log.d(TermVereinfachenTask.class.getSimpleName(), sql);
+                c = db.query(db.getReadableDatabase(), sql);
+
+                c.moveToFirst();
+                Integer anzahl = c.getInt(0);
+                Log.d(TermVereinfachenTask.class.getSimpleName(), "Anzahl an Bearbeitungen: " + anzahl.toString());
+
+                // Aufgaben mit kleinster Bearbeitungszahl aus DB holen
+                sql = "SELECT * " +
+                        "FROM Aufgabenzustand az INNER JOIN Aufgabe a on az.ID = a.ID " +
+                        "INNER JOIN Normalformen n ON a.id = n.id " +
+                        "WHERE az.Anzahl_der_Bearbeitungen = " + anzahl.toString() + ";";
+                Log.d(TermVereinfachenTask.class.getSimpleName(), sql);
+            }
+
+        }
+
+        //gewählte Aufgabe verarbeiten
         String[] taskinformation = new String[5];
+        c = db.query(db.getWritableDatabase(), sql);
+        c.moveToFirst();
 
-//        // Kleinste Bearbeitungszahl ermitteln
-//        String sql = "SELECT MAX(Aufgabenzustand.Anzahl_der_Bearbeitungen) " +
-//                "FROM Aufgabenzustand INNER JOIN Aufgabe ON Aufgabenzustand.ID=Aufgabe.ID " +
-//                "INNER JOIN Termvereinfachung ON Aufgabe.ID=Termvereinfachung.ID ";
-//
-//        Log.d(TermVereinfachenTask.class.getSimpleName(), sql);
-//        Cursor c = db.query(sql);
-//
-//        c.moveToFirst();
-//        Integer anzahl = c.getInt(0);
-//        Log.d(TermVereinfachenTask.class.getSimpleName(), "Anzahl an Bearbeitungen: " + anzahl.toString());
-//
-//        // Aufgaben mit kleinster Bearbeitungszahl aus DB holen
-//        sql = "SELECT * " +
-//                "FROM Aufgabenzustand az INNER JOIN Aufgabe a on az.ID = a.ID " +
-//                "INNER JOIN Termvereinfachung t ON a.id = t.id " +
-//                "WHERE az.Anzahl_der_Bearbeitungen = " + anzahl.toString() + ";";
-//        Log.d(TermVereinfachenTask.class.getSimpleName(), sql);
-//        c = db.query(sql);
-//
-//        c.moveToFirst();
-//
-//        // Spaltennummer herausfinden
-//        int id = c.getColumnIndex("ID");
-//        int hilfe = c.getColumnIndex("Hilfe");
-//        int term = c.getColumnIndex("Term");
-//        int schwierigkeitsgrad = c.getColumnIndex("Schwierigkeitsgrad");
-//        int aufgabenstellung = c.getColumnIndex("Aufgabenstellung");
-//        int loesung = c.getColumnIndex("Lösung");
-//
-//        //Testweise Ausgabe der Infos im Debugger
-//        Log.d(TermVereinfachenTask.class.getSimpleName(), "Aufgabenstellung " + c.getString(aufgabenstellung));
-//        Log.d(TermVereinfachenTask.class.getSimpleName(), "Term: " + c.getString(term));
-//        Log.d(TermVereinfachenTask.class.getSimpleName(), "Schwierigkeitsgrad: " + c.getString(schwierigkeitsgrad));
-//
-//        //Zuweisung der Infos aus der DB
-//        taskinformation[0] = c.getString(aufgabenstellung);
-//        taskinformation[1] = c.getString(term);
-//        taskinformation[2] = c.getString(schwierigkeitsgrad);
+        // Spaltennummer herausfinden
+        int hilfe = c.getColumnIndex("Hilfe");
+        int term = c.getColumnIndex("Term");
+        int schwierigkeitsgrad = c.getColumnIndex("Schwierigkeitsgrad");
+        int aufgabenstellung = c.getColumnIndex("Aufgabenstellung");
+        int anz_argumente = c.getColumnIndex("Anzahl_Argumente");
 
+        //Zuweisung der Infos aus der DB
+        taskinformation[0] = c.getString(aufgabenstellung);
+        taskinformation[1] = c.getString(term);
+        taskinformation[2] = c.getString(schwierigkeitsgrad);
+        taskhelp = c.getString(hilfe);
 
-        //taskinformation[0] = "Vereinfache den folgenden Term soweit wie möglich";
-        //taskinformation[1] = "( a + ¬(b*a)) * (c+(d+c))";
-        //taskinformation[2] = "2"; // Schwierigkeit
-
-        taskinformation[0]="Wandeln Sie folgende Formel in die kanonische disjunktive Normalform um.";
-        taskinformation[1]="((A→C)→B)";
-        taskinformation[2]="3";//Schwierigkeit
+        //Cursor schließen
+        c.close();
 
         return taskinformation;
     }

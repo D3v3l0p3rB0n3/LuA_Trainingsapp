@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
@@ -18,6 +19,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.tool.gym.lua_trainingsapp.Activities.RandomTasks;
+import com.tool.gym.lua_trainingsapp.Activities.TaskList;
 
 import Database.SQLiteDatabase;
 
@@ -29,9 +33,10 @@ public class RelationalTask extends AppCompatActivity implements OnClickListener
     private String loesung;
     private Button next_tast_button;
     private Button help_button;
-    private String taskid;
-    private String taskhelp;
+    private String taskid, taskhelp, sql;
+    Cursor c;
     SQLiteDatabase db;
+    Bundle extras;
 
     private Runnable colourDefault = new Runnable() {
         public void run() {
@@ -42,7 +47,8 @@ public class RelationalTask extends AppCompatActivity implements OnClickListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         db = new SQLiteDatabase(this);
-        db.getWritableDatabase();
+        extras = getIntent().getExtras();
+
         //Layout
         setContentView(R.layout.relationtask_layout);
 
@@ -126,44 +132,70 @@ public class RelationalTask extends AppCompatActivity implements OnClickListener
     //Führt den Select auf die Datenbank aus, um die Aufgabe zu ermitteln
     private String[] getTask() {
 
+        if (extras!=null)
+        {
+            String choser = extras.getString("startactivity");
 
+            if (choser.equals(TaskList.class.getSimpleName())) // Aufgabe aus der gezielten Aufgabenauswahl gewählt
+            {
+                String aufgabe = extras.getString("choice");
 
+                sql = "SELECT * " +
+                        "FROM Aufgabenzustand az INNER JOIN Aufgabe a on az.ID = a.ID " +
+                        "INNER JOIN Relationenschema r ON a.id = r.id " +
+                        "WHERE a.id =  " + aufgabe + ";";
+
+            }
+            else if (choser.equals(RandomTasks.class.getSimpleName())) //Zufällige Aufgabenauswahl => zuerst noch geringste Bearbeitungszahl ermitteln
+            {
+
+                // Kleinste Bearbeitungszahl ermitteln
+                sql = "SELECT MIN(az.Anzahl_der_Bearbeitungen) " +
+                        "FROM Aufgabenzustand az INNER JOIN Aufgabe a ON az.ID=a.ID " +
+                        "INNER JOIN Relationenschema r ON a.ID = r.ID ";
+
+                Log.d(TermVereinfachenTask.class.getSimpleName(), sql);
+                c = db.query(db.getReadableDatabase(), sql);
+
+                c.moveToFirst();
+                Integer anzahl = c.getInt(0);
+                Log.d(TermVereinfachenTask.class.getSimpleName(), "Anzahl an Bearbeitungen: " + anzahl.toString());
+
+                // Aufgaben mit kleinster Bearbeitungszahl aus DB holen
+                sql = "SELECT * " +
+                        "FROM Aufgabenzustand az INNER JOIN Aufgabe a on az.ID = a.ID " +
+                        "INNER JOIN Relationenschema r ON a.id = r.id " +
+                        "WHERE az.Anzahl_der_Bearbeitungen = " + anzahl.toString() + ";";
+                Log.d(TermVereinfachenTask.class.getSimpleName(), sql);
+            }
+
+        }
+
+        //gewählte Aufgabe verarbeiten
         String[] taskinformation = new String[6];
-        Cursor anzahl = db.query(db.getWritableDatabase(), "SELECT MIN(Aufgabenzustand.Anzahl_der_Bearbeitungen) " +
-                                 "FROM Aufgabenzustand INNER JOIN Aufgabe ON Aufgabenzustand.ID=Aufgabe.ID " +
-                                 "INNER JOIN Relationenschema ON Aufgabe.ID=Relationenschema.ID ");
-        anzahl.moveToFirst();
-        Integer anzbearbeitungen = anzahl.getInt(0);
+        c = db.query(db.getWritableDatabase(), sql);
+        c.moveToFirst();
 
-        System.out.println(anzbearbeitungen);
+        // Spaltennummer herausfinden
+        int id = c.getColumnIndex("ID");
+        int hilfe = c.getColumnIndex("Hilfe");
+        int aufgabenstellung = c.getColumnIndex("Aufgabenstellung");
+        int schwierigkeitsgrad = c.getColumnIndex("Schwierigkeitsgrad");
+        int aufgabenbeschreibung = c.getColumnIndex("Aufgabenbeschreibung");
+        int loesung = c.getColumnIndex("Lösung");
+        int relationennummer = c.getColumnIndex("Relationennummer");
 
-        Cursor cursor = db.query(db.getWritableDatabase(),"SELECT * " +
-                                 "FROM Aufgabenzustand az INNER JOIN Aufgabe a on az.ID = a.ID " +
-                                 "INNER JOIN Relationenschema r ON a.id = r.id " +
-                                 "WHERE az.Anzahl_der_Bearbeitungen = " + anzbearbeitungen.toString() + ";");
-        cursor.moveToFirst();
-
-
-        int id = cursor.getColumnIndex("ID");
-        int hilfe = cursor.getColumnIndex("Hilfe");
-        int aufgabenstellung = cursor.getColumnIndex("Aufgabenstellung");
-        int schwierigkeitsgrad = cursor.getColumnIndex("Schwierigkeitsgrad");
-        int aufgabenbeschreibung = cursor.getColumnIndex("Aufgabenbeschreibung");
-        int loesung = cursor.getColumnIndex("Lösung");
-        int relationennummer = cursor.getColumnIndex("Relationennummer");
-
-        taskid = cursor.getString(id);
-        taskhelp = cursor.getString(hilfe);
-
-        String relationen = getRelationen(cursor.getString(relationennummer));
-
-        taskinformation[0] = cursor.getString(aufgabenstellung);
+        // Zuweisung der Infos aus der DB
+        taskid = c.getString(id);
+        taskhelp = c.getString(hilfe);
+        String relationen = getRelationen(c.getString(relationennummer));
+        taskinformation[0] = c.getString(aufgabenstellung);
         taskinformation[1] = relationen;
-        taskinformation[2] = cursor.getString(aufgabenbeschreibung);
-        taskinformation[3] = cursor.getString(loesung);
-        taskinformation[4] = cursor.getString(schwierigkeitsgrad);
-        cursor.close();
+        taskinformation[2] = c.getString(aufgabenbeschreibung);
+        taskinformation[3] = c.getString(loesung);
+        taskinformation[4] = c.getString(schwierigkeitsgrad);
 
+        c.close();
         return taskinformation;
     }
 

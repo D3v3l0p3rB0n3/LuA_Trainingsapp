@@ -14,8 +14,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 
+import com.tool.gym.lua_trainingsapp.NormalformenTask;
 import com.tool.gym.lua_trainingsapp.R;
+import com.tool.gym.lua_trainingsapp.RelationalTask;
 import com.tool.gym.lua_trainingsapp.TermVereinfachenTask;
+import com.tool.gym.lua_trainingsapp.WahrheitstabellenTask;
 
 
 import Database.SQLiteDatabase;
@@ -177,33 +180,38 @@ public class TaskList extends AppCompatActivity {
 
                     Log.d(TaskList.class.getSimpleName(), "ausgewählte Aufgabe: " + aufgabe);
 
-                    // IDS: Relationenalgebra: 1-24
-                    //  25 - 29 Termin
-                    //  30 - 38 NF
-                    // 39 - 43
-                    Intent i;
+                    // ID's:
+                    // Relationenalgebra: 1-24
+                    // Termvereinfachung:  25 - 29
+                    // Normalformen:  30 - 38
+                    // Wahrheitstabellen: 39 - 43
+                    Intent i = null;
                     if (a < 25)
                     {
                         Log.d(TaskList.class.getSimpleName(), "Relationenalgebra");
+                        i = new Intent(TaskList.this, RelationalTask.class);
                     }
                     else if (a < 30 )
                     {
                         Log.d(TaskList.class.getSimpleName(), "Term");
                         i = new Intent(TaskList.this, TermVereinfachenTask.class);
-                        i.putExtra("startactivity", TaskList.class.getSimpleName());
-                        i.putExtra("choice", aufgabe);
-                        startActivity(i);
+
 
                     }
                     else if (a < 39)
                     {
                         Log.d(TaskList.class.getSimpleName(), "Normalformen");
+                        i = new Intent(TaskList.this, NormalformenTask.class);
                     }
                     else
                     {
                         Log.d(TaskList.class.getSimpleName(), "Wahrheitstabellen");
+                        i = new Intent(TaskList.this, WahrheitstabellenTask.class);
                     }
 
+                    i.putExtra("startactivity", TaskList.class.getSimpleName());
+                    i.putExtra("choice", aufgabe);
+                    startActivity(i);
                 }
 
             });

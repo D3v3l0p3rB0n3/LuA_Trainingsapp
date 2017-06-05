@@ -13,6 +13,7 @@ import com.tool.gym.lua_trainingsapp.NormalformenTask;
 import com.tool.gym.lua_trainingsapp.R;
 import com.tool.gym.lua_trainingsapp.RelationalTask;
 import com.tool.gym.lua_trainingsapp.TermVereinfachenTask;
+import com.tool.gym.lua_trainingsapp.WahrheitstabellenTask;
 
 /**
  * Created by mabr on 23.01.2017.
@@ -38,12 +39,14 @@ public class RandomTasks extends AppCompatActivity implements OnClickListener{
         int id = v.getId();
         if (id == R.id.random_relational) {
             Intent i = new Intent(RandomTasks.this, RelationalTask.class);
+            i.putExtra("startactivity", RandomTasks.class.getSimpleName());
             startActivity(i);
         }
         else if (id == R.id.random_bool){
             BoolscheAlgebraTasks task = new BoolscheAlgebraTasks(getApplicationContext());
             task.nextTask();
             //Intent i = new Intent(RandomTasks.this, NormalformenTask.class);
+            //i.putExtra("startactivity", RandomTasks.class.getSimpleName());
             //startActivity(i);
         }
 

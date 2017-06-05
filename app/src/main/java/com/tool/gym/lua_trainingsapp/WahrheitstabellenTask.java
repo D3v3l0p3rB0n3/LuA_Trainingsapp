@@ -1,21 +1,34 @@
 package com.tool.gym.lua_trainingsapp;
 
 import android.content.Intent;
+import android.database.Cursor;
+
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import Database.SQLiteDatabase;
+
+import com.tool.gym.lua_trainingsapp.Activities.RandomTasks;
+import com.tool.gym.lua_trainingsapp.Activities.TaskList;
 
 public class WahrheitstabellenTask extends AppCompatActivity implements OnClickListener {
     private Button commitbutton;
     private Button next_tast_button;
     private Button help_button;
+    String sql, taskhelp;
+    Cursor c;
+    SQLiteDatabase db;
+    Bundle extras;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        db = new Database.SQLiteDatabase(this);
+        extras = getIntent().getExtras();
 
         //Layout
         setContentView(R.layout.wahrheitstabellentask_layout);
@@ -42,13 +55,77 @@ public class WahrheitstabellenTask extends AppCompatActivity implements OnClickL
 
     //Führt den Select auf die Datenbank aus, um die Aufgabe zu ermitteln
     private String[] getTask() {
+
+        if (extras!=null)
+        {
+            String choser = extras.getString("startactivity");
+
+            if (choser.equals(TaskList.class.getSimpleName())) // Aufgabe aus der gezielten Aufgabenauswahl gewählt
+            {
+                String aufgabe = extras.getString("choice");
+
+                sql = "SELECT * " +
+                        "FROM Aufgabenzustand az INNER JOIN Aufgabe a on az.ID = a.ID " +
+                        "INNER JOIN Wahrheitstabellen w ON a.id = w.id " +
+                        "WHERE a.id =  " + aufgabe + ";";
+
+            }
+            else if (choser.equals(BoolscheAlgebraTasks.class.getSimpleName())) //Zufällige Aufgabenauswahl => zuerst noch geringste Bearbeitungszahl ermitteln
+            {
+
+                // Kleinste Bearbeitungszahl ermitteln
+                sql = "SELECT MIN(az.Anzahl_der_Bearbeitungen) " +
+                        "FROM Aufgabenzustand az INNER JOIN Aufgabe a ON az.ID=a.ID " +
+                        "INNER JOIN Wahrheitstabellen w ON a.ID = w.ID ";
+
+                Log.d(TermVereinfachenTask.class.getSimpleName(), sql);
+                c = db.query(db.getReadableDatabase(), sql);
+
+                c.moveToFirst();
+                Integer anzahl = c.getInt(0);
+                Log.d(TermVereinfachenTask.class.getSimpleName(), "Anzahl an Bearbeitungen: " + anzahl.toString());
+
+                // Aufgaben mit kleinster Bearbeitungszahl aus DB holen
+                sql = "SELECT * " +
+                        "FROM Aufgabenzustand az INNER JOIN Aufgabe a on az.ID = a.ID " +
+                        "INNER JOIN Wahrheitstabellen w ON a.id = w.id " +
+                        "WHERE az.Anzahl_der_Bearbeitungen = " + anzahl.toString() + ";";
+                Log.d(TermVereinfachenTask.class.getSimpleName(), sql);
+            }
+
+        }
+
+        //gewählte Aufgabe verarbeiten
         String[] taskinformation = new String[5];
-        taskinformation[0] = "Fülle die Wahrheitstabelle mit den Werten 1 und 0 aus";
-        taskinformation[1] = "a * b + c";
-        taskinformation[2] = "Tabelle";
-        taskinformation[3] = "4";
-        taskinformation[4] = "2";
+        c = db.query(db.getWritableDatabase(), sql);
+        c.moveToFirst();
+
+        // Spaltennummer herausfinden
+        int hilfe = c.getColumnIndex("Hilfe");
+        int term = c.getColumnIndex("Term");
+        int schwierigkeitsgrad = c.getColumnIndex("Schwierigkeitsgrad");
+        int aufgabenstellung = c.getColumnIndex("Aufgabenstellung");
+        int anz_argumente = c.getColumnIndex("Anzahl_Argumente");
+
+        //Zuweisung der Infos aus der DB
+        taskinformation[0] = c.getString(aufgabenstellung);
+        taskinformation[1] = c.getString(term);
+        taskinformation[3] = c.getString(anz_argumente);
+        taskinformation[4] = c.getString(schwierigkeitsgrad);
+        taskhelp = c.getString(hilfe);
+
+        //taskinformation[0] = "Fülle die Wahrheitstabelle mit den Werten 1 und 0 aus";
+        //taskinformation[1] = "a * b + c";
+        //taskinformation[2] = "Tabelle";
+        //taskinformation[3] = "4";
+        //taskinformation[4] = "2";
+
+        //Cursor schließen
+        c.close();
+
         return taskinformation;
+
+
     }
 
     //Zeigt die Aufgabenstellung auf der Oberfläche an
@@ -105,6 +182,7 @@ public class WahrheitstabellenTask extends AppCompatActivity implements OnClickL
                 break;
             case R.id.helpbutton:
                 Intent help = new Intent(WahrheitstabellenTask.this, HelpPopUp.class);
+                help.putExtra("text", taskhelp);
                 startActivity(help);
                 break;
             case R.id.row1:

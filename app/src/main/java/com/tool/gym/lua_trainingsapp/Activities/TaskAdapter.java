@@ -58,12 +58,12 @@ public class TaskAdapter extends ArrayAdapter<Task> {
         //holder.difficulty.setText(task.difficulty);
         holder.status.setText(task.status);
         holder.number.setText(task.number);
-        if (task.number.equals("1"))
+        if (task.difficulty.equals("1"))
         {
             holder.difficulty.setBackgroundResource(R.drawable.schwierigkeit1);
             //holder.difficulty.setText(task.difficulty);
         }
-        else if (task.number.equals("2"))
+        else if (task.difficulty.equals("2"))
         {
             holder.difficulty.setBackgroundResource(R.drawable.schwierigkeit2);
             //holder.difficulty.setText(task.difficulty);

@@ -43,7 +43,7 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
     private EditText result;
     SQLiteDatabase db;
     Bundle extras;
-    String sql;
+    String sql, taskhelp;
     Cursor c;
 
     String LOG_TAG = TermVereinfachenTask.class.getSimpleName();
@@ -100,6 +100,7 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
 
             case R.id.helpbutton:
                 Intent help = new Intent(TermVereinfachenTask.this, HelpPopUp.class);
+                help.putExtra("text", taskhelp);
                 startActivity(help);
                 break;
         }
@@ -178,6 +179,10 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
         taskinformation[0] = c.getString(aufgabenstellung);
         taskinformation[1] = c.getString(term);
         taskinformation[2] = c.getString(schwierigkeitsgrad);
+        taskhelp = c.getString(hilfe);
+
+        //Cursor schließen
+        c.close();
 
         return taskinformation;
     }
