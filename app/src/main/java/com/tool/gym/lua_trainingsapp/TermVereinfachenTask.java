@@ -25,6 +25,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tool.gym.lua_trainingsapp.Activities.TaskList;
+
 import Database.SQLiteDatabase;
 
 
@@ -40,6 +42,9 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
     private Button help_button;
     private EditText result;
     SQLiteDatabase db;
+    Bundle extras;
+    String sql;
+    Cursor c;
 
     String LOG_TAG = TermVereinfachenTask.class.getSimpleName();
 
@@ -47,6 +52,7 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         db = new Database.SQLiteDatabase(this);
+        extras = getIntent().getExtras();
 
 
         //Layout laden
@@ -111,28 +117,48 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
     //Führt den Select auf die Datenbank aus, um die Aufgabe zu ermitteln
     private String[] getTask() {
 
+        if (extras!=null)
+        {
+            String choser = extras.getString("startactivity");
+
+            if (choser.equals(TaskList.class.getSimpleName())) // Aufgabe aus der gezielten Aufgabenauswahl gewählt
+            {
+                String aufgabe = extras.getString("choice");
+
+                sql = "SELECT * " +
+                        "FROM Aufgabenzustand az INNER JOIN Aufgabe a on az.ID = a.ID " +
+                        "INNER JOIN Termvereinfachung t ON a.id = t.id " +
+                        "WHERE a.id =  " + aufgabe + ";";
+
+            }
+            else if (choser.equals(BoolscheAlgebraTasks.class.getSimpleName())) //Zufällige Aufgabenauswahl => zuerst noch geringste Bearbeitungszahl ermitteln
+            {
+
+                // Kleinste Bearbeitungszahl ermitteln
+                sql = "SELECT MIN(Aufgabenzustand.Anzahl_der_Bearbeitungen) " +
+                        "FROM Aufgabenzustand INNER JOIN Aufgabe ON Aufgabenzustand.ID=Aufgabe.ID " +
+                        "INNER JOIN Termvereinfachung ON Aufgabe.ID=Termvereinfachung.ID ";
+
+                Log.d(TermVereinfachenTask.class.getSimpleName(), sql);
+                c = db.query(db.getWritableDatabase(), sql);
+
+                c.moveToFirst();
+                Integer anzahl = c.getInt(0);
+                Log.d(TermVereinfachenTask.class.getSimpleName(), "Anzahl an Bearbeitungen: " + anzahl.toString());
+
+                // Aufgaben mit kleinster Bearbeitungszahl aus DB holen
+                sql = "SELECT * " +
+                        "FROM Aufgabenzustand az INNER JOIN Aufgabe a on az.ID = a.ID " +
+                        "INNER JOIN Termvereinfachung t ON a.id = t.id " +
+                        "WHERE az.Anzahl_der_Bearbeitungen = " + anzahl.toString() + ";";
+                Log.d(TermVereinfachenTask.class.getSimpleName(), sql);
+            }
+
+        }
+
+        //gewählte Aufgabe verarbeiten
         String[] taskinformation = new String[5];
-
-        // Kleinste Bearbeitungszahl ermitteln
-        String sql = "SELECT MIN(Aufgabenzustand.Anzahl_der_Bearbeitungen) " +
-                "FROM Aufgabenzustand INNER JOIN Aufgabe ON Aufgabenzustand.ID=Aufgabe.ID " +
-                "INNER JOIN Termvereinfachung ON Aufgabe.ID=Termvereinfachung.ID ";
-
-        Log.d(TermVereinfachenTask.class.getSimpleName(), sql);
-        Cursor c = db.query(db.getWritableDatabase(), sql);
-
-        c.moveToFirst();
-        Integer anzahl = c.getInt(0);
-        Log.d(TermVereinfachenTask.class.getSimpleName(), "Anzahl an Bearbeitungen: " + anzahl.toString());
-
-        // Aufgaben mit kleinster Bearbeitungszahl aus DB holen
-        sql = "SELECT * " +
-                "FROM Aufgabenzustand az INNER JOIN Aufgabe a on az.ID = a.ID " +
-                "INNER JOIN Termvereinfachung t ON a.id = t.id " +
-                "WHERE az.Anzahl_der_Bearbeitungen = " + anzahl.toString() + ";";
-        Log.d(TermVereinfachenTask.class.getSimpleName(), sql);
         c = db.query(db.getWritableDatabase(), sql);
-
         c.moveToFirst();
 
         // Spaltennummer herausfinden
@@ -152,12 +178,6 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
         taskinformation[0] = c.getString(aufgabenstellung);
         taskinformation[1] = c.getString(term);
         taskinformation[2] = c.getString(schwierigkeitsgrad);
-
-
-        //taskinformation[0] = "Vereinfache den folgenden Term soweit wie möglich";
-        //taskinformation[1] = "( a + ¬(b*a)) * (c+(d+c))";
-        //taskinformation[2] = "2"; // Schwierigkeit
-
 
         return taskinformation;
     }

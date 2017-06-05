@@ -29,6 +29,7 @@ public class BoolscheAlgebraTasks extends Activity {
                 break;
         }
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.putExtra("startactivity", BoolscheAlgebraTasks.class.getSimpleName());
         context.startActivity(i);
     }
 }
