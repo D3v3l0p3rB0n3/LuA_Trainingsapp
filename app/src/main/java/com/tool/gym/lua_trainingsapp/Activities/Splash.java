@@ -24,9 +24,6 @@ public class Splash extends AppCompatActivity {
 
         //DB physisch anlegen
         db = new SQLiteDatabase(this);
-        InputMethodManager imeManager = (InputMethodManager) getApplicationContext().getSystemService(INPUT_METHOD_SERVICE);
-        imeManager.showInputMethodPicker();
-
 
         int secondsDelayed = 1;
         new Handler().postDelayed(new Runnable() {

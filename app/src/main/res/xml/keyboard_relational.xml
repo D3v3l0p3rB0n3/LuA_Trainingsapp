@@ -17,8 +17,8 @@
         <Key android:codes="48" android:keyLabel="0" android:keyEdgeFlags="right"/>
     </Row>
     <Row>
-        <Key android:codes="64" android:keyLabel="\@" android:keyEdgeFlags="left"/>
-        <Key android:codes="35" android:keyLabel="\#"/>
+        <Key android:codes="40" android:keyLabel="(" android:keyEdgeFlags="left"/>
+        <Key android:codes="41" android:keyLabel=")"/>
         <Key android:codes="36" android:keyLabel="$"/>
         <Key android:codes="37" android:keyLabel="%"/>
         <Key android:codes="38" android:keyLabel="&amp;"/>
@@ -29,9 +29,7 @@
         <Key android:codes="47" android:keyLabel="/" android:keyEdgeFlags="right"/>
     </Row>
     <Row>
-        <Key android:codes="40" android:keyLabel="(" android:keyEdgeFlags="left"/>
-        <Key android:codes="41" android:keyLabel=")"/>
-        <Key android:codes="34" android:keyLabel="&quot;"/>
+        <Key android:codes="34" android:keyLabel="&quot;" android:keyEdgeFlags="left"/>
         <Key android:codes="172" android:keyLabel="\u00AC" />
         <Key android:codes="8594" android:keyLabel="\u2192" />
         <Key android:codes="10231" android:keyLabel="\u2194" />
@@ -39,6 +37,8 @@
         <Key android:codes="8743" android:keyLabel="\u2227"/>
         <Key android:codes="8804" android:keyLabel="\u2264"/>
         <Key android:codes="60" android:keyLabel="\u003C"/>
+        <Key android:codes="8805" android:keyLabel="\u2265"/>
+        <Key android:codes="62" android:keyLabel="\u003E" android:keyEdgeFlags="right"/>
     </Row>
     <Row  android:rowEdgeFlags="bottom">
         <Key android:codes="-2" android:keyLabel="Switch" android:keyEdgeFlags="left"/>
@@ -49,7 +49,6 @@
         <Key android:codes="10197" android:keyLabel="\u27D5"/>
         <Key android:codes="10198" android:keyLabel="\u27D6"/>
         <Key android:codes="10199" android:keyLabel="\u27D7"/>
-        <Key android:codes="8805" android:keyLabel="\u2265"/>
-        <Key android:codes="62" android:keyLabel="\u003E" android:keyEdgeFlags="right"/>
+        <Key android:codes="-5" android:keyLabel="DEL" android:keyWidth="20%p" android:isRepeatable="true" android:keyEdgeFlags="right"/>
     </Row>
 </Keyboard>
