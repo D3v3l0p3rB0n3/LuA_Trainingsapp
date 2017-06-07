@@ -5,6 +5,7 @@
     android:clickable="true"
     android:focusableInTouchMode="true" >
     <LinearLayout
+        android:id="@+id/TitleArea"
         android:layout_gravity="top"
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"
@@ -98,6 +99,7 @@
             android:layout_marginTop="10sp"/>
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/BottomArea"
         android:layout_height="0dp"
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"
@@ -143,4 +145,13 @@
                 android:text="Weiter" />
             </LinearLayout>
     </LinearLayout>
+    <android.inputmethodservice.KeyboardView
+        android:id="@+id/keyboardview"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:visibility="gone" />
 </LinearLayout>

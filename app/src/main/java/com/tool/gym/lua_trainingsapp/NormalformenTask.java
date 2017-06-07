@@ -20,7 +20,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.tool.gym.lua_trainingsapp.Activities.RandomTasks;
 import com.tool.gym.lua_trainingsapp.Activities.TaskList;
 
 import Database.SQLiteDatabase;
@@ -40,6 +39,7 @@ public class NormalformenTask extends AppCompatActivity implements OnClickListen
     String sql, taskhelp;
 
     String LOG_TAG = TermVereinfachenTask.class.getSimpleName();
+    private CustomKeyboard mCustomKeyboard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,17 +61,8 @@ public class NormalformenTask extends AppCompatActivity implements OnClickListen
 
         result = (EditText) findViewById(R.id.bool_term_result);
 
-        //Tastatur ausblenden
-        result.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    hideKeyboard(v);
-                }
-            }
-        });
-        //InputMethodManager imeManager = (InputMethodManager) getApplicationContext().getSystemService(INPUT_METHOD_SERVICE);
-        //imeManager.showInputMethodPicker();
+        mCustomKeyboard = new CustomKeyboard(this, R.id.keyboardview, R.xml.qwertz, R.id.TitleArea, R.id.BottomArea);
+        mCustomKeyboard.registerEditText(R.id.bool_term_result);
 
         //Aufgabe laden
         setTask();
@@ -125,7 +116,7 @@ public class NormalformenTask extends AppCompatActivity implements OnClickListen
                         "WHERE a.id =  " + aufgabe + ";";
 
             }
-            else if (choser.equals(BoolscheAlgebraTasks.class.getSimpleName())) //Zufällige Aufgabenauswahl => zuerst noch geringste Bearbeitungszahl ermitteln
+            else if (choser.equals(ChooseTask.class.getSimpleName())) //Zufällige Aufgabenauswahl => zuerst noch geringste Bearbeitungszahl ermitteln
             {
 
                 // Kleinste Bearbeitungszahl ermitteln
@@ -205,8 +196,8 @@ public class NormalformenTask extends AppCompatActivity implements OnClickListen
     //Lösung
     private void checkSolution() {
         Toast.makeText(getApplication(), "Lösung wird geprüft...", Toast.LENGTH_SHORT).show();
-        BoolscheAlgebraTasks task = new BoolscheAlgebraTasks(getApplicationContext());
-        task.nextTask();
+        ChooseTask task = new ChooseTask(getApplicationContext());
+        task.nextBoolTask(this);
     }
 
     //Korrektheit der Umformung prüfen
@@ -249,5 +240,8 @@ public class NormalformenTask extends AppCompatActivity implements OnClickListen
     public int getPixel(int sp) {
         float textsize = sp * getResources().getDisplayMetrics().scaledDensity;
         return (int) textsize;
+    }
+    @Override public void onBackPressed() {
+        if( mCustomKeyboard.isCustomKeyboardVisible() ) mCustomKeyboard.hideCustomKeyboard(); else this.finish();
     }
 }

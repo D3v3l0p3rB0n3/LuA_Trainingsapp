@@ -1,4 +1,4 @@
-package com.tool.gym.lua_trainingsapp.Activities;
+package com.tool.gym.lua_trainingsapp;
 
 import android.content.Intent;
 import android.os.Bundle;

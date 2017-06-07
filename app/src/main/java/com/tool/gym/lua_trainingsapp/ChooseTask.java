@@ -4,16 +4,19 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
+import com.tool.gym.lua_trainingsapp.Activities.RandomTasks;
 
-public class BoolscheAlgebraTasks extends Activity {
+
+public class ChooseTask extends Activity {
 
     private Context context;
 
-    public BoolscheAlgebraTasks(Context applicationContext) {
+    public ChooseTask(Context applicationContext) {
         this.context = applicationContext;
     }
 
-    public void nextTask() {
+    public void nextBoolTask(Activity activity) {
+        activity.finish();
         Double x = Math.random() * 2;
         Integer zufall = (int) Math.round(x);
         Intent i = null;
@@ -29,7 +32,14 @@ public class BoolscheAlgebraTasks extends Activity {
                 break;
         }
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        i.putExtra("startactivity", BoolscheAlgebraTasks.class.getSimpleName());
+        i.putExtra("startactivity", ChooseTask.class.getSimpleName());
+        context.startActivity(i);
+    }
+
+    public void nextRelationalTask(Activity activity){
+        activity.finish();
+        Intent i = new Intent(context, RelationalTask.class);
+        i.putExtra("startactivity", RandomTasks.class.getSimpleName());
         context.startActivity(i);
     }
 }

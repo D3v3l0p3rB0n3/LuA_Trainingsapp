@@ -24,7 +24,7 @@
             android:screenOrientation="landscape">
         </activity>
         <activity
-            android:name=".Activities.SpecificTasks"
+            android:name=".SpecificTasks"
             android:screenOrientation="landscape">
         </activity>
         <activity
@@ -52,19 +52,6 @@
             android:name=".NormalformenTask"
             android:screenOrientation="landscape">
         </activity>
-
-        <service
-            android:name=".LogikUndAlgebraKeyboard"
-            android:label="@string/relationalkeyboard"
-            android:permission="android.permission.BIND_INPUT_METHOD">
-            <meta-data
-                android:name="android.view.im"
-                android:resource="@xml/method">
-            </meta-data>
-            <intent-filter>
-                <action android:name="android.view.InputMethod"/>
-            </intent-filter>
-        </service>
     </application>
 
 </manifest>

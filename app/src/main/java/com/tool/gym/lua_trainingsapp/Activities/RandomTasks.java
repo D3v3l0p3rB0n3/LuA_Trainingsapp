@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 
-import com.tool.gym.lua_trainingsapp.BoolscheAlgebraTasks;
+import com.tool.gym.lua_trainingsapp.ChooseTask;
 import com.tool.gym.lua_trainingsapp.NormalformenTask;
 import com.tool.gym.lua_trainingsapp.R;
 import com.tool.gym.lua_trainingsapp.RelationalTask;
@@ -38,13 +38,12 @@ public class RandomTasks extends AppCompatActivity implements OnClickListener{
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.random_relational) {
-            Intent i = new Intent(RandomTasks.this, RelationalTask.class);
-            i.putExtra("startactivity", RandomTasks.class.getSimpleName());
-            startActivity(i);
+            ChooseTask task = new ChooseTask(getApplicationContext());
+            task.nextRelationalTask(this);
         }
         else if (id == R.id.random_bool){
-            BoolscheAlgebraTasks task = new BoolscheAlgebraTasks(getApplicationContext());
-            task.nextTask();
+            ChooseTask task = new ChooseTask(getApplicationContext());
+            task.nextBoolTask(this);
             //Intent i = new Intent(RandomTasks.this, NormalformenTask.class);
             //i.putExtra("startactivity", RandomTasks.class.getSimpleName());
             //startActivity(i);

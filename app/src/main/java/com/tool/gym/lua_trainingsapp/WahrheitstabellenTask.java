@@ -70,7 +70,7 @@ public class WahrheitstabellenTask extends AppCompatActivity implements OnClickL
                         "WHERE a.id =  " + aufgabe + ";";
 
             }
-            else if (choser.equals(BoolscheAlgebraTasks.class.getSimpleName())) //Zufällige Aufgabenauswahl => zuerst noch geringste Bearbeitungszahl ermitteln
+            else if (choser.equals(ChooseTask.class.getSimpleName())) //Zufällige Aufgabenauswahl => zuerst noch geringste Bearbeitungszahl ermitteln
             {
 
                 // Kleinste Bearbeitungszahl ermitteln
@@ -165,8 +165,8 @@ public class WahrheitstabellenTask extends AppCompatActivity implements OnClickL
 
     //Nach Bestätigung Überprüfung des Ergebnisses
     private void checkInput() {
-        BoolscheAlgebraTasks task = new BoolscheAlgebraTasks(getApplicationContext());
-        task.nextTask();
+        ChooseTask task = new ChooseTask(getApplicationContext());
+        task.nextBoolTask(this);
     }
 
     //Button Click verarbeiten
@@ -177,8 +177,8 @@ public class WahrheitstabellenTask extends AppCompatActivity implements OnClickL
                 checkInput();
                 break;
             case R.id.next_task:
-                BoolscheAlgebraTasks task = new BoolscheAlgebraTasks(getApplicationContext());
-                task.nextTask();
+                ChooseTask task = new ChooseTask(getApplicationContext());
+                task.nextBoolTask(this);
                 break;
             case R.id.helpbutton:
                 Intent help = new Intent(WahrheitstabellenTask.this, HelpPopUp.class);

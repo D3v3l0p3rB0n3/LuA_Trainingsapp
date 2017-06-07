@@ -37,6 +37,7 @@ public class RelationalTask extends AppCompatActivity implements OnClickListener
     Cursor c;
     SQLiteDatabase db;
     Bundle extras;
+    private CustomKeyboard mCustomKeyboard;
 
     private Runnable colourDefault = new Runnable() {
         public void run() {
@@ -82,17 +83,8 @@ public class RelationalTask extends AppCompatActivity implements OnClickListener
             }
         };
 
-        //Tastatur ausblenden
-        result.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    hideKeyboard(v);
-                }
-            }
-        });
-        //InputMethodManager imeManager = (InputMethodManager) getApplicationContext().getSystemService(INPUT_METHOD_SERVICE);
-        //imeManager.showInputMethodPicker();
+        mCustomKeyboard = new CustomKeyboard(this, R.id.keyboardview, R.xml.qwertz, R.id.TitleArea, R.id.BottomArea);
+        mCustomKeyboard.registerEditText(R.id.relationalresult);
 
         //Listener für das Eingabefeld
         result.addTextChangedListener(watcher);
@@ -109,8 +101,8 @@ public class RelationalTask extends AppCompatActivity implements OnClickListener
                 checkInput();
                 break;
             case R.id.next_task:
-                Intent i = new Intent(RelationalTask.this, RelationalTask.class);
-                startActivity(i);
+                ChooseTask task = new ChooseTask(getApplicationContext());
+                task.nextRelationalTask(this);
                 break;
             case R.id.helpbutton:
                 Intent helppopup = new Intent(RelationalTask.this, HelpPopUp.class);
@@ -207,7 +199,12 @@ public class RelationalTask extends AppCompatActivity implements OnClickListener
 
         while(!cursor.isAfterLast()) {
             colId = cursor.getColumnIndex("Relation");
-            relationen = relationen + " " + cursor.getString(colId);
+            if(cursor.isLast()){
+                relationen = relationen + " " + cursor.getString(colId);
+            }
+            else{
+                relationen = relationen + " " + cursor.getString(colId) + "<br>";
+            }
             cursor.moveToNext();
         }
 
@@ -256,18 +253,21 @@ public class RelationalTask extends AppCompatActivity implements OnClickListener
         if(result.getText().toString().equals(loesung)) {
             result.setText(R.string.correct_answer);
             result.setBackgroundColor(Color.parseColor("#BCED91"));
-            db.query(db.getWritableDatabase(),"UPDATE Aufgabenzustand SET Status = 'Richtig', Anzahl_der_Bearbeitungen = Anzahl_der_Bearbeitungen + 1" );
+            Cursor cursor = db.query(db.getWritableDatabase(),"UPDATE Aufgabenzustand SET Status = 'Richtig', Anzahl_der_Bearbeitungen = Anzahl_der_Bearbeitungen + 1 WHERE ID = " + taskid );
+            cursor.moveToFirst();
+            cursor.close();
+
         }
         else {
             result.setBackgroundColor(Color.parseColor("#FF4040"));
             result.setText(R.string.wrong_answer);
-            db.query(db.getWritableDatabase(),"UPDATE Aufgabenzustand SET Status = 'Falsch', Anzahl_der_Bearbeitungen = Anzahl_der_Bearbeitungen + 1" );
+            Cursor cursor = db.query(db.getWritableDatabase(),"UPDATE Aufgabenzustand SET Status = 'Falsch', Anzahl_der_Bearbeitungen = Anzahl_der_Bearbeitungen + 1 WHERE ID = " + taskid  );
+            cursor.moveToFirst();
+            cursor.close();
         }
     }
 
-    //Hilfsmethode um Tastatur auszublenden
-    private void hideKeyboard(View view) {
-        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    @Override public void onBackPressed() {
+        if( mCustomKeyboard.isCustomKeyboardVisible() ) mCustomKeyboard.hideCustomKeyboard(); else this.finish();
     }
 }
