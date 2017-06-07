@@ -39,6 +39,7 @@ public class ChooseTask extends Activity {
     public void nextRelationalTask(Activity activity){
         activity.finish();
         Intent i = new Intent(context, RelationalTask.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         i.putExtra("startactivity", RandomTasks.class.getSimpleName());
         context.startActivity(i);
     }
