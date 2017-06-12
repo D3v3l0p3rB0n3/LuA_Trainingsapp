@@ -55,23 +55,19 @@ public class TaskAdapter extends ArrayAdapter<Task> {
 
         Task task = data[position];
         holder.txtTitle.setText(task.title);
-        //holder.difficulty.setText(task.difficulty);
         holder.status.setText(task.status);
         holder.number.setText(task.number);
         if (task.difficulty.equals("1"))
         {
-            //holder.difficulty.setBackgroundResource(R.drawable.schwierigkeit1);
-            holder.difficulty.setText(task.difficulty);
+            holder.difficulty.setBackgroundResource(R.drawable.schwierigkeit1);
         }
         else if (task.difficulty.equals("2"))
         {
-            //holder.difficulty.setBackgroundResource(R.drawable.schwierigkeit2);
-            holder.difficulty.setText(task.difficulty);
+            holder.difficulty.setBackgroundResource(R.drawable.schwierigkeit2);
         }
         else
         {
-            //holder.difficulty.setBackgroundResource(R.drawable.schwierigkeit3);
-            holder.difficulty.setText(task.difficulty);
+            holder.difficulty.setBackgroundResource(R.drawable.schwierigkeit3);
         }
 
 

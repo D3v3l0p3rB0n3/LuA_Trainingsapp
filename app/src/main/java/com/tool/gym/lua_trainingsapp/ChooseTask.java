@@ -3,13 +3,18 @@ package com.tool.gym.lua_trainingsapp;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.tool.gym.lua_trainingsapp.Activities.RandomTasks;
+
+import Database.SQLiteDatabase;
+import android.database.Cursor;
 
 
 public class ChooseTask extends Activity {
 
     private Context context;
+    Intent i;
 
     public ChooseTask(Context applicationContext) {
         this.context = applicationContext;
@@ -19,7 +24,7 @@ public class ChooseTask extends Activity {
         activity.finish();
         Double x = Math.random() * 2;
         Integer zufall = (int) Math.round(x);
-        Intent i = null;
+        i = null;
         switch (zufall) {
             case 0:
                 i = new Intent(context, WahrheitstabellenTask.class);
@@ -38,9 +43,10 @@ public class ChooseTask extends Activity {
 
     public void nextRelationalTask(Activity activity){
         activity.finish();
-        Intent i = new Intent(context, RelationalTask.class);
+        i = new Intent(context, RelationalTask.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         i.putExtra("startactivity", RandomTasks.class.getSimpleName());
         context.startActivity(i);
     }
+
 }

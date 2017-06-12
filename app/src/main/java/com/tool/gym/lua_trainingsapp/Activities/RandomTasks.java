@@ -18,7 +18,7 @@ import com.tool.gym.lua_trainingsapp.WahrheitstabellenTask;
 /**
  * Created by mabr on 23.01.2017.
  */
-public class RandomTasks extends AppCompatActivity implements OnClickListener{
+public class RandomTasks extends AppCompatActivity implements OnClickListener {
 
     LinearLayout bool_tasks;
     LinearLayout relation_tasks;
@@ -27,11 +27,11 @@ public class RandomTasks extends AppCompatActivity implements OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.randomtasks_layout);
-        bool_tasks = (LinearLayout)findViewById(R.id.random_bool);
+        bool_tasks = (LinearLayout) findViewById(R.id.random_bool);
         bool_tasks.setOnClickListener(this);
-        relation_tasks = (LinearLayout)findViewById(R.id.random_relational);
+        relation_tasks = (LinearLayout) findViewById(R.id.random_relational);
         relation_tasks.setOnClickListener(this);
-        all_tasks = (LinearLayout)findViewById(R.id.random_all);
+        all_tasks = (LinearLayout) findViewById(R.id.random_all);
         all_tasks.setOnClickListener(this);
     }
 
@@ -40,14 +40,16 @@ public class RandomTasks extends AppCompatActivity implements OnClickListener{
         if (id == R.id.random_relational) {
             ChooseTask task = new ChooseTask(getApplicationContext());
             task.nextRelationalTask(this);
-        }
-        else if (id == R.id.random_bool){
+        } else if (id == R.id.random_bool) {
             ChooseTask task = new ChooseTask(getApplicationContext());
             task.nextBoolTask(this);
-            //Intent i = new Intent(RandomTasks.this, NormalformenTask.class);
+            //Intent i = new Intent(RandomTasks.this, TermVereinfachenTask.class);
             //i.putExtra("startactivity", RandomTasks.class.getSimpleName());
             //startActivity(i);
-        }
+        } else {
 
+        }
     }
+
 }
+

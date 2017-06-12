@@ -20,6 +20,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tool.gym.lua_trainingsapp.Activities.RandomTasks;
 import com.tool.gym.lua_trainingsapp.Activities.TaskList;
 
 import Database.SQLiteDatabase;
@@ -129,7 +130,6 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
 
                 Log.d(TermVereinfachenTask.class.getSimpleName(), sql);
                 c = db.query(db.getWritableDatabase(), sql);
-
                 c.moveToFirst();
                 Integer anzahl = c.getInt(0);
                 Log.d(TermVereinfachenTask.class.getSimpleName(), "Anzahl an Bearbeitungen: " + anzahl.toString());
@@ -147,7 +147,25 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
         //gewählte Aufgabe verarbeiten
         String[] taskinformation = new String[5];
         c = db.query(db.getWritableDatabase(), sql);
-        c.moveToFirst();
+
+        //Ermittlung der konrekten Aufgabe => z.T. per Zufallszahl
+        Integer anzahl = c.getCount();
+        Integer zufall,x1;
+        if (anzahl > 1) // wenn mehrs als 1 Aufgabe aus der DB geholt wurde => Zufallszahl für die Aufgabe, sonst nur die 1 Aufgabe
+        {
+            x1= (int) ((Math.random())*anzahl+1); //Zufallszahl zwischen 0 - Anzahl der Aufgaben - 1
+            zufall = x1 - 1;
+
+
+        }
+        else
+        {
+            zufall = 0;
+        }
+
+        //Log.d(TermVereinfachenTask.class.getSimpleName(), "Anzahl an DS mit kleinster Zahl: " + anzahl.toString());
+        //Log.d(TermVereinfachenTask.class.getSimpleName(), "gewählte Aufgabe aus der Auswahl: " + zufall.toString());
+        c.moveToPosition(zufall);
 
         // Spaltennummer herausfinden
         int id = c.getColumnIndex("ID");

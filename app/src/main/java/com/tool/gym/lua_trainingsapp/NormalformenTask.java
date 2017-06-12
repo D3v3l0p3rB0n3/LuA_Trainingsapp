@@ -144,7 +144,23 @@ public class NormalformenTask extends AppCompatActivity implements OnClickListen
         //gewählte Aufgabe verarbeiten
         String[] taskinformation = new String[5];
         c = db.query(db.getWritableDatabase(), sql);
-        c.moveToFirst();
+
+        //Ermittlung der konrekten Aufgabe => z.T. per Zufallszahl
+        Integer anzahl = c.getCount();
+        Integer zufall,x1;
+        if (anzahl > 1) // wenn mehrs als 1 Aufgabe aus der DB geholt wurde => Zufallszahl für die Aufgabe, sonst nur die 1 Aufgabe
+        {
+            x1= (int) ((Math.random())*anzahl+1); //Zufallszahl zwischen 0 - Anzahl der Aufgaben - 1
+            zufall = x1 - 1;
+
+
+        }
+        else
+        {
+            zufall = 0;
+        }
+
+        c.moveToPosition(zufall);
 
         // Spaltennummer herausfinden
         int hilfe = c.getColumnIndex("Hilfe");

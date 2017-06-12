@@ -17,11 +17,11 @@
             android:fontFamily="sans-serif-light"
             android:textSize="45dp"/>
     </LinearLayout>
+
     <ListView
         android:id="@+id/list_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:divider="@color/Title"
-        android:dividerHeight="5dp">
-    </ListView>
+        android:dividerHeight="5dp"></ListView>
 </LinearLayout>
