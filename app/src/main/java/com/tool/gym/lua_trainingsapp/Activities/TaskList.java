@@ -29,6 +29,7 @@ public class TaskList extends AppCompatActivity {
     Task[] tasklist;
     Cursor c;
     Integer counter;
+    String sql;
 
 
     @Override
@@ -44,7 +45,7 @@ public class TaskList extends AppCompatActivity {
             title.setText(topic);
 
             //Aufgaben unterscheidung je nach gewähltem Themengebiet
-            String sql;
+
 
 
             if (topic.equals(getString(R.string.bool))) //boolsche Algebra
@@ -173,42 +174,68 @@ public class TaskList extends AppCompatActivity {
             listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    //String test = (String) view parent.getItemAtPosition(position).toString();
+
+
                     Task t = (Task) parent.getItemAtPosition(position);
                     String aufgabe = t.number.toString();
-                    Integer a = Integer.parseInt(aufgabe);
+                    Log.d(TaskList.class.getSimpleName(), "ID der ausgewählten Aufgabe: " + aufgabe);
 
-                    Log.d(TaskList.class.getSimpleName(), "ausgewählte Aufgabe: " + aufgabe);
-
-                    // ID's:
-                    // Relationenalgebra: 1-24
-                    // Termvereinfachung:  25 - 29
-                    // Normalformen:  30 - 38
-                    // Wahrheitstabellen: 39 - 43
                     Intent i = null;
-                    if (a < 25)
+
+                    // Verzweigung: Prüfen, welcher Aufgabentyp gewählte wurde
+                    // dazu Abgleich aus der DB
+
+                    sql = "SELECT * " +
+                            "FROM Aufgabenzustand az INNER JOIN Aufgabe a on az.ID = a.ID " +
+                            "INNER JOIN Relationenschema r ON a.id = r.id " +
+                            "WHERE a.id = " + aufgabe;
+                    c = db.query(db.getReadableDatabase(), sql);
+
+                    if (c.moveToNext()) // Aufgabe ist aus der Relationenalgebra
                     {
-                        Log.d(TaskList.class.getSimpleName(), "Relationenalgebra");
                         i = new Intent(TaskList.this, RelationalTask.class);
-                    }
-                    else if (a < 30 )
-                    {
-                        Log.d(TaskList.class.getSimpleName(), "Term");
-                        i = new Intent(TaskList.this, TermVereinfachenTask.class);
-
-
-                    }
-                    else if (a < 39)
-                    {
-                        Log.d(TaskList.class.getSimpleName(), "Normalformen");
-                        i = new Intent(TaskList.this, NormalformenTask.class);
-                    }
-                    else
-                    {
-                        Log.d(TaskList.class.getSimpleName(), "Wahrheitstabellen");
-                        i = new Intent(TaskList.this, WahrheitstabellenTask.class);
+                        Log.d(TaskList.class.getSimpleName(), "Ergebnis: Relationenalgebra");
                     }
 
+                    else // ist nicht aus der Relationenalgebra => weiter prüfen
+                    {
+                        sql = "SELECT * " +
+                                "FROM Aufgabenzustand az INNER JOIN Aufgabe a on az.ID = a.ID " +
+                                "INNER JOIN Termvereinfachung t ON a.id = t.id " +
+                                "WHERE a.id = " + aufgabe;
+                        c = db.query(db.getReadableDatabase(), sql);
+
+                        if (c.moveToNext()) //Aufgaben d. Termvereinfachung
+                        {
+                            Log.d(TaskList.class.getSimpleName(), "Ergebnis: Term - Vereinfachung");
+                            i = new Intent(TaskList.this, TermVereinfachenTask.class);
+                        }
+
+                        else // keine Termvereinfachung => weiter prüfen
+
+                        {
+                            sql = "SELECT * " +
+                                    "FROM Aufgabenzustand az INNER JOIN Aufgabe a on az.ID = a.ID " +
+                                    "INNER JOIN Normalformen n ON a.id = n.id " +
+                                    "WHERE a.id = " + aufgabe;
+                            c = db.query(db.getReadableDatabase(), sql);
+                            if (c.moveToNext()) // Aufggabe Normalform
+                            {
+                                Log.d(TaskList.class.getSimpleName(), "Ergebnis: Normalformen");
+                                i = new Intent(TaskList.this, NormalformenTask.class);
+                            }
+                            else // keine Normalform => muss folglich Wahrheitstabell sein
+                            {
+                                Log.d(TaskList.class.getSimpleName(), "kein Ergebnis vorhanden");
+                                i = new Intent(TaskList.this, WahrheitstabellenTask.class);
+                            }
+
+                        }
+
+                    }
+                    c.close();
+
+                    // gewählte Aufgabe laden => Intent starten
                     i.putExtra("startactivity", TaskList.class.getSimpleName());
                     i.putExtra("choice", aufgabe);
                     startActivity(i);
