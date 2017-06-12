@@ -226,7 +226,7 @@ public class TaskList extends AppCompatActivity {
                             }
                             else // keine Normalform => muss folglich Wahrheitstabell sein
                             {
-                                Log.d(TaskList.class.getSimpleName(), "kein Ergebnis vorhanden");
+                                Log.d(TaskList.class.getSimpleName(), "Ergebnis: Wahrheitstabelle");
                                 i = new Intent(TaskList.this, WahrheitstabellenTask.class);
                             }
 
