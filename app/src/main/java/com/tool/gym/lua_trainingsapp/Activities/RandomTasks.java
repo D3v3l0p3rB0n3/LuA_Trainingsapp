@@ -46,7 +46,10 @@ public class RandomTasks extends AppCompatActivity implements OnClickListener {
             //Intent i = new Intent(RandomTasks.this, TermVereinfachenTask.class);
             //i.putExtra("startactivity", RandomTasks.class.getSimpleName());
             //startActivity(i);
-        } else {
+        } else if (id == R.id.random_all)
+        {
+            ChooseTask task = new ChooseTask(getApplicationContext());
+            task.nextRandomTask(this);
 
         }
     }

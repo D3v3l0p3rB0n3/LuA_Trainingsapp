@@ -138,7 +138,7 @@ public class RelationalTask extends AppCompatActivity implements OnClickListener
                         "WHERE a.id =  " + aufgabe + ";";
 
             }
-            else if (choser.equals(RandomTasks.class.getSimpleName())) //Zufällige Aufgabenauswahl => zuerst noch geringste Bearbeitungszahl ermitteln
+            else if (choser.equals(ChooseTask.class.getSimpleName())) //Zufällige Aufgabenauswahl => zuerst noch geringste Bearbeitungszahl ermitteln
             {
 
                 // Kleinste Bearbeitungszahl ermitteln
