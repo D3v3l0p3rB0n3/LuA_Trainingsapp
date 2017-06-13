@@ -32,7 +32,7 @@ public class SQLQuerries {
                                                                     "ID INT PRIMARY KEY NOT NULL, " +
                                                                     "Relationennummer TEXT NOT NULL, " +
                                                                     "Aufgabenbeschreibung TEXT, " +
-                                                                    "Lösung TEXT NOT NULL, " +
+                                                                    "Loesung TEXT NOT NULL, " +
                                                                     "FOREIGN KEY(ID) REFERENCES Aufgabe(ID)" +
                                                                     ")";
 
@@ -45,8 +45,8 @@ public class SQLQuerries {
     protected static final String createTableTermvereinfachung =       "CREATE TABLE Termvereinfachung (" +
                                                                     "ID INT PRIMARY KEY NOT NULL, " +
                                                                     "Term TEXT NOT NULL, " +
-                                                                    "Anzahl_Argumente_der_Lösung TEXT NOT NULL, " +
-                                                                    "Lösung TEXT NOT NULL, " +
+                                                                    "Anzahl_Argumente_der_Loesung TEXT NOT NULL, " +
+                                                                    "Loesung TEXT NOT NULL, " +
                                                                     "FOREIGN KEY(ID) REFERENCES Aufgabe(ID)" +
                                                                     ")";
 
@@ -54,8 +54,8 @@ public class SQLQuerries {
                                                                 "ID INT PRIMARY KEY NOT NULL, " +
                                                                 "Art_der_Normalform TEXT NOT NULL, " +
                                                                 "Term TEXT NOT NULL, " +
-                                                                "Anzahl_Argumente_der_Lösung TEXT NOT NULL, " +
-                                                                "Lösung TEXT NOT NULL, " +
+                                                                "Anzahl_Argumente_der_Loesung TEXT NOT NULL, " +
+                                                                "Loesung TEXT NOT NULL, " +
                                                                 "FOREIGN KEY(ID) REFERENCES Aufgabe(ID)" +
                                                                 ")";
 

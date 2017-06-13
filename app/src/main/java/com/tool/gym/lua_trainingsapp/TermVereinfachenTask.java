@@ -173,7 +173,7 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
         int term = c.getColumnIndex("Term");
         int schwierigkeitsgrad = c.getColumnIndex("Schwierigkeitsgrad");
         int aufgabenstellung = c.getColumnIndex("Aufgabenstellung");
-        int loesung = c.getColumnIndex("Lösung");
+        int loesung = c.getColumnIndex("Loesung");
 
         //Testweise Ausgabe der Infos im Debugger
         Log.d(TermVereinfachenTask.class.getSimpleName(), "Aufgabenstellung " + c.getString(aufgabenstellung));
@@ -220,7 +220,7 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    //Lösung
+    //Lösung prüfen
     private void checkSolution() {
         Toast.makeText(getApplication(), "Lösung wird geprüft...", Toast.LENGTH_SHORT).show();
         ChooseTask task = new ChooseTask(getApplicationContext());

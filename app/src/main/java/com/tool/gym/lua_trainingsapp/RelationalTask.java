@@ -190,7 +190,7 @@ public class RelationalTask extends AppCompatActivity implements OnClickListener
         int aufgabenstellung = c.getColumnIndex("Aufgabenstellung");
         int schwierigkeitsgrad = c.getColumnIndex("Schwierigkeitsgrad");
         int aufgabenbeschreibung = c.getColumnIndex("Aufgabenbeschreibung");
-        int loesung = c.getColumnIndex("Lösung");
+        int loesung = c.getColumnIndex("Loesung");
         int relationennummer = c.getColumnIndex("Relationennummer");
 
         // Zuweisung der Infos aus der DB
