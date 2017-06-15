@@ -23,20 +23,26 @@ import android.widget.Toast;
 import com.tool.gym.lua_trainingsapp.Activities.TaskList;
 
 import Database.SQLiteDatabase;
+import ResultCheck.CheckFormula;
 
 /**
  * Created by Marcel on 21.05.2017.
  */
 
 public class NormalformenTask extends AppCompatActivity implements OnClickListener{
+    String[] taskinformation;
+    String lastinput = "";
+
     private Button checkbutton;
     private Button commitbutton;
     private Button help_button;
-    private EditText result;
-    SQLiteDatabase db;
-    Cursor c;
-    Bundle extras;
-    String sql, taskhelp;
+
+    private EditText    result;
+    SQLiteDatabase      db;
+    Cursor              c;
+    Bundle              extras;
+    String              sql,
+                        taskhelp;
 
     String LOG_TAG = TermVereinfachenTask.class.getSimpleName();
     private CustomKeyboard mCustomKeyboard;
@@ -93,7 +99,7 @@ public class NormalformenTask extends AppCompatActivity implements OnClickListen
     //eigene Methoden
     //Ermittelt die zu bearbeitende Aufgabe und zeigt diese an
     private void setTask() {
-        String[] taskinformation;
+
         taskinformation = getTask(); //Aufgabe aus DB
         showTaskdetails(taskinformation); //Anzeigen
     }
@@ -167,12 +173,15 @@ public class NormalformenTask extends AppCompatActivity implements OnClickListen
         int term = c.getColumnIndex("Term");
         int schwierigkeitsgrad = c.getColumnIndex("Schwierigkeitsgrad");
         int aufgabenstellung = c.getColumnIndex("Aufgabenstellung");
-        int anz_argumente = c.getColumnIndex("Anzahl_Argumente");
+        int anz_argumente = c.getColumnIndex("Anzahl_Argumente_der_Loesung");
+        int lösung = c.getColumnIndex("Loesung");
 
         //Zuweisung der Infos aus der DB
         taskinformation[0] = c.getString(aufgabenstellung);
         taskinformation[1] = c.getString(term);
         taskinformation[2] = c.getString(schwierigkeitsgrad);
+        taskinformation[3] = c.getString(lösung);
+        taskinformation[4] = c.getString(anz_argumente);
         taskhelp = c.getString(hilfe);
 
         //Cursor schließen
@@ -211,7 +220,32 @@ public class NormalformenTask extends AppCompatActivity implements OnClickListen
 
     //Lösung
     private void checkSolution() {
-        Toast.makeText(getApplication(), "Lösung wird geprüft...", Toast.LENGTH_SHORT).show();
+        /*Das Endergebnis wird geprüft.
+        Die Korrektheit der Umformung ist bereits gewährleistet.
+        Es wird noch die Anzahl der Argumente des Endergebnises mit der Lösung verglichen.
+         */
+
+        if(!lastinput.isEmpty())
+        {
+            lastinput = lastinput.replaceAll("\\W", "");
+            int anzahlArg = lastinput.length();
+            if (anzahlArg == Integer.parseInt(taskinformation[4])) {
+                Toast.makeText(getApplication(), "Ergebnis ist korrekt!", Toast.LENGTH_LONG).show();
+
+                /*
+                Update Einfügen !!
+                 */
+
+                ChooseTask task = new ChooseTask(getApplicationContext());
+                task.nextBoolTask(this);
+            }
+            else {
+                Toast.makeText(getApplication(), "Ergebnis ist falsch!", Toast.LENGTH_LONG).show();
+                /*
+                Update Einfügen !!
+                 */
+            }
+        }
         ChooseTask task = new ChooseTask(getApplicationContext());
         task.nextBoolTask(this);
     }
@@ -221,32 +255,50 @@ public class NormalformenTask extends AppCompatActivity implements OnClickListen
         if (!result.getText().toString().isEmpty()) {
             //Textfeld nicht leer => Prüfung geht weiter
 
-            // Container suchen + neues Textfeld anpassen
-            LinearLayout container = (LinearLayout) findViewById(R.id.eingabe_bool_term_vereinfachen);
-            TextView neuesfeld = new TextView(this);
-
-            //neues Textfeld anpassen
-            neuesfeld.setHeight(getPixel(35));
-            neuesfeld.setWidth(getPixel(500));
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-            params.setMargins(0, 0, 0, getPixel(20));
-            neuesfeld.setLayoutParams(params);
-            neuesfeld.setTextColor(ResourcesCompat.getColor(getResources(), R.color.Text, null));
-            neuesfeld.setGravity(Gravity.CENTER);
-            neuesfeld.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
-            neuesfeld.setText(result.getText());
-
-            //neues Textfeld hinzufügen
-            container.addView(neuesfeld);
-            container.setGravity(Gravity.CENTER_HORIZONTAL);
-
-            // Scroll-View immer ganz nach unten schieben
-            ScrollView scroll = (ScrollView) findViewById(R.id.eingabe_term);
-            scroll.fullScroll(ScrollView.FOCUS_DOWN);
+            // Überprüfen der Terme (Lösung aus der Datenbank, Eingegebene Umformung der Benutzers)
+            CheckFormula checkresult = new CheckFormula(taskinformation[3], result.getText().toString());
 
 
-            Integer anzahl = container.getChildCount();
-            Log.d(LOG_TAG, anzahl.toString());
+            //Bei richtigem Ergebnis wird die Lösung angezeigt.
+            if (checkresult.getRechenergebnis().equals("true")) {
+
+                // Container suchen + neues Textfeld anpassen
+                LinearLayout container = (LinearLayout) findViewById(R.id.eingabe_bool_term_vereinfachen);
+                TextView neuesfeld = new TextView(this);
+
+                //neues Textfeld anpassen
+                neuesfeld.setHeight(getPixel(35));
+                neuesfeld.setWidth(getPixel(500));
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                params.setMargins(0, 0, 0, getPixel(20));
+                neuesfeld.setLayoutParams(params);
+                neuesfeld.setTextColor(ResourcesCompat.getColor(getResources(), R.color.Text, null));
+                neuesfeld.setGravity(Gravity.CENTER);
+                neuesfeld.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
+                neuesfeld.setText(result.getText());
+
+                //neues Textfeld hinzufügen
+                container.addView(neuesfeld);
+                container.setGravity(Gravity.CENTER_HORIZONTAL);
+
+                // Scroll-View immer ganz nach unten schieben
+                ScrollView scroll = (ScrollView) findViewById(R.id.eingabe_term);
+                scroll.fullScroll(ScrollView.FOCUS_DOWN);
+
+
+                Integer anzahl = container.getChildCount();
+                lastinput = result.getText().toString();
+                Log.d(LOG_TAG, anzahl.toString());
+            }
+
+            //bei falschem Ergebnis wird Fehlermeldung angezeigt.
+            if (checkresult.getRechenergebnis().equals("false")) {
+                Toast.makeText(getApplication(), "Die eigegebene Umformung ist falsch!", Toast.LENGTH_SHORT).show();
+            }
+            //wenn der Algorithmus null zurückliefert ist in dem Algorithmus eine Exception entstanden.
+            if (checkresult.getRechenergebnis().equals("fehler")) {
+                Toast.makeText(getApplication(), "Die eigegebene Umformung konnte nicht geprüft werden. Bitte Syntax beachten!", Toast.LENGTH_SHORT).show();
+            }
 
         } else {
             Toast.makeText(getApplication(), "Textfeld leer - bitte befüllen!", Toast.LENGTH_SHORT).show();

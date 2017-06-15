@@ -10,6 +10,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/j2v8_android-3.0.5" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

@@ -24,6 +24,7 @@ import com.tool.gym.lua_trainingsapp.Activities.RandomTasks;
 import com.tool.gym.lua_trainingsapp.Activities.TaskList;
 
 import Database.SQLiteDatabase;
+import ResultCheck.CheckFormula;
 
 
 /**
@@ -32,10 +33,13 @@ import Database.SQLiteDatabase;
 
 
 public class TermVereinfachenTask extends AppCompatActivity implements OnClickListener {
+    String[] taskinformation;
+    String lastinput = "";
 
     private Button checkbutton;
     private Button commitbutton;
     private Button help_button;
+
     private EditText result;
     SQLiteDatabase db;
     Bundle extras;
@@ -145,7 +149,7 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
         }
 
         //gewählte Aufgabe verarbeiten
-        String[] taskinformation = new String[5];
+        taskinformation = new String[5];
         c = db.query(db.getWritableDatabase(), sql);
 
         //Ermittlung der konrekten Aufgabe => z.T. per Zufallszahl
@@ -173,6 +177,7 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
         int term = c.getColumnIndex("Term");
         int schwierigkeitsgrad = c.getColumnIndex("Schwierigkeitsgrad");
         int aufgabenstellung = c.getColumnIndex("Aufgabenstellung");
+        int anz_argumente = c.getColumnIndex("Anzahl_Argumente_der_Loesung");
         int loesung = c.getColumnIndex("Loesung");
 
         //Testweise Ausgabe der Infos im Debugger
@@ -184,6 +189,8 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
         taskinformation[0] = c.getString(aufgabenstellung);
         taskinformation[1] = c.getString(term);
         taskinformation[2] = c.getString(schwierigkeitsgrad);
+        taskinformation[3] = c.getString(loesung);
+        taskinformation[4] = c.getString(anz_argumente);
         taskhelp = c.getString(hilfe);
 
         //Cursor schließen
@@ -222,7 +229,32 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
 
     //Lösung prüfen
     private void checkSolution() {
-        Toast.makeText(getApplication(), "Lösung wird geprüft...", Toast.LENGTH_SHORT).show();
+        /*Das Endergebnis wird geprüft.
+        Die Korrektheit der Umformung ist bereits gewährleistet.
+        Es wird noch die Anzahl der Argumente des Endergebnises mit der Lösung verglichen.
+         */
+
+        if(!lastinput.isEmpty())
+        {
+            lastinput = lastinput.replaceAll("\\W", "");
+            int anzahlArg = lastinput.length();
+            if (anzahlArg == Integer.parseInt(taskinformation[4])) {
+                Toast.makeText(getApplication(), "Ergebnis ist korrekt!", Toast.LENGTH_LONG).show();
+
+                /*
+                Update Einfügen !!
+                 */
+
+                ChooseTask task = new ChooseTask(getApplicationContext());
+                task.nextBoolTask(this);
+            }
+            else {
+                Toast.makeText(getApplication(), "Ergebnis ist falsch!", Toast.LENGTH_LONG).show();
+                /*
+                Update Einfügen !!
+                 */
+            }
+        }
         ChooseTask task = new ChooseTask(getApplicationContext());
         task.nextBoolTask(this);
     }
@@ -232,32 +264,47 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
         if (!result.getText().toString().isEmpty()) {
             //Textfeld nicht leer => Prüfung geht weiter
 
-            // Container suchen + neues Textfeld anpassen
-            LinearLayout container = (LinearLayout) findViewById(R.id.eingabe_bool_term_vereinfachen);
-            TextView neuesfeld = new TextView(this);
+            CheckFormula checkresult = new CheckFormula(taskinformation[3], result.getText().toString());
 
-            //neues Textfeld anpassen
-            neuesfeld.setHeight(getPixel(35));
-            neuesfeld.setWidth(getPixel(500));
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-            params.setMargins(0, 0, 0, getPixel(20));
-            neuesfeld.setLayoutParams(params);
-            neuesfeld.setTextColor(ResourcesCompat.getColor(getResources(), R.color.Text, null));
-            neuesfeld.setGravity(Gravity.CENTER);
-            neuesfeld.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
-            neuesfeld.setText(result.getText());
+            //Bei richtigem Ergebnis wird die Lösung angezeigt.
+            if (checkresult.getRechenergebnis().equals("true")) {
 
-            //neues Textfeld hinzufügen
-            container.addView(neuesfeld);
-            container.setGravity(Gravity.CENTER_HORIZONTAL);
+                // Container suchen + neues Textfeld anpassen
+                LinearLayout container = (LinearLayout) findViewById(R.id.eingabe_bool_term_vereinfachen);
+                TextView neuesfeld = new TextView(this);
 
-            // Scroll-View immer ganz nach unten schieben
-            ScrollView scroll = (ScrollView) findViewById(R.id.eingabe_term);
-            scroll.fullScroll(ScrollView.FOCUS_DOWN);
+                //neues Textfeld anpassen
+                neuesfeld.setHeight(getPixel(35));
+                neuesfeld.setWidth(getPixel(500));
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                params.setMargins(0, 0, 0, getPixel(20));
+                neuesfeld.setLayoutParams(params);
+                neuesfeld.setTextColor(ResourcesCompat.getColor(getResources(), R.color.Text, null));
+                neuesfeld.setGravity(Gravity.CENTER);
+                neuesfeld.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
+                neuesfeld.setText(result.getText());
 
+                //neues Textfeld hinzufügen
+                container.addView(neuesfeld);
+                container.setGravity(Gravity.CENTER_HORIZONTAL);
 
-            Integer anzahl = container.getChildCount();
-            Log.d(LOG_TAG, anzahl.toString());
+                // Scroll-View immer ganz nach unten schieben
+                ScrollView scroll = (ScrollView) findViewById(R.id.eingabe_term);
+                scroll.fullScroll(ScrollView.FOCUS_DOWN);
+
+                Integer anzahl = container.getChildCount();
+                lastinput = result.getText().toString();
+                Log.d(LOG_TAG, anzahl.toString());
+            }
+
+            //bei falschem Ergebnis wird Fehlermeldung angezeigt.
+            if (checkresult.getRechenergebnis().equals("false")) {
+                Toast.makeText(getApplication(), "Die eigegebene Umformung ist falsch!", Toast.LENGTH_SHORT).show();
+            }
+            //wenn der Algorithmus null zurückliefert ist in dem Algorithmus eine Exception entstanden.
+            if (checkresult.getRechenergebnis().equals("fehler")) {
+                Toast.makeText(getApplication(), "Die eigegebene Umformung konnte nicht geprüft werden. Bitte Syntax beachten!", Toast.LENGTH_SHORT).show();
+            }
 
         } else {
             Toast.makeText(getApplication(), "Textfeld leer - bitte befüllen!", Toast.LENGTH_SHORT).show();

@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/LuA_Trainingsapp.iml" filepath="$PROJECT_DIR$/LuA_Trainingsapp.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/j2v8_android-3.0.5/j2v8_android-3.0.5.iml" filepath="$PROJECT_DIR$/j2v8_android-3.0.5/j2v8_android-3.0.5.iml" />
     </modules>
   </component>
 </project>
