@@ -16,7 +16,8 @@ public class CheckFormula {
 	private boolean wertInputB;
 	private boolean wertInputC;
 	private boolean wertInputD;
-	private String rechenergebnis;
+	private String formelvergleichergebnis;
+	private String [] wahrheitstabellenErgebnis;
 	
 	
 	public CheckFormula (String formel, String umformung)
@@ -49,59 +50,73 @@ public class CheckFormula {
 	umformung = umformung.replace('D', 'd');
     this.formelinput = formel;
     this.umformunginput= umformung;
-    
-    rechenergebnis = formelVergleich();
+
+		formelvergleichergebnis = formelVergleich();
 	};
 	
-	public CheckFormula(boolean a, boolean b, boolean c, boolean d, String formel){
+	public CheckFormula(String formel){
 		
-	//Der ï¿½berladene Konstruktor fï¿½r das gezielte Errechnen eines boolschen Ausdrucks.
+	//Der überladene Konstruktor fuer das gezielte Errechnen eines boolschen Ausdrucks fuer die Wahrheitstabellen.
 	formel = formel.replace('+', '|');
 	formel = formel.replace('*', '&');
 	formel = formel.replace('¬', '!');
+	formel = formel.replace('A', 'a');
+	formel = formel.replace('B', 'b');
+	formel = formel.replace('C', 'c');
+	formel = formel.replace('D', 'd');
 	
 	this.formelinput = formel;
-	this.wertInputA = a;
-	this.wertInputB = b;
-	this.wertInputC = c;
-	this.wertInputD = d;
-	
-	rechenergebnis = ausdruckBerechnen();
+
+	wahrheitstabellenErgebnis = new String [16];
+	wahrheitstabellenErgebnis =	calculatewahrheitstabelle();
 	
 	}
 	
 	private String formelVergleich (){
-	
+
 	/* PotenzmengeVariablen enthï¿½lt ein zweidimensionales Array mit allen
 	 * mï¿½glichen true, false Kombinationen bei 4 Variablen
-	 * 
-	 * Wenn fï¿½r jede mï¿½gliche Kombination, der boolschen Variablen, 
+	 *
+	 * Wenn fï¿½r jede mï¿½gliche Kombination, der boolschen Variablen,
 	 * das selbe Ergebnis bei den beiden Bedingungen herauskommt,
 	 * ist die Umformung richtig.
 	 */
-		
-	String ergebnis="";																	
-	PotenzmengeVariablen potenzmenge= new PotenzmengeVariablen();		
-																		
-	for( int i=0; i<16; i++){
-		ergebnis =ausdruckBerechnen(potenzmenge.potenzmenge[i][0], 
-							   potenzmenge.potenzmenge[i][1],
-							   potenzmenge.potenzmenge[i][2],
-							   potenzmenge.potenzmenge[i][3],
-							   formelinput,
-							   umformunginput);
-	if (ergebnis.equals("false")){
+		String ergebnis="";
+		PotenzmengeVariablen potenzmenge= new PotenzmengeVariablen();
+
+		for( int i=0; i<16; i++){
+			ergebnis =ausdruckBerechnen(potenzmenge.potenzmenge[i][0],
+					potenzmenge.potenzmenge[i][1],
+					potenzmenge.potenzmenge[i][2],
+					potenzmenge.potenzmenge[i][3],
+					formelinput,
+					umformunginput);
+			if (ergebnis.equals("false")){
+				return ergebnis;
+			}
+
+			if (ergebnis.equals("fehler"))
+			{
+				return "fehler";
+			}
+		}
 		return ergebnis;
 	}
-	
-	if (ergebnis.equals("fehler"))
-	{
-		return "fehler";
+
+	private String [] calculatewahrheitstabelle (){
+
+		String [] ergebnis= new String [16];
+		PotenzmengeVariablen potenzmenge= new PotenzmengeVariablen();
+
+		for( int i=0; i<16; i++){
+			ergebnis [i] =ausdruckBerechnen(potenzmenge.potenzmenge[i][0],
+					potenzmenge.potenzmenge[i][1],
+					potenzmenge.potenzmenge[i][2],
+					potenzmenge.potenzmenge[i][3],
+					formelinput);
+		}
+		return ergebnis;
 	}
-	}
-	return ergebnis;
-	}
-	
 	private String ausdruckBerechnen(boolean a, boolean b, boolean c, boolean d, String Formel1, String Formel2)
 	{
 		try {
@@ -135,31 +150,41 @@ public class CheckFormula {
 		}
 		return "false";
 	}
-	
-	private String ausdruckBerechnen (){
 
+	private String ausdruckBerechnen(boolean a, boolean b, boolean c, boolean d, String Formel1)
+	{
 		try {
 			V8 runtime = V8.createV8Runtime();
-			runtime.add("a", wertInputA);
-			runtime.add("b", wertInputB);
-			runtime.add("c", wertInputC);
-			runtime.add("d", wertInputD);
-	    	formelinput = runtime.executeScript(formelinput).toString();
-	    }
-	    catch (Exception e) {
+			runtime.add("a", a);
+			runtime.add("b", b);
+			runtime.add("c", c);
+			runtime.add("d", d);
+
+			//Wenn eine Formel bereits 0,1, true oder false lautet, mï¿½ssen bzw. kï¿½nnen keine Variablenwerte mehr errechnet werden.
+			if (!Formel1.equals("1") | !Formel1.equals("0") | !Formel1.equals("true") | !Formel1.equals("false")) {
+				Formel1 = runtime.executeScript(Formel1).toString();
+			}
+		}
+		catch (Exception e){
 			return "fehler";
 		}
-	    if (formelinput.equals("0") | formelinput.equals("false")){
-	    	return "0";
-	    }
-	    if (formelinput.equals("1") | formelinput.equals("true")){
-	    	return "1";
-	    }
-	    return "fehler";
+
+		if(Formel1.equals("1")| Formel1.equals("true")){
+			return "1";
+		}
+		if(Formel1.equals("0")| Formel1.equals("false")){
+			return "0";
+		}
+		return "fehler";
 	}
 	
-	public String getRechenergebnis (){
-		return rechenergebnis;
+	public String getformelvergleichergebnis (){
+
+		return formelvergleichergebnis;
+	}
+	public String [] getwahrheitstabellenErgebnis (){
+
+		return wahrheitstabellenErgebnis;
 	}
 	
 }

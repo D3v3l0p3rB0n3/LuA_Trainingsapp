@@ -267,7 +267,7 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
             CheckFormula checkresult = new CheckFormula(taskinformation[3], result.getText().toString());
 
             //Bei richtigem Ergebnis wird die Lösung angezeigt.
-            if (checkresult.getRechenergebnis().equals("true")) {
+            if (checkresult.getformelvergleichergebnis().equals("true")) {
 
                 // Container suchen + neues Textfeld anpassen
                 LinearLayout container = (LinearLayout) findViewById(R.id.eingabe_bool_term_vereinfachen);
@@ -298,11 +298,11 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
             }
 
             //bei falschem Ergebnis wird Fehlermeldung angezeigt.
-            if (checkresult.getRechenergebnis().equals("false")) {
+            if (checkresult.getformelvergleichergebnis().equals("false")) {
                 Toast.makeText(getApplication(), "Die eigegebene Umformung ist falsch!", Toast.LENGTH_SHORT).show();
             }
             //wenn der Algorithmus null zurückliefert ist in dem Algorithmus eine Exception entstanden.
-            if (checkresult.getRechenergebnis().equals("fehler")) {
+            if (checkresult.getformelvergleichergebnis().equals("fehler")) {
                 Toast.makeText(getApplication(), "Die eigegebene Umformung konnte nicht geprüft werden. Bitte Syntax beachten!", Toast.LENGTH_SHORT).show();
             }
 
