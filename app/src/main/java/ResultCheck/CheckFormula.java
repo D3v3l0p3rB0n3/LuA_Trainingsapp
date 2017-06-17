@@ -1,5 +1,9 @@
 package ResultCheck;
 
+import android.content.Intent;
+import android.os.AsyncTask;
+import android.util.Log;
+
 import com.eclipsesource.v8.V8;
 import com.eclipsesource.v8.V8ScriptExecutionException;
 
@@ -68,7 +72,9 @@ public class CheckFormula {
 	this.formelinput = formel;
 
 	wahrheitstabellenErgebnis = new String [16];
-	wahrheitstabellenErgebnis =	calculatewahrheitstabelle();
+	//wahrheitstabellenErgebnis =	calculatewahrheitstabelle();
+	Test t1 = new Test(); //Async Task
+	t1.execute();
 	
 	}
 	
@@ -185,6 +191,22 @@ public class CheckFormula {
 	public String [] getwahrheitstabellenErgebnis (){
 
 		return wahrheitstabellenErgebnis;
+	}
+
+	// Test Marcel
+	public class Test extends AsyncTask<String, Integer, String[]>
+	{
+		@Override
+		protected String[] doInBackground(String... params) {
+			Log.d(CheckFormula.class.getSimpleName(), "Bin nun im Asychronen Task");
+			wahrheitstabellenErgebnis = calculatewahrheitstabelle();
+			return  wahrheitstabellenErgebnis;
+		}
+
+		@Override
+		protected void onPostExecute(String[] strings) {
+			Log.d(CheckFormula.class.getSimpleName(), "Hintergrundrechnung beendet");
+		}
 	}
 	
 }
