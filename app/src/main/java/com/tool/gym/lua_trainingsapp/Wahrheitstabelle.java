@@ -33,10 +33,10 @@ public class Wahrheitstabelle extends AppCompatActivity {
 
         String[][] array = new String[][] {
                 { "A", "B", "Result" },
-                { "1", "1", "" },
-                { "1", "0", "" },
+                { "0", "0", "" },
                 { "0", "1", "" },
-                { "0", "0", "" }};
+                { "1", "0", "" },
+                { "1", "1", "" }};
 
         for (int i = 0; i <= 4; i++) {
             row[i] = new TableRow(task); //create a new tablerow
@@ -72,14 +72,14 @@ public class Wahrheitstabelle extends AppCompatActivity {
 
         String[][] array = new String[][] {
                 { "A", "B", "C" ,"Result" },
-                { "1", "1", "1","" },
-                { "1", "1", "0","" },
-                { "1", "0", "1","" },
-                { "1", "0", "0","" },
-                { "0", "1", "1","" },
-                { "0", "1", "0","" },
+                { "0", "0", "0","" },
                 { "0", "0", "1","" },
-                { "0", "0", "0","" }};
+                { "0", "1", "0","" },
+                { "0", "1", "1","" },
+                { "1", "0", "0","" },
+                { "1", "0", "1","" },
+                { "1", "1", "0","" },
+                { "1", "1", "1","" }};
 
         for (int i = 0; i <= 8; i++) {
             row[i] = new TableRow(task); //create a new tablerow
