@@ -248,36 +248,38 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
         Die Korrektheit der Umformung ist bereits gewährleistet.
         Es wird noch die Anzahl der Argumente des Endergebnises mit der Lösung verglichen.
          */
+        if (lastinput.contains("→") | lastinput.contains("⟷")){
+            Toast.makeText(getApplication(), "Solang das Endergebnis eine Implikation oder Äquivalenzen enthält, kann es nicht bestätigt werden. Bitte weiter Umformen!", Toast.LENGTH_LONG).show();
+        }
+        else{
+            if(!lastinput.isEmpty())
+            {
+                lastinput = lastinput.replaceAll("\\W", "");
+                int anzahlArg = lastinput.length();
+                if (anzahlArg == Integer.parseInt(taskinformation[4])) {
+                    Toast.makeText(getApplication(), "Ergebnis ist korrekt!", Toast.LENGTH_LONG).show();
 
-        if(!lastinput.isEmpty())
-        {
-            lastinput = lastinput.replaceAll("\\W", "");
-            int anzahlArg = lastinput.length();
-            if (anzahlArg == Integer.parseInt(taskinformation[4])) {
-                Toast.makeText(getApplication(), "Ergebnis ist korrekt!", Toast.LENGTH_LONG).show();
+                    Cursor cursor = db.query(db.getWritableDatabase(),"UPDATE Aufgabenzustand SET Status = 'Richtig', Anzahl_der_Bearbeitungen = Anzahl_der_Bearbeitungen + 1 WHERE ID = " + taskinformation[5] );
+                    cursor.moveToFirst();
+                    cursor.close();
 
-                Cursor cursor = db.query(db.getWritableDatabase(),"UPDATE Aufgabenzustand SET Status = 'Richtig', Anzahl_der_Bearbeitungen = Anzahl_der_Bearbeitungen + 1 WHERE ID = " + taskinformation[5] );
-                cursor.moveToFirst();
-                cursor.close();
+                    ChooseTask task = new ChooseTask(getApplicationContext());
+                    task.nextBoolTask(this);
+                }
+                else {
+                    Toast.makeText(getApplication(), "Das Endergebnis ist nicht vollständig vereinfacht!", Toast.LENGTH_LONG).show();
 
-                ChooseTask task = new ChooseTask(getApplicationContext());
-                task.nextBoolTask(this);
-            }
-            else {
-                Toast.makeText(getApplication(), "Das Endergebnis ist nicht vollständig vereinfacht!", Toast.LENGTH_LONG).show();
-
-                Cursor cursor = db.query(db.getWritableDatabase(),"UPDATE Aufgabenzustand SET Status = 'Falsch', Anzahl_der_Bearbeitungen = Anzahl_der_Bearbeitungen + 1 WHERE ID = " + taskinformation[5] );
-                cursor.moveToFirst();
-                cursor.close();
+                    Cursor cursor = db.query(db.getWritableDatabase(),"UPDATE Aufgabenzustand SET Status = 'Falsch', Anzahl_der_Bearbeitungen = Anzahl_der_Bearbeitungen + 1 WHERE ID = " + taskinformation[5] );
+                    cursor.moveToFirst();
+                    cursor.close();
+                }
             }
         }
-        ChooseTask task = new ChooseTask(getApplicationContext());
-        task.nextBoolTask(this);
     }
 
     //Korrektheit der Umformung prüfen
     private void checkInput() {
-        if (!result.getText().toString().isEmpty() & !result.getText().toString().contains("→")) {
+        if (!result.getText().toString().isEmpty() & !result.getText().toString().contains("→") & !result.getText().toString().contains("⟷")) {
             //Textfeld nicht leer und keine Implikation => Prüfung geht weiter
             Log.d(TermVereinfachenTask.class.getSimpleName(), "Prüfung der Umformung gestartet");
             Toast.makeText(getApplication(), "Umformung wird geprüft...", Toast.LENGTH_SHORT).show();
@@ -330,8 +332,37 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
             if (result.getText().toString().isEmpty()) {
                 Toast.makeText(getApplication(), "Textfeld leer - bitte befüllen!", Toast.LENGTH_SHORT).show();
             }
-            if(result.getText().toString().contains("→")){
-                Toast.makeText(getApplication(), "Eine Umformung kann erst geprüft werden sobald sie keine Implikationen mehr enthält!", Toast.LENGTH_LONG).show();
+            if(result.getText().toString().contains("→") | result.getText().toString().contains("⟷")){
+
+                //Wenn eine Eingabe eine Implikation oder eine Äquivalenz enthält kann sie zwar nicht geprüft werden
+                // aber die Möglichkeit des Bestätigens der Eingabe muss trotzdem gegeben sein.
+                // Container suchen + neues Textfeld anpassen
+                LinearLayout container = (LinearLayout) findViewById(R.id.eingabe_bool_term_vereinfachen);
+                TextView neuesfeld = new TextView(this);
+
+                //neues Textfeld anpassen
+                neuesfeld.setHeight(getPixel(35));
+                neuesfeld.setWidth(getPixel(500));
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                params.setMargins(0, 0, 0, getPixel(20));
+                neuesfeld.setLayoutParams(params);
+                neuesfeld.setTextColor(ResourcesCompat.getColor(getResources(), R.color.Text, null));
+                neuesfeld.setGravity(Gravity.CENTER);
+                neuesfeld.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
+                neuesfeld.setText(result.getText());
+
+                //neues Textfeld hinzufügen
+                container.addView(neuesfeld);
+                container.setGravity(Gravity.CENTER_HORIZONTAL);
+
+                // Scroll-View immer ganz nach unten schieben
+                ScrollView scroll = (ScrollView) findViewById(R.id.eingabe_term);
+                scroll.fullScroll(ScrollView.FOCUS_DOWN);
+
+                Integer anzahl = container.getChildCount();
+                lastinput = result.getText().toString();
+                Log.d(LOG_TAG, anzahl.toString());
+                Toast.makeText(getApplication(), "Eine Umformung kann erst geprüft werden sobald sie weder Implikationen noch Äquivalenzen enthält. Bitte weiter Umformen um den Term zu überprüfen!", Toast.LENGTH_LONG).show();
             }
         }
     }
