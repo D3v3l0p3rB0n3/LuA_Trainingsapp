@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -45,6 +47,7 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
     Bundle extras;
     String sql, taskhelp;
     Cursor c;
+    private TextWatcher watcher;
 
     String LOG_TAG = TermVereinfachenTask.class.getSimpleName();
     private CustomKeyboard mCustomKeyboard;
@@ -71,6 +74,17 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
 
         mCustomKeyboard = new CustomKeyboard(this, R.id.keyboardview, R.xml.qwertz, R.id.TitleArea, R.id.BottomArea);
         mCustomKeyboard.registerEditText(R.id.bool_term_result);
+
+        watcher = new TextWatcher() {
+
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            public void afterTextChanged(Editable editable) {}
+
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                result.setSelection(result.length());}
+        };
+        result.addTextChangedListener(watcher);
+
 
         //Aufgabe laden
         setTask();

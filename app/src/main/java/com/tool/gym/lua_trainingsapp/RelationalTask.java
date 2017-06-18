@@ -1,8 +1,7 @@
 package com.tool.gym.lua_trainingsapp;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Context;
+
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -14,13 +13,10 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.tool.gym.lua_trainingsapp.Activities.RandomTasks;
 import com.tool.gym.lua_trainingsapp.Activities.TaskList;
 
 import Database.SQLiteDatabase;
@@ -71,14 +67,18 @@ public class RelationalTask extends AppCompatActivity implements OnClickListener
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if(charSequence.toString().isEmpty()){
                     result.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                    result.setSelection(result.length());
                 }
                 else if(loesung.startsWith(charSequence.toString())){
                     result.setBackgroundColor(Color.parseColor("#BCED91"));
                     result.postDelayed(colourDefault, 150);
+                    result.setSelection(result.length());
                 }
                 else {
                     result.setBackgroundColor(Color.parseColor("#FF4040"));
                     result.postDelayed(colourDefault, 150);
+                    result.setSelection(result.length());
+
                 }
             }
         };

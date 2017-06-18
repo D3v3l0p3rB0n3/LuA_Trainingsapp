@@ -3,12 +3,17 @@ package com.tool.gym.lua_trainingsapp;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.Layout;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -43,6 +48,7 @@ public class NormalformenTask extends AppCompatActivity implements OnClickListen
     Bundle              extras;
     String              sql,
                         taskhelp;
+    TextWatcher watcher;
 
     String LOG_TAG = TermVereinfachenTask.class.getSimpleName();
     private CustomKeyboard mCustomKeyboard;
@@ -70,6 +76,17 @@ public class NormalformenTask extends AppCompatActivity implements OnClickListen
         mCustomKeyboard = new CustomKeyboard(this, R.id.keyboardview, R.xml.qwertz, R.id.TitleArea, R.id.BottomArea);
         mCustomKeyboard.registerEditText(R.id.bool_term_result);
 
+        watcher = new TextWatcher() {
+
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            public void afterTextChanged(Editable editable) {}
+
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    result.setSelection(result.length());}
+        };
+        result.addTextChangedListener(watcher);
+
+
         //Aufgabe laden
         setTask();
 
@@ -86,8 +103,6 @@ public class NormalformenTask extends AppCompatActivity implements OnClickListen
             case R.id.commitbutton: // Lösung prüfen
                 checkSolution();
                 break;
-
-
             case R.id.helpbutton:
                 Intent help = new Intent(NormalformenTask.this, HelpPopUp.class);
                 help.putExtra("text", taskhelp);

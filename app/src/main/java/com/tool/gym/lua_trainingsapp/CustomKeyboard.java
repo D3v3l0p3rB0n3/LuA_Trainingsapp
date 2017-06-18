@@ -4,8 +4,11 @@ import android.app.Activity;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.inputmethodservice.KeyboardView.OnKeyboardActionListener;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.text.Editable;
 import android.text.InputType;
+import android.text.Layout;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,6 +18,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 
 class CustomKeyboard {
@@ -23,6 +27,7 @@ class CustomKeyboard {
     private LinearLayout title;
     private LinearLayout bottom;
     private Activity     mHostActivity;
+    private EditText     text;
     private boolean shifted = false;
 
     private OnKeyboardActionListener mOnKeyboardActionListener = new OnKeyboardActionListener() {
@@ -115,18 +120,24 @@ class CustomKeyboard {
 
 
     public void registerEditText(int resid) {
-        EditText edittext= (EditText)mHostActivity.findViewById(resid);
-        edittext.setOnFocusChangeListener(new OnFocusChangeListener() {
+        text= (EditText)mHostActivity.findViewById(resid);
+        text.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override public void onFocusChange(View v, boolean hasFocus) {
-                if( hasFocus ) showCustomKeyboard(v); else hideCustomKeyboard();
+                if( hasFocus ) {
+                    showCustomKeyboard(v);
+                }
+                else {
+                    hideCustomKeyboard();
+                }
             }
         });
-        edittext.setOnClickListener(new OnClickListener() {
+        text.setOnClickListener(new OnClickListener() {
             @Override public void onClick(View v) {
                 showCustomKeyboard(v);
             }
         });
-        edittext.setOnTouchListener(new OnTouchListener() {
+        text.setOnTouchListener(new OnTouchListener() {
+            @RequiresApi(api = Build.VERSION_CODES.ICE_CREAM_SANDWICH)
             @Override public boolean onTouch(View v, MotionEvent event) {
                 EditText edittext = (EditText) v;
                 int inType = edittext.getInputType();
@@ -136,7 +147,7 @@ class CustomKeyboard {
                 return true;
             }
         });
-        edittext.setInputType(edittext.getInputType() | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+        text.setInputType(text.getInputType() | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
     }
 
 
