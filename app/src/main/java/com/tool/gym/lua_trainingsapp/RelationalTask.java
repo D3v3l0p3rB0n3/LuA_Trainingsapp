@@ -83,7 +83,7 @@ public class RelationalTask extends AppCompatActivity implements OnClickListener
             }
         };
 
-        mCustomKeyboard = new CustomKeyboard(this, R.id.keyboardview, R.xml.qwertz, R.id.TitleArea, R.id.BottomArea);
+        mCustomKeyboard = new CustomKeyboard(this, R.id.keyboardview,  R.xml.keyboard_relational,R.xml.qwertz, R.id.TitleArea, R.id.BottomArea);
         mCustomKeyboard.registerEditText(R.id.relationalresult);
 
         //Listener für das Eingabefeld

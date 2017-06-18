@@ -28,6 +28,8 @@ class CustomKeyboard {
     private LinearLayout bottom;
     private Activity     mHostActivity;
     private EditText     text;
+    private int          specialkeyboard;
+    private int          basickeyboard;
     private boolean shifted = false;
 
     private OnKeyboardActionListener mOnKeyboardActionListener = new OnKeyboardActionListener() {
@@ -55,12 +57,12 @@ class CustomKeyboard {
         private void handleshift() {
             if(!shifted)
             {
-                mKeyboardView.setKeyboard(new Keyboard(mHostActivity, R.xml.keyboard_relational));
+                mKeyboardView.setKeyboard(new Keyboard(mHostActivity, specialkeyboard));
                 shifted = true;
             }
             else
             {
-                mKeyboardView.setKeyboard(new Keyboard(mHostActivity, R.xml.qwertz));
+                mKeyboardView.setKeyboard(new Keyboard(mHostActivity, basickeyboard));
                 shifted = false;
             }
         }
@@ -87,12 +89,14 @@ class CustomKeyboard {
         }
     };
 
-    public CustomKeyboard(Activity host, int viewid, int layoutid, int titleid, int bottomid) {
+    public CustomKeyboard(Activity host, int viewid, int layoutid, int layoutid_2, int titleid, int bottomid) {
         mHostActivity= host;
         title = (LinearLayout) mHostActivity.findViewById(titleid);
         bottom = (LinearLayout) mHostActivity.findViewById(bottomid);
         mKeyboardView= (KeyboardView)mHostActivity.findViewById(viewid);
         mKeyboardView.setKeyboard(new Keyboard(mHostActivity, layoutid));
+        specialkeyboard = layoutid_2;
+        basickeyboard   = layoutid;
         mKeyboardView.setPreviewEnabled(false); // NOTE Do not show the preview balloons
         mKeyboardView.setOnKeyboardActionListener(mOnKeyboardActionListener);
         // Hide the standard keyboard initially

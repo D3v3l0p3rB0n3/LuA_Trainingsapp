@@ -72,7 +72,7 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
 
         result = (EditText) findViewById(R.id.bool_term_result);
 
-        mCustomKeyboard = new CustomKeyboard(this, R.id.keyboardview, R.xml.qwertz, R.id.TitleArea, R.id.BottomArea);
+        mCustomKeyboard = new CustomKeyboard(this, R.id.keyboardview, R.xml.boolkeyboard ,R.xml.qwertz, R.id.TitleArea, R.id.BottomArea);
         mCustomKeyboard.registerEditText(R.id.bool_term_result);
 
         watcher = new TextWatcher() {
