@@ -135,7 +135,7 @@
                 android:text="Schritt prüfen"
                 android:layout_gravity="center"
                 android:layout_width="@dimen/buttonsize"
-                android:layout_height="30sp"
+                android:layout_height="@dimen/button_height"
                 android:background="@drawable/button"
                 />
         </LinearLayout>
@@ -150,7 +150,7 @@
             <Button
                 android:id="@+id/commitbutton"
                 android:layout_width="@dimen/buttonsize"
-                android:layout_height="30sp"
+                android:layout_height="@dimen/button_height"
                 android:background="@drawable/button"
                 android:text="Abschließen" />
         </LinearLayout>

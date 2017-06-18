@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.database.Cursor;
 
 import android.graphics.Color;
+import android.graphics.ImageFormat;
 import android.os.Bundle;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +19,7 @@ import android.widget.Toast;
 import Database.SQLiteDatabase;
 import ResultCheck.CheckFormula;
 import ResultCheck.PotenzmengeVariablen;
+
 import java.lang.Object;
 
 import com.tool.gym.lua_trainingsapp.Activities.RandomTasks;
@@ -49,7 +52,7 @@ public class WahrheitstabellenTask extends AppCompatActivity implements OnClickL
     TextView field16;
 
 
-    String sql, taskhelp;
+    String sql, taskhelp, taskid;
     Cursor c;
     SQLiteDatabase db;
     Bundle extras;
@@ -59,22 +62,22 @@ public class WahrheitstabellenTask extends AppCompatActivity implements OnClickL
         db = new Database.SQLiteDatabase(this);
         extras = getIntent().getExtras();
 
-         field1 = (TextView) findViewById(R.id.row1);
-         field2 = (TextView) findViewById(R.id.row2);
-         field3 = (TextView) findViewById(R.id.row3);
-         field4 = (TextView) findViewById(R.id.row4);
-         field5 = (TextView) findViewById(R.id.row5);
-         field6 = (TextView) findViewById(R.id.row6);
-         field7 = (TextView) findViewById(R.id.row7);
-         field8 = (TextView) findViewById(R.id.row8);
-         field9 = (TextView) findViewById(R.id.row9);
-         field10 = (TextView) findViewById(R.id.row10);
-         field11 = (TextView) findViewById(R.id.row11);
-         field12 = (TextView) findViewById(R.id.row12);
-         field13 = (TextView) findViewById(R.id.row13);
-         field14 = (TextView) findViewById(R.id.row14);
-         field15 = (TextView) findViewById(R.id.row15);
-         field16 = (TextView) findViewById(R.id.row16);
+        field1 = (TextView) findViewById(R.id.row1);
+        field2 = (TextView) findViewById(R.id.row2);
+        field3 = (TextView) findViewById(R.id.row3);
+        field4 = (TextView) findViewById(R.id.row4);
+        field5 = (TextView) findViewById(R.id.row5);
+        field6 = (TextView) findViewById(R.id.row6);
+        field7 = (TextView) findViewById(R.id.row7);
+        field8 = (TextView) findViewById(R.id.row8);
+        field9 = (TextView) findViewById(R.id.row9);
+        field10 = (TextView) findViewById(R.id.row10);
+        field11 = (TextView) findViewById(R.id.row11);
+        field12 = (TextView) findViewById(R.id.row12);
+        field13 = (TextView) findViewById(R.id.row13);
+        field14 = (TextView) findViewById(R.id.row14);
+        field15 = (TextView) findViewById(R.id.row15);
+        field16 = (TextView) findViewById(R.id.row16);
 
         //Layout
         setContentView(R.layout.wahrheitstabellentask_layout);
@@ -102,8 +105,7 @@ public class WahrheitstabellenTask extends AppCompatActivity implements OnClickL
     //Führt den Select auf die Datenbank aus, um die Aufgabe zu ermitteln
     private String[] getTask() {
 
-        if (extras!=null)
-        {
+        if (extras != null) {
             String choser = extras.getString("startactivity");
 
             if (choser.equals(TaskList.class.getSimpleName())) // Aufgabe aus der gezielten Aufgabenauswahl gewählt
@@ -114,8 +116,7 @@ public class WahrheitstabellenTask extends AppCompatActivity implements OnClickL
                         "FROM Aufgabenzustand az INNER JOIN Aufgabe a on az.ID = a.ID " +
                         "INNER JOIN Wahrheitstabellen w ON a.id = w.id " +
                         "WHERE a.id =  " + aufgabe + ";";
-            }
-            else if (choser.equals(ChooseTask.class.getSimpleName())) //Zufällige Aufgabenauswahl => zuerst noch geringste Bearbeitungszahl ermitteln
+            } else if (choser.equals(ChooseTask.class.getSimpleName())) //Zufällige Aufgabenauswahl => zuerst noch geringste Bearbeitungszahl ermitteln
             {
 
                 // Kleinste Bearbeitungszahl ermitteln
@@ -146,22 +147,21 @@ public class WahrheitstabellenTask extends AppCompatActivity implements OnClickL
 
         //Ermittlung der konrekten Aufgabe => z.T. per Zufallszahl
         Integer anzahl = c.getCount();
-        Integer zufall,x1;
+        Integer zufall, x1;
         if (anzahl > 1) // wenn mehrs als 1 Aufgabe aus der DB geholt wurde => Zufallszahl für die Aufgabe, sonst nur die 1 Aufgabe
         {
-            x1= (int) ((Math.random())*anzahl+1); //Zufallszahl zwischen 0 - Anzahl der Aufgaben - 1
+            x1 = (int) ((Math.random()) * anzahl + 1); //Zufallszahl zwischen 0 - Anzahl der Aufgaben - 1
             zufall = x1 - 1;
 
 
-        }
-        else
-        {
+        } else {
             zufall = 0;
         }
 
         c.moveToPosition(zufall);
 
         // Spaltennummer herausfinden
+        int id = c.getColumnIndex("ID");
         int hilfe = c.getColumnIndex("Hilfe");
         int term = c.getColumnIndex("Term");
         int schwierigkeitsgrad = c.getColumnIndex("Schwierigkeitsgrad");
@@ -174,6 +174,7 @@ public class WahrheitstabellenTask extends AppCompatActivity implements OnClickL
         taskinformation[3] = c.getString(anz_argumente);
         taskinformation[4] = c.getString(schwierigkeitsgrad);
         taskhelp = c.getString(hilfe);
+        taskid = c.getString(id);
 
         //Cursor schließen
         c.close();
@@ -204,34 +205,37 @@ public class WahrheitstabellenTask extends AppCompatActivity implements OnClickL
     }
 
     //Bild für den Schwierigkeitsgrad festlegen
-    private void setDifficulty(String difficulty ) {
+    private void setDifficulty(String difficulty) {
         LinearLayout diff_png = (LinearLayout) findViewById(R.id.difficulty);
         if (difficulty.equals("1")) {
             diff_png.setBackgroundResource(R.drawable.schwierigkeit1);
-        }
-        else if (difficulty.equals("2")) {
+        } else if (difficulty.equals("2")) {
             diff_png.setBackgroundResource(R.drawable.schwierigkeit2);
-        }
-        else {
+        } else {
             diff_png.setBackgroundResource(R.drawable.schwierigkeit3);
         }
-        
+
     }
 
     //Nach Bestätigung Überprüfung des Ergebnisses
     private void checkInput() {
 
+
         field1 = (TextView) findViewById(R.id.row1);
         field2 = (TextView) findViewById(R.id.row2);
         field3 = (TextView) findViewById(R.id.row3);
         field4 = (TextView) findViewById(R.id.row4);
-        field5 = (TextView) findViewById(R.id.row5);
-        field6 = (TextView) findViewById(R.id.row6);
-        field7 = (TextView) findViewById(R.id.row7);
-        field8 = (TextView) findViewById(R.id.row8);
+
+        //Aufgaben mit 3 Variablen
+        if (taskinformation[3].equals("3")) {
+            field5 = (TextView) findViewById(R.id.row5);
+            field6 = (TextView) findViewById(R.id.row6);
+            field7 = (TextView) findViewById(R.id.row7);
+            field8 = (TextView) findViewById(R.id.row8);
+        }
 
         //Wenn einmal Aufgaben mit 4 Variablen dazukommen sollten
-        if(taskinformation[3].equals("4")) {
+        if (taskinformation[3].equals("4")) {
             field9 = (TextView) findViewById(R.id.row9);
             field10 = (TextView) findViewById(R.id.row10);
             field11 = (TextView) findViewById(R.id.row11);
@@ -242,155 +246,301 @@ public class WahrheitstabellenTask extends AppCompatActivity implements OnClickL
             field16 = (TextView) findViewById(R.id.row16);
         }
 
-        Boolean everythingright = true;
-        //Ergebnisse für die Tabellen holen
-        CheckFormula checkterm = new CheckFormula(taskinformation[1]);
-        termSolution = checkterm.getwahrheitstabellenErgebnis();
-
-        //Ergebnisse mit den eingebenen Werten abgleichen
-        if (field1.getText().toString().equals(termSolution[0])) {
-            field1.setBackgroundColor(Color.GREEN);
-        }
-        if (!field1.getText().toString().equals(termSolution[0])) {
+        // Prüfung ob alle Eingabefelder korrekt befüllt wurden
+        Boolean InputCorrect = true;
+        if (field1.getText().toString().isEmpty()) {
             field1.setBackgroundColor(Color.RED);
-            everythingright = false;
+            InputCorrect = false;
+        } else {
+            field1.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorPrimary, null));
         }
-
-        if (field2.getText().toString().equals(termSolution[1])) {
-            field2.setBackgroundColor(Color.GREEN);
-        }
-        if (!field2.getText().toString().equals(termSolution[1])) {
+        if (field2.getText().toString().isEmpty()) {
             field2.setBackgroundColor(Color.RED);
-            everythingright = false;
+            InputCorrect = false;
+        } else {
+            field2.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorPrimary, null));
         }
 
-        if (field3.getText().toString().equals(termSolution[2])) {
-            field3.setBackgroundColor(Color.GREEN);
-        }
-        if (!field3.getText().toString().equals(termSolution[2])) {
+        if (field3.getText().toString().isEmpty()) {
             field3.setBackgroundColor(Color.RED);
-            everythingright = false;
+            InputCorrect = false;
+        } else {
+            field3.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorPrimary, null));
         }
 
-        if (field4.getText().toString().equals(termSolution[3])) {
-            field4.setBackgroundColor(Color.GREEN);
-        }
-        if (!field4.getText().toString().equals(termSolution[3])) {
+        if (field4.getText().toString().isEmpty()) {
             field4.setBackgroundColor(Color.RED);
-            everythingright = false;
+            InputCorrect = false;
+        } else {
+            field4.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorPrimary, null));
+        }
+        // 3 Variablen
+        if (taskinformation[3].equals("3")) {
+
+
+            if (field5.getText().toString().isEmpty()) {
+                field5.setBackgroundColor(Color.RED);
+                InputCorrect = false;
+            } else {
+                field5.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorPrimary, null));
+            }
+
+            if (field6.getText().toString().isEmpty()) {
+                field6.setBackgroundColor(Color.RED);
+                InputCorrect = false;
+            } else {
+                field6.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorPrimary, null));
+            }
+
+            if (field7.getText().toString().isEmpty()) {
+                field7.setBackgroundColor(Color.RED);
+                InputCorrect = false;
+            } else {
+                field7.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorPrimary, null));
+            }
+
+
+            if (field8.getText().toString().isEmpty()) {
+                field8.setBackgroundColor(Color.RED);
+                InputCorrect = false;
+            } else {
+                field8.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorPrimary, null));
+            }
         }
 
-        if (field5.getText().toString().equals(termSolution[4])) {
-            field5.setBackgroundColor(Color.GREEN);
-        }
-        if (!field5.getText().toString().equals(termSolution[4])) {
-            field5.setBackgroundColor(Color.RED);
-            everythingright = false;
-        }
-
-        if (field6.getText().toString().equals(termSolution[5])) {
-            field6.setBackgroundColor(Color.GREEN);
-        }
-        if (!field6.getText().toString().equals(termSolution[5])) {
-            field6.setBackgroundColor(Color.RED);
-            everythingright = false;
-        }
-
-        if (field7.getText().toString().equals(termSolution[6])) {
-            field7.setBackgroundColor(Color.GREEN);
-        }
-        if (!field7.getText().toString().equals(termSolution[6])) {
-            field7.setBackgroundColor(Color.RED);
-            everythingright = false;
-        }
-
-        if (field8.getText().toString().equals(termSolution[7])) {
-            field8.setBackgroundColor(Color.GREEN);
-        }
-        if (!field8.getText().toString().equals(termSolution[7])) {
-            field8.setBackgroundColor(Color.RED);
-            everythingright = false;
-        }
-
-        //Wenn einmal Aufgaben mit 4 Variablen dazukommen sollten
+        //Variablen
         if (taskinformation[3].equals("4")) {
-            if (field9.getText().toString().equals(termSolution[8])) {
-                field9.setBackgroundColor(Color.GREEN);
-            }
-            if (!field9.getText().toString().equals(termSolution[8])) {
+
+
+            if (field9.getText().toString().isEmpty()) {
                 field9.setBackgroundColor(Color.RED);
-                everythingright = false;
+                InputCorrect = false;
+            } else {
+                field9.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorPrimary, null));
             }
 
-            if (field10.getText().toString().equals(termSolution[9])) {
-                field10.setBackgroundColor(Color.GREEN);
-            }
-            if (!field10.getText().toString().equals(termSolution[9])) {
+            if (field10.getText().toString().isEmpty()) {
                 field10.setBackgroundColor(Color.RED);
-                everythingright = false;
+                InputCorrect = false;
+            } else {
+                field10.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorPrimary, null));
             }
 
-            if (field11.getText().toString().equals(termSolution[10])) {
-                field11.setBackgroundColor(Color.GREEN);
-            }
-            if (!field11.getText().toString().equals(termSolution[10])) {
+            if (field11.getText().toString().isEmpty()) {
                 field11.setBackgroundColor(Color.RED);
-                everythingright = false;
+                InputCorrect = false;
+            } else {
+                field11.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorPrimary, null));
             }
 
-            if (field12.getText().toString().equals(termSolution[11])) {
-                field12.setBackgroundColor(Color.GREEN);
-            }
-            if (!field12.getText().toString().equals(termSolution[11])) {
+
+            if (field12.getText().toString().isEmpty()) {
                 field12.setBackgroundColor(Color.RED);
-                everythingright = false;
+                InputCorrect = false;
+            } else {
+                field12.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorPrimary, null));
             }
 
-            if (field13.getText().toString().equals(termSolution[12])) {
-                field13.setBackgroundColor(Color.GREEN);
-            }
-            if (!field13.getText().toString().equals(termSolution[12])) {
+            if (field13.getText().toString().isEmpty()) {
                 field13.setBackgroundColor(Color.RED);
-                everythingright = false;
+                InputCorrect = false;
+            } else {
+                field13.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorPrimary, null));
             }
 
-            if (field14.getText().toString().equals(termSolution[13])) {
-                field14.setBackgroundColor(Color.GREEN);
-            }
-            if (!field14.getText().toString().equals(termSolution[13])) {
+            if (field14.getText().toString().isEmpty()) {
                 field14.setBackgroundColor(Color.RED);
-                everythingright = false;
+                InputCorrect = false;
+            } else {
+                field14.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorPrimary, null));
             }
 
-            if (field15.getText().toString().equals(termSolution[14])) {
-                field15.setBackgroundColor(Color.GREEN);
-            }
-            if (!field15.getText().toString().equals(termSolution[14])) {
+            if (field15.getText().toString().isEmpty()) {
                 field15.setBackgroundColor(Color.RED);
-                everythingright = false;
+                InputCorrect = false;
+            } else {
+                field15.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorPrimary, null));
             }
 
-            if (field16.getText().toString().equals(termSolution[15])) {
-                field16.setBackgroundColor(Color.GREEN);
-            }
-            if (!field16.getText().toString().equals(termSolution[15])) {
+            if (field16.getText().toString().isEmpty()) {
                 field16.setBackgroundColor(Color.RED);
-                everythingright = false;
+                InputCorrect = false;
+            } else {
+                field16.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorPrimary, null));
             }
         }
 
-        //Prüfen ob alle Zeilen korrekt eingegeben wurden
-        if(everythingright){
-            Toast.makeText(getApplication(), "Ergebnis ist korrekt!", Toast.LENGTH_LONG).show();
+        // alle Eingabefelder korrekt befüllt
+        if (InputCorrect) {
 
-            /*
-            Updates einfügen!!
-             */
+            Toast.makeText(getApplication(), "Lösung wird geprüft...", Toast.LENGTH_SHORT).show();
+
+            Boolean everythingright = true;
+
+            //Ergebnisse für die Tabellen holen
+            CheckFormula checkterm = new CheckFormula(taskinformation[1], taskinformation[3]);
+            termSolution = checkterm.getwahrheitstabellenErgebnis();
+
+            //Ergebnisse mit den eingebenen Werten abgleichen
+            if (field1.getText().toString().equals(termSolution[0])) {
+                field1.setBackgroundColor(Color.GREEN);
+            }
+            if (!field1.getText().toString().equals(termSolution[0])) {
+                field1.setBackgroundColor(Color.RED);
+                everythingright = false;
+            }
+
+            if (field2.getText().toString().equals(termSolution[1])) {
+                field2.setBackgroundColor(Color.GREEN);
+            }
+            if (!field2.getText().toString().equals(termSolution[1])) {
+                field2.setBackgroundColor(Color.RED);
+                everythingright = false;
+            }
+
+            if (field3.getText().toString().equals(termSolution[2])) {
+                field3.setBackgroundColor(Color.GREEN);
+            }
+            if (!field3.getText().toString().equals(termSolution[2])) {
+                field3.setBackgroundColor(Color.RED);
+                everythingright = false;
+            }
+
+            if (field4.getText().toString().equals(termSolution[3])) {
+                field4.setBackgroundColor(Color.GREEN);
+            }
+            if (!field4.getText().toString().equals(termSolution[3])) {
+                field4.setBackgroundColor(Color.RED);
+                everythingright = false;
+            }
+
+            // 3 Variablen
+            if (taskinformation[3].equals("3")) {
+
+
+                if (field5.getText().toString().equals(termSolution[4])) {
+                    field5.setBackgroundColor(Color.GREEN);
+                }
+                if (!field5.getText().toString().equals(termSolution[4])) {
+                    field5.setBackgroundColor(Color.RED);
+                    everythingright = false;
+                }
+
+                if (field6.getText().toString().equals(termSolution[5])) {
+                    field6.setBackgroundColor(Color.GREEN);
+                }
+                if (!field6.getText().toString().equals(termSolution[5])) {
+                    field6.setBackgroundColor(Color.RED);
+                    everythingright = false;
+                }
+
+                if (field7.getText().toString().equals(termSolution[6])) {
+                    field7.setBackgroundColor(Color.GREEN);
+                }
+                if (!field7.getText().toString().equals(termSolution[6])) {
+                    field7.setBackgroundColor(Color.RED);
+                    everythingright = false;
+                }
+
+                if (field8.getText().toString().equals(termSolution[7])) {
+                    field8.setBackgroundColor(Color.GREEN);
+                }
+                if (!field8.getText().toString().equals(termSolution[7])) {
+                    field8.setBackgroundColor(Color.RED);
+                    everythingright = false;
+                }
+            }
+
+            //Wenn einmal Aufgaben mit 4 Variablen dazukommen sollten
+            if (taskinformation[3].equals("4")) {
+                if (field9.getText().toString().equals(termSolution[8])) {
+                    field9.setBackgroundColor(Color.GREEN);
+                }
+                if (!field9.getText().toString().equals(termSolution[8])) {
+                    field9.setBackgroundColor(Color.RED);
+                    everythingright = false;
+                }
+
+                if (field10.getText().toString().equals(termSolution[9])) {
+                    field10.setBackgroundColor(Color.GREEN);
+                }
+                if (!field10.getText().toString().equals(termSolution[9])) {
+                    field10.setBackgroundColor(Color.RED);
+                    everythingright = false;
+                }
+
+                if (field11.getText().toString().equals(termSolution[10])) {
+                    field11.setBackgroundColor(Color.GREEN);
+                }
+                if (!field11.getText().toString().equals(termSolution[10])) {
+                    field11.setBackgroundColor(Color.RED);
+                    everythingright = false;
+                }
+
+                if (field12.getText().toString().equals(termSolution[11])) {
+                    field12.setBackgroundColor(Color.GREEN);
+                }
+                if (!field12.getText().toString().equals(termSolution[11])) {
+                    field12.setBackgroundColor(Color.RED);
+                    everythingright = false;
+                }
+
+                if (field13.getText().toString().equals(termSolution[12])) {
+                    field13.setBackgroundColor(Color.GREEN);
+                }
+                if (!field13.getText().toString().equals(termSolution[12])) {
+                    field13.setBackgroundColor(Color.RED);
+                    everythingright = false;
+                }
+
+                if (field14.getText().toString().equals(termSolution[13])) {
+                    field14.setBackgroundColor(Color.GREEN);
+                }
+                if (!field14.getText().toString().equals(termSolution[13])) {
+                    field14.setBackgroundColor(Color.RED);
+                    everythingright = false;
+                }
+
+                if (field15.getText().toString().equals(termSolution[14])) {
+                    field15.setBackgroundColor(Color.GREEN);
+                }
+                if (!field15.getText().toString().equals(termSolution[14])) {
+                    field15.setBackgroundColor(Color.RED);
+                    everythingright = false;
+                }
+
+                if (field16.getText().toString().equals(termSolution[15])) {
+                    field16.setBackgroundColor(Color.GREEN);
+                }
+                if (!field16.getText().toString().equals(termSolution[15])) {
+                    field16.setBackgroundColor(Color.RED);
+                    everythingright = false;
+                }
+            }
+            //Prüfen ob alle Zeilen korrekt eingegeben wurden
+            if (everythingright) {
+                Toast.makeText(getApplication(), "Ergebnis ist korrekt!", Toast.LENGTH_LONG).show();
+
+                sql = "UPDATE Aufgabenzustand SET Status = 'Richtig', Anzahl_der_Bearbeitungen = Anzahl_der_Bearbeitungen + 1 WHERE ID = " + taskid;
+
+            } else {
+                Toast.makeText(getApplication(), "Ergebnis ist nicht korrekt!", Toast.LENGTH_LONG).show();
+
+                sql = "UPDATE Aufgabenzustand SET Status = 'Falsch', Anzahl_der_Bearbeitungen = Anzahl_der_Bearbeitungen + 1 WHERE ID = " + taskid;
+
+            }
+
+            c = db.query(db.getWritableDatabase(), sql);
+            c.moveToFirst();
+            c.close();
         }
-        else{
-            Toast.makeText(getApplication(), "Ergebnis ist nicht korrekt!", Toast.LENGTH_LONG).show();
+        else
+
+        {
+            Toast.makeText(getApplication(), "Eingabefelder sind nicht richtig ausgefüllt!", Toast.LENGTH_SHORT).show();
         }
     }
+
 
     //Button Click verarbeiten
     public void onClick(View v) {
@@ -413,7 +563,7 @@ public class WahrheitstabellenTask extends AppCompatActivity implements OnClickL
         field16 = (TextView) findViewById(R.id.row16);
 
         int id = v.getId();
-        switch (id){
+        switch (id) {
             case R.id.commitbutton:
                 checkInput();
                 break;
@@ -429,143 +579,112 @@ public class WahrheitstabellenTask extends AppCompatActivity implements OnClickL
             case R.id.row1:
                 if (field1.getText().toString().equals("1")) {
                     field1.setText("0");
-                }
-                else
-                {
+                } else {
                     field1.setText("1");
                 }
                 break;
             case R.id.row2:
                 if (field2.getText().toString().equals("1")) {
                     field2.setText("0");
-                }
-                else
-                {
+                } else {
                     field2.setText("1");
                 }
                 break;
             case R.id.row3:
                 if (field3.getText().toString().equals("1")) {
                     field3.setText("0");
-                }
-                else
-                {
+                } else {
                     field3.setText("1");
                 }
                 break;
             case R.id.row4:
                 if (field4.getText().toString().equals("1")) {
                     field4.setText("0");
-                }
-                else
-                {
+                } else {
                     field4.setText("1");
                 }
                 break;
             case R.id.row5:
                 if (field5.getText().toString().equals("1")) {
                     field5.setText("0");
-                }
-                else
-                {
+                } else {
                     field5.setText("1");
                 }
                 break;
             case R.id.row6:
                 if (field6.getText().toString().equals("1")) {
                     field6.setText("0");
-                }
-                else
-                {
+                } else {
                     field6.setText("1");
                 }
                 break;
             case R.id.row7:
                 if (field7.getText().toString().equals("1")) {
                     field7.setText("0");
-                }
-                else
-                {
+                } else {
                     field7.setText("1");
                 }
                 break;
             case R.id.row8:
                 if (field8.getText().toString().equals("1")) {
                     field8.setText("0");
-                }
-                else
-                {
+                } else {
                     field8.setText("1");
                 }
                 break;
             case R.id.row9:
                 if (field9.getText().toString().equals("1")) {
                     field9.setText("0");
-                }
-                else
-                {
+                } else {
                     field9.setText("1");
                 }
-                break;case R.id.row10:
+                break;
+            case R.id.row10:
                 if (field10.getText().toString().equals("1")) {
                     field10.setText("0");
-                }
-                else
-                {
+                } else {
                     field10.setText("1");
                 }
                 break;
             case R.id.row11:
                 if (field11.getText().toString().equals("1")) {
                     field11.setText("0");
-                }
-                else
-                {
+                } else {
                     field11.setText("1");
                 }
                 break;
             case R.id.row12:
                 if (field12.getText().toString().equals("1")) {
                     field12.setText("0");
-                }
-                else
-                {
+                } else {
                     field12.setText("1");
                 }
                 break;
             case R.id.row13:
                 if (field13.getText().toString().equals("1")) {
                     field13.setText("0");
-                }
-                else
-                {
+                } else {
                     field13.setText("1");
                 }
                 break;
             case R.id.row14:
                 if (field14.getText().toString().equals("1")) {
                     field14.setText("0");
-                }
-                else
-                {
+                } else {
                     field14.setText("1");
                 }
                 break;
             case R.id.row15:
                 if (field15.getText().toString().equals("1")) {
                     field15.setText("0");
-                }
-                else
-                {
+                } else {
                     field15.setText("1");
                 }
                 break;
             case R.id.row16:
                 if (field16.getText().toString().equals("1")) {
                     field16.setText("0");
-                }
-                else
-                {
+                } else {
                     field16.setText("1");
                 }
                 break;

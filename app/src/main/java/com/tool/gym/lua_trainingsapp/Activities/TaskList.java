@@ -83,9 +83,10 @@ public class TaskList extends AppCompatActivity {
                     String aufgabe_anzeige = aufgabenstellung + "\n" + aufgabe;
                     String schwierigkeitsgrad = c.getString(c.getColumnIndex("Schwierigkeitsgrad"));
                     String status = c.getString(c.getColumnIndex("Status"));
+                    Integer anzahl_bearbeitungen = c.getInt(c.getColumnIndex("Anzahl_der_Bearbeitungen"));
 
                     tasklist[counter] = new Task(id.toString(), schwierigkeitsgrad, aufgabe_anzeige, status);
-                    Log.d(TaskList.class.getSimpleName(), id.toString() + " , " + aufgabe.toString() + " , " + schwierigkeitsgrad.toString() + " , " + status.toString());
+                    Log.d(TaskList.class.getSimpleName(), id.toString() + " , " + aufgabe.toString() + " , " + schwierigkeitsgrad.toString() + " , " + status.toString()+ " , " + anzahl_bearbeitungen.toString());
                     counter++;
                 }
 
@@ -106,9 +107,10 @@ public class TaskList extends AppCompatActivity {
                     String aufgabe_anzeige = aufgabenstellung + "\n" + aufgabe;
                     String schwierigkeitsgrad = c.getString(c.getColumnIndex("Schwierigkeitsgrad"));
                     String status = c.getString(c.getColumnIndex("Status"));
+                    Integer anzahl_bearbeitungen = c.getInt(c.getColumnIndex("Anzahl_der_Bearbeitungen"));
 
                     tasklist[counter] = new Task(id.toString(), schwierigkeitsgrad, aufgabe_anzeige, status);
-                    Log.d(TaskList.class.getSimpleName(), id.toString() + " , " + aufgabe.toString() + " , " + schwierigkeitsgrad.toString() + " , " + status.toString());
+                    Log.d(TaskList.class.getSimpleName(), id.toString() + " , " + aufgabe.toString() + " , " + schwierigkeitsgrad.toString() + " , " + status.toString()+ " , " + anzahl_bearbeitungen.toString());
                     counter++;
                 }
 
@@ -129,9 +131,10 @@ public class TaskList extends AppCompatActivity {
                     String aufgabe_anzeige = aufgabenstellung + "\n" + aufgabe;
                     String schwierigkeitsgrad = c.getString(c.getColumnIndex("Schwierigkeitsgrad"));
                     String status = c.getString(c.getColumnIndex("Status"));
+                    Integer anzahl_bearbeitungen = c.getInt(c.getColumnIndex("Anzahl_der_Bearbeitungen"));
 
                     tasklist[counter] = new Task(id.toString(), schwierigkeitsgrad, aufgabe_anzeige, status);
-                    Log.d(TaskList.class.getSimpleName(), id.toString() + " , " + aufgabe.toString() + " , " + schwierigkeitsgrad.toString() + " , " + status.toString());
+                    Log.d(TaskList.class.getSimpleName(), id.toString() + " , " + aufgabe.toString() + " , " + schwierigkeitsgrad.toString() + " , " + status.toString()+ " , " + anzahl_bearbeitungen.toString());
                     counter++;
                 }
 
@@ -157,10 +160,11 @@ public class TaskList extends AppCompatActivity {
                     String aufgabe = c.getString(c.getColumnIndex("Aufgabenbeschreibung"));
                     String schwierigkeitsgrad = c.getString(c.getColumnIndex("Schwierigkeitsgrad"));
                     String status = c.getString(c.getColumnIndex("Status"));
+                    Integer anzahl_bearbeitungen = c.getInt(c.getColumnIndex("Anzahl_der_Bearbeitungen"));
 
                     tasklist[counter] = new Task(id.toString(), schwierigkeitsgrad, aufgabe, status);
 
-                    Log.d(TaskList.class.getSimpleName(), id.toString() + " , " + aufgabe.toString() + " , " + schwierigkeitsgrad.toString() + " , " + status.toString());
+                    Log.d(TaskList.class.getSimpleName(), id.toString() + " , " + aufgabe.toString() + " , " + schwierigkeitsgrad.toString() + " , " + status.toString()+ " , " + anzahl_bearbeitungen.toString());
                     counter++;
                 }
 

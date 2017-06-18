@@ -7,4 +7,5 @@
     <dimen name="padding">50dp</dimen>
     <dimen name="help">30dp</dimen>
     <dimen name="help_button">50dp</dimen>
+    <dimen name="button_height">45dp</dimen>
 </resources>

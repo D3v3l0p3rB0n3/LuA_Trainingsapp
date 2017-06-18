@@ -271,7 +271,7 @@ public class NormalformenTask extends AppCompatActivity implements OnClickListen
             //Textfeld nicht leer => Prüfung geht weiter
 
             // Überprüfen der Terme (Lösung aus der Datenbank, Eingegebene Umformung der Benutzers)
-            CheckFormula checkresult = new CheckFormula(taskinformation[3], result.getText().toString());
+            CheckFormula checkresult = new CheckFormula(taskinformation[3], result.getText().toString(), "4");
 
 
             //Bei richtigem Ergebnis wird die Lösung angezeigt.

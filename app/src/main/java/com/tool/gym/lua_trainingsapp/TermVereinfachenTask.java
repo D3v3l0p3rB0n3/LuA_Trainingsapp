@@ -277,11 +277,15 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
     private void checkInput() {
         if (!result.getText().toString().isEmpty()) {
             //Textfeld nicht leer => Prüfung geht weiter
+            Log.d(TermVereinfachenTask.class.getSimpleName(), "Prüfung der Umformung gestartet");
+            Toast.makeText(getApplication(), "Umformung wird geprüft...", Toast.LENGTH_SHORT).show();
 
-            CheckFormula checkresult = new CheckFormula(taskinformation[3], result.getText().toString());
+            CheckFormula checkresult = new CheckFormula(taskinformation[3], result.getText().toString(), "4");
 
             //Bei richtigem Ergebnis wird die Lösung angezeigt.
             if (checkresult.getformelvergleichergebnis().equals("true")) {
+
+                Toast.makeText(getApplication(), "Die eigegebene Umformung ist korrekt!", Toast.LENGTH_SHORT).show();
 
                 // Container suchen + neues Textfeld anpassen
                 LinearLayout container = (LinearLayout) findViewById(R.id.eingabe_bool_term_vereinfachen);

@@ -145,7 +145,7 @@
             <Button
                 android:id="@+id/checkbutton"
                 android:layout_width="@dimen/buttonsize"
-                android:layout_height="30sp"
+                android:layout_height="@dimen/button_height"
                 android:layout_gravity="center"
                 android:background="@drawable/button"
                 android:text="Schritt prüfen" />
@@ -163,7 +163,7 @@
             <Button
                 android:id="@+id/commitbutton"
                 android:layout_width="@dimen/buttonsize"
-                android:layout_height="30sp"
+                android:layout_height="@dimen/button_height"
                 android:background="@drawable/button"
                 android:text="Abschließen" />
         </LinearLayout>
