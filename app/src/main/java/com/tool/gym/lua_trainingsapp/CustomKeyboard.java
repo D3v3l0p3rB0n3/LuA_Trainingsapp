@@ -31,6 +31,7 @@ class CustomKeyboard {
     private int          specialkeyboard;
     private int          basickeyboard;
     private boolean shifted = false;
+    private boolean capital = false;
 
     private OnKeyboardActionListener mOnKeyboardActionListener = new OnKeyboardActionListener() {
 
@@ -39,7 +40,7 @@ class CustomKeyboard {
             View focusCurrent = mHostActivity.getWindow().getCurrentFocus();
             EditText edittext = (EditText) focusCurrent;
             Editable editable = edittext.getText();
-            int start = edittext.getSelectionStart();
+            int start = edittext.length();
             switch (primaryCode) {
                 case Keyboard.KEYCODE_DELETE:
                     if( editable!=null && start>0 ) editable.delete(start - 1, start);
@@ -47,11 +48,27 @@ class CustomKeyboard {
                 case Keyboard.KEYCODE_MODE_CHANGE:
                     handleshift();
                     break;
+                case Keyboard.KEYCODE_SHIFT:
+                    handleshiftedkeys();
+                    break;
                 default:
-                    editable.insert(start, Character.toString((char) primaryCode));
+                    String s = Character.toString((char) primaryCode);
+                    if(!capital) {
+                        editable.insert(start, s);
+                    }
+                    else {
+                        editable.insert(start, s.toUpperCase());
+                    }
             }
+        }
 
-            //}
+        private void handleshiftedkeys() {
+            if (!capital){
+                capital = true;
+            }
+            else{
+                capital = false;
+            }
         }
 
         private void handleshift() {
