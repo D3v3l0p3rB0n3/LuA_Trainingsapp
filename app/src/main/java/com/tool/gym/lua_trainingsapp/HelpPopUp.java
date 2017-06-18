@@ -20,7 +20,7 @@ public class HelpPopUp extends Activity {
         int height = dm.heightPixels;
         getWindow().setLayout((int) (width * 0.8), (int) (height * 0.8));
         Bundle extras = getIntent().getExtras();
-        String help = extras.getString("text");
+        String help = extras.getString("text") + "\n \n" + "Lösung: " + extras.getString("loesung") + "\n";
         tv.setText(help);
     }
 }

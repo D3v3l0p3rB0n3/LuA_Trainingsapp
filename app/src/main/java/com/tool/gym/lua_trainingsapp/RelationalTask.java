@@ -107,6 +107,7 @@ public class RelationalTask extends AppCompatActivity implements OnClickListener
             case R.id.helpbutton:
                 Intent helppopup = new Intent(RelationalTask.this, HelpPopUp.class);
                 helppopup.putExtra("text", taskhelp);
+                helppopup.putExtra("loesung", loesung);
                 startActivity(helppopup);
                 break;
         }
