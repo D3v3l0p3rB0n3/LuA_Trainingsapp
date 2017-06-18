@@ -163,7 +163,7 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
         }
 
         //gewählte Aufgabe verarbeiten
-        taskinformation = new String[5];
+        taskinformation = new String[6];
         c = db.query(db.getWritableDatabase(), sql);
 
         //Ermittlung der konrekten Aufgabe => z.T. per Zufallszahl
@@ -205,6 +205,7 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
         taskinformation[2] = c.getString(schwierigkeitsgrad);
         taskinformation[3] = c.getString(loesung);
         taskinformation[4] = c.getString(anz_argumente);
+        taskinformation[5] = c.getString(id);
         taskhelp = c.getString(hilfe);
 
         //Cursor schließen
@@ -255,18 +256,19 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
             if (anzahlArg == Integer.parseInt(taskinformation[4])) {
                 Toast.makeText(getApplication(), "Ergebnis ist korrekt!", Toast.LENGTH_LONG).show();
 
-                /*
-                Update Einfügen !!
-                 */
+                Cursor cursor = db.query(db.getWritableDatabase(),"UPDATE Aufgabenzustand SET Status = 'Richtig', Anzahl_der_Bearbeitungen = Anzahl_der_Bearbeitungen + 1 WHERE ID = " + taskinformation[5] );
+                cursor.moveToFirst();
+                cursor.close();
 
                 ChooseTask task = new ChooseTask(getApplicationContext());
                 task.nextBoolTask(this);
             }
             else {
-                Toast.makeText(getApplication(), "Ergebnis ist falsch!", Toast.LENGTH_LONG).show();
-                /*
-                Update Einfügen !!
-                 */
+                Toast.makeText(getApplication(), "Das Endergebnis ist nicht vollständig vereinfacht!", Toast.LENGTH_LONG).show();
+
+                Cursor cursor = db.query(db.getWritableDatabase(),"UPDATE Aufgabenzustand SET Status = 'Falsch', Anzahl_der_Bearbeitungen = Anzahl_der_Bearbeitungen + 1 WHERE ID = " + taskinformation[5] );
+                cursor.moveToFirst();
+                cursor.close();
             }
         }
         ChooseTask task = new ChooseTask(getApplicationContext());
@@ -275,8 +277,8 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
 
     //Korrektheit der Umformung prüfen
     private void checkInput() {
-        if (!result.getText().toString().isEmpty()) {
-            //Textfeld nicht leer => Prüfung geht weiter
+        if (!result.getText().toString().isEmpty() & !result.getText().toString().contains("→")) {
+            //Textfeld nicht leer und keine Implikation => Prüfung geht weiter
             Log.d(TermVereinfachenTask.class.getSimpleName(), "Prüfung der Umformung gestartet");
             Toast.makeText(getApplication(), "Umformung wird geprüft...", Toast.LENGTH_SHORT).show();
 
@@ -325,7 +327,12 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
             }
 
         } else {
-            Toast.makeText(getApplication(), "Textfeld leer - bitte befüllen!", Toast.LENGTH_SHORT).show();
+            if (result.getText().toString().isEmpty()) {
+                Toast.makeText(getApplication(), "Textfeld leer - bitte befüllen!", Toast.LENGTH_SHORT).show();
+            }
+            if(result.getText().toString().contains("→")){
+                Toast.makeText(getApplication(), "Eine Umformung kann erst geprüft werden sobald sie keine Implikationen mehr enthält!", Toast.LENGTH_LONG).show();
+            }
         }
     }
 

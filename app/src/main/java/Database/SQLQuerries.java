@@ -18,6 +18,13 @@ public class SQLQuerries {
                                                         "Hilfe TEXT" +
                                                         ")";
 
+    /*
+    Die Tabelle Aufagebzustand hat in der Spalte Status. Drei mögliche Werte
+    Offen --> Noch nicht bearbeitet.
+    Richtig --> Mindestens 1 mal korrekt gelöst.
+    Falsch --> Mindestens 1 mal falsch gelöst.
+     */
+
     protected static final String createTableAufgabenzustand =     "CREATE TABLE Aufgabenzustand ( " +
                                                                 "ID INT PRIMARY KEY NOT NULL, " +
                                                                 "Status TEXT NOT NULL, " +
@@ -169,49 +176,50 @@ public class SQLQuerries {
         inserts.add("INSERT INTO Wahrheitstabellen VALUES (41, '3', '¬ (B+C ) * (¬A+B) ')");
         inserts.add("INSERT INTO Wahrheitstabellen VALUES (42, '3', '(¬A*C) + (B*¬C)')");
         inserts.add("INSERT INTO Wahrheitstabellen VALUES (43, '3', '(A*B*C) * (B+¬C)')");
-        inserts.add("INSERT INTO Aufgabenzustand VALUES (1, 'Offen', 0, 'Test')");
-        inserts.add("INSERT INTO Aufgabenzustand VALUES (2, 'Offen', 0, 'Test')");
-        inserts.add("INSERT INTO Aufgabenzustand VALUES (3, 'Offen', 0, 'Test')");
-        inserts.add("INSERT INTO Aufgabenzustand VALUES (4, 'Offen', 0, 'Test')");
-        inserts.add("INSERT INTO Aufgabenzustand VALUES (5, 'Offen', 0, 'Test')");
-        inserts.add("INSERT INTO Aufgabenzustand VALUES (6, 'Offen', 0, 'Test')");
-        inserts.add("INSERT INTO Aufgabenzustand VALUES (7, 'Offen', 0, 'Test')");
-        inserts.add("INSERT INTO Aufgabenzustand VALUES (8, 'Offen', 0, 'Test')");
-        inserts.add("INSERT INTO Aufgabenzustand VALUES (9, 'Offen', 0, 'Test')");
-        inserts.add("INSERT INTO Aufgabenzustand VALUES (10, 'Offen', 0, 'Test')");
-        inserts.add("INSERT INTO Aufgabenzustand VALUES (11, 'Offen', 0, 'Test')");
-        inserts.add("INSERT INTO Aufgabenzustand VALUES (12, 'Offen', 0, 'Test')");
-        inserts.add("INSERT INTO Aufgabenzustand VALUES (13, 'Offen', 0, 'Test')");
-        inserts.add("INSERT INTO Aufgabenzustand VALUES (14, 'Offen', 0, 'Test')");
-        inserts.add("INSERT INTO Aufgabenzustand VALUES (15, 'Offen', 0, 'Test')");
-        inserts.add("INSERT INTO Aufgabenzustand VALUES (16, 'Offen', 0, 'Test')");
-        inserts.add("INSERT INTO Aufgabenzustand VALUES (17, 'Offen', 0, 'Test')");
-        inserts.add("INSERT INTO Aufgabenzustand VALUES (18, 'Offen', 0, 'Test')");
-        inserts.add("INSERT INTO Aufgabenzustand VALUES (19, 'Offen', 0, 'Test')");
-        inserts.add("INSERT INTO Aufgabenzustand VALUES (20, 'Offen', 0, 'Test')");
-        inserts.add("INSERT INTO Aufgabenzustand VALUES (21, 'Offen', 0, 'Test')");
-        inserts.add("INSERT INTO Aufgabenzustand VALUES (22, 'Offen', 0, 'Test')");
-        inserts.add("INSERT INTO Aufgabenzustand VALUES (23, 'Offen', 0, 'Test')");
-        inserts.add("INSERT INTO Aufgabenzustand VALUES (24, 'Offen', 0, 'Test')");
-        inserts.add("INSERT INTO Aufgabenzustand VALUES (25, 'Offen', 0, 'Test')");
-        inserts.add("INSERT INTO Aufgabenzustand VALUES (26, 'Offen', 0, 'Test')");
-        inserts.add("INSERT INTO Aufgabenzustand VALUES (27, 'Offen', 0, 'Test')");
-        inserts.add("INSERT INTO Aufgabenzustand VALUES (28, 'Offen', 0, 'Test')");
-        inserts.add("INSERT INTO Aufgabenzustand VALUES (29, 'Offen', 0, 'Test')");
-        inserts.add("INSERT INTO Aufgabenzustand VALUES (30, 'Offen', 0, 'Test')");
-        inserts.add("INSERT INTO Aufgabenzustand VALUES (31, 'Offen', 0, 'Test')");
-        inserts.add("INSERT INTO Aufgabenzustand VALUES (32, 'Offen', 0, 'Test')");
-        inserts.add("INSERT INTO Aufgabenzustand VALUES (33, 'Offen', 0, 'Test')");
-        inserts.add("INSERT INTO Aufgabenzustand VALUES (34, 'Offen', 0, 'Test')");
-        inserts.add("INSERT INTO Aufgabenzustand VALUES (35, 'Offen', 0, 'Test')");
-        inserts.add("INSERT INTO Aufgabenzustand VALUES (36, 'Offen', 0, 'Test')");
-        inserts.add("INSERT INTO Aufgabenzustand VALUES (37, 'Offen', 0, 'Test')");
-        inserts.add("INSERT INTO Aufgabenzustand VALUES (38, 'Offen', 0, 'Test')");
-        inserts.add("INSERT INTO Aufgabenzustand VALUES (39, 'Offen', 0, 'Test')");
-        inserts.add("INSERT INTO Aufgabenzustand VALUES (40, 'Offen', 0, 'Test')");
-        inserts.add("INSERT INTO Aufgabenzustand VALUES (41, 'Offen', 0, 'Test')");
-        inserts.add("INSERT INTO Aufgabenzustand VALUES (42, 'Offen', 0, 'Test')");
-        inserts.add("INSERT INTO Aufgabenzustand VALUES (43, 'Offen', 0, 'Test')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES (1, 'Offen', 0, 'Root')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES (2, 'Offen', 0, 'Root')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES (3, 'Offen', 0, 'Root')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES (4, 'Offen', 0, 'Root')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES (5, 'Offen', 0, 'Root')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES (6, 'Offen', 0, 'Root')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES (7, 'Offen', 0, 'Root')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES (8, 'Offen', 0, 'Root')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES (9, 'Offen', 0, 'Root')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES (10, 'Offen', 0, 'Root')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES (11, 'Offen', 0, 'Root')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES (12, 'Offen', 0, 'Root')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES (13, 'Offen', 0, 'Root')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES (14, 'Offen', 0, 'Root')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES (15, 'Offen', 0, 'Root')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES (16, 'Offen', 0, 'Root')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES (17, 'Offen', 0, 'Root')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES (18, 'Offen', 0, 'Root')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES (19, 'Offen', 0, 'Root')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES (20, 'Offen', 0, 'Root')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES (21, 'Offen', 0, 'Root')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES (22, 'Offen', 0, 'Root')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES (23, 'Offen', 0, 'Root')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES (24, 'Offen', 0, 'Root')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES (25, 'Offen', 0, 'Root')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES (26, 'Offen', 0, 'Root')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES (27, 'Offen', 0, 'Root')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES (28, 'Offen', 0, 'Root')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES (29, 'Offen', 0, 'Root')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES (30, 'Offen', 0, 'Root')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES (31, 'Offen', 0, 'Root')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES (32, 'Offen', 0, 'Root')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES (33, 'Offen', 0, 'Root')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES (34, 'Offen', 0, 'Root')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES (35, 'Offen', 0, 'Root')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES (36, 'Offen', 0, 'Root')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES (37, 'Offen', 0, 'Root')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES (38, 'Offen', 0, 'Root')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES (39, 'Offen', 0, 'Root')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES (40, 'Offen', 0, 'Root')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES (41, 'Offen', 0, 'Root')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES (42, 'Offen', 0, 'Root')");
+        inserts.add("INSERT INTO Aufgabenzustand VALUES (43, 'Offen', 0, 'Root')");
+
 
 
 

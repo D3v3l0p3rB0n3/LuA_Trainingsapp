@@ -163,7 +163,7 @@ public class NormalformenTask extends AppCompatActivity implements OnClickListen
         }
 
         //gewählte Aufgabe verarbeiten
-        String[] taskinformation = new String[5];
+        String[] taskinformation = new String[6];
         c = db.query(db.getWritableDatabase(), sql);
 
         //Ermittlung der konrekten Aufgabe => z.T. per Zufallszahl
@@ -190,6 +190,7 @@ public class NormalformenTask extends AppCompatActivity implements OnClickListen
         int aufgabenstellung = c.getColumnIndex("Aufgabenstellung");
         int anz_argumente = c.getColumnIndex("Anzahl_Argumente_der_Loesung");
         int lösung = c.getColumnIndex("Loesung");
+        int id = c.getColumnIndex("ID");
 
         //Zuweisung der Infos aus der DB
         taskinformation[0] = c.getString(aufgabenstellung);
@@ -197,6 +198,7 @@ public class NormalformenTask extends AppCompatActivity implements OnClickListen
         taskinformation[2] = c.getString(schwierigkeitsgrad);
         taskinformation[3] = c.getString(lösung);
         taskinformation[4] = c.getString(anz_argumente);
+        taskinformation[5] = c.getString(id);
         taskhelp = c.getString(hilfe);
 
         //Cursor schließen
@@ -247,18 +249,19 @@ public class NormalformenTask extends AppCompatActivity implements OnClickListen
             if (anzahlArg == Integer.parseInt(taskinformation[4])) {
                 Toast.makeText(getApplication(), "Ergebnis ist korrekt!", Toast.LENGTH_LONG).show();
 
-                /*
-                Update Einfügen !!
-                 */
+                Cursor cursor = db.query(db.getWritableDatabase(),"UPDATE Aufgabenzustand SET Status = 'Richtig', Anzahl_der_Bearbeitungen = Anzahl_der_Bearbeitungen + 1 WHERE ID = " + taskinformation[5] );
+                cursor.moveToFirst();
+                cursor.close();
 
                 ChooseTask task = new ChooseTask(getApplicationContext());
                 task.nextBoolTask(this);
             }
             else {
-                Toast.makeText(getApplication(), "Ergebnis ist falsch!", Toast.LENGTH_LONG).show();
-                /*
-                Update Einfügen !!
-                 */
+                Toast.makeText(getApplication(), "Das Endergebnis ist falsch!", Toast.LENGTH_LONG).show();
+
+                Cursor cursor = db.query(db.getWritableDatabase(),"UPDATE Aufgabenzustand SET Status = 'Falsch', Anzahl_der_Bearbeitungen = Anzahl_der_Bearbeitungen + 1 WHERE ID = " + taskinformation[5] );
+                cursor.moveToFirst();
+                cursor.close();
             }
         }
         ChooseTask task = new ChooseTask(getApplicationContext());
@@ -267,8 +270,8 @@ public class NormalformenTask extends AppCompatActivity implements OnClickListen
 
     //Korrektheit der Umformung prüfen
     private void checkInput() {
-        if (!result.getText().toString().isEmpty()) {
-            //Textfeld nicht leer => Prüfung geht weiter
+        if (!result.getText().toString().isEmpty() & !result.getText().toString().contains("→")) {
+            //Textfeld nicht leer und keine Implikation => Prüfung geht weiter
 
             // Überprüfen der Terme (Lösung aus der Datenbank, Eingegebene Umformung der Benutzers)
             CheckFormula checkresult = new CheckFormula(taskinformation[3], result.getText().toString(), "4");
@@ -316,7 +319,12 @@ public class NormalformenTask extends AppCompatActivity implements OnClickListen
             }
 
         } else {
-            Toast.makeText(getApplication(), "Textfeld leer - bitte befüllen!", Toast.LENGTH_SHORT).show();
+            if (result.getText().toString().isEmpty()) {
+                Toast.makeText(getApplication(), "Textfeld leer - bitte befüllen!", Toast.LENGTH_SHORT).show();
+            }
+            if(result.getText().toString().contains("→")){
+                Toast.makeText(getApplication(), "Eine Umformung kann erst geprüft werden sobald sie keine Implikationen mehr enthält!", Toast.LENGTH_LONG).show();
+            }
         }
     }
 
