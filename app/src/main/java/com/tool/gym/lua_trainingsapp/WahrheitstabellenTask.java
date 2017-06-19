@@ -380,6 +380,7 @@ public class WahrheitstabellenTask extends AppCompatActivity implements OnClickL
             //Ergebnisse für die Tabellen holen
             CheckFormula checkterm = new CheckFormula(taskinformation[1], taskinformation[3]);
             termSolution = checkterm.getwahrheitstabellenErgebnis();
+            checkterm = null;
 
             //Ergebnisse mit den eingebenen Werten abgleichen
             if (field1.getText().toString().equals(termSolution[0])) {

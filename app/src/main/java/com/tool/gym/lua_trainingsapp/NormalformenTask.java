@@ -322,6 +322,7 @@ public class NormalformenTask extends AppCompatActivity implements OnClickListen
                 Toast.makeText(getApplication(), "Die eigegebene Umformung konnte nicht geprüft werden. Bitte Syntax beachten!", Toast.LENGTH_SHORT).show();
             }
 
+            checkresult = null;
         } else {
             if (result.getText().toString().isEmpty()) {
                 Toast.makeText(getApplication(), "Textfeld leer - bitte befüllen!", Toast.LENGTH_SHORT).show();
