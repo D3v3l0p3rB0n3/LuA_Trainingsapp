@@ -34,7 +34,7 @@ import ResultCheck.CheckFormula;
  * Created by Marcel on 21.05.2017.
  */
 
-public class NormalformenTask extends AppCompatActivity implements OnClickListener{
+public class NormalformenTask extends AppCompatActivity implements OnClickListener {
     String[] taskinformation;
     String lastinput = "";
 
@@ -42,12 +42,12 @@ public class NormalformenTask extends AppCompatActivity implements OnClickListen
     private Button commitbutton;
     private Button help_button;
 
-    private EditText    result;
-    SQLiteDatabase      db;
-    Cursor              c;
-    Bundle              extras;
-    String              sql,
-                        taskhelp;
+    private EditText result;
+    SQLiteDatabase db;
+    Cursor c;
+    Bundle extras;
+    String sql,
+            taskhelp;
     TextWatcher watcher;
 
     String LOG_TAG = TermVereinfachenTask.class.getSimpleName();
@@ -73,16 +73,20 @@ public class NormalformenTask extends AppCompatActivity implements OnClickListen
 
         result = (EditText) findViewById(R.id.bool_term_result);
 
-        mCustomKeyboard = new CustomKeyboard(this, R.id.keyboardview, R.xml.boolkeyboard ,R.xml.qwertz, R.id.TitleArea, R.id.BottomArea);
+        mCustomKeyboard = new CustomKeyboard(this, R.id.keyboardview, R.xml.boolkeyboard, R.xml.qwertz, R.id.TitleArea, R.id.BottomArea);
         mCustomKeyboard.registerEditText(R.id.bool_term_result);
 
         watcher = new TextWatcher() {
 
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-            public void afterTextChanged(Editable editable) {}
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            public void afterTextChanged(Editable editable) {
+            }
 
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    result.setSelection(result.length());}
+                result.setSelection(result.length());
+            }
         };
         result.addTextChangedListener(watcher);
 
@@ -123,8 +127,7 @@ public class NormalformenTask extends AppCompatActivity implements OnClickListen
     //Führt den Select auf die Datenbank aus, um die Aufgabe zu ermitteln
     private String[] getTask() {
 
-        if (extras!=null)
-        {
+        if (extras != null) {
             String choser = extras.getString("startactivity");
 
             if (choser.equals(TaskList.class.getSimpleName())) // Aufgabe aus der gezielten Aufgabenauswahl gewählt
@@ -136,8 +139,7 @@ public class NormalformenTask extends AppCompatActivity implements OnClickListen
                         "INNER JOIN Normalformen n ON a.id = n.id " +
                         "WHERE a.id =  " + aufgabe + ";";
 
-            }
-            else if (choser.equals(ChooseTask.class.getSimpleName())) //Zufällige Aufgabenauswahl => zuerst noch geringste Bearbeitungszahl ermitteln
+            } else if (choser.equals(ChooseTask.class.getSimpleName())) //Zufällige Aufgabenauswahl => zuerst noch geringste Bearbeitungszahl ermitteln
             {
 
                 // Kleinste Bearbeitungszahl ermitteln
@@ -168,16 +170,14 @@ public class NormalformenTask extends AppCompatActivity implements OnClickListen
 
         //Ermittlung der konrekten Aufgabe => z.T. per Zufallszahl
         Integer anzahl = c.getCount();
-        Integer zufall,x1;
+        Integer zufall, x1;
         if (anzahl > 1) // wenn mehrs als 1 Aufgabe aus der DB geholt wurde => Zufallszahl für die Aufgabe, sonst nur die 1 Aufgabe
         {
-            x1= (int) ((Math.random())*anzahl+1); //Zufallszahl zwischen 0 - Anzahl der Aufgaben - 1
+            x1 = (int) ((Math.random()) * anzahl + 1); //Zufallszahl zwischen 0 - Anzahl der Aufgaben - 1
             zufall = x1 - 1;
 
 
-        }
-        else
-        {
+        } else {
             zufall = 0;
         }
 
@@ -241,33 +241,34 @@ public class NormalformenTask extends AppCompatActivity implements OnClickListen
         Die Korrektheit der Umformung ist bereits gewährleistet.
         Es wird noch die Anzahl der Argumente des Endergebnises mit der Lösung verglichen.
          */
-        if (lastinput.contains("→") | lastinput.contains("⟷")){
+        if (lastinput.contains("→") | lastinput.contains("⟷")) {
             Toast.makeText(getApplication(), "Solang das Endergebnis eine Implikation oder Äquivalenzen enthält, kann es nicht bestätigt werden. Bitte weiter Umformen!", Toast.LENGTH_LONG).show();
-        }
-        else{
-            if(!lastinput.isEmpty())
-            {
+        } else {
+            if (!lastinput.isEmpty()) {
                 lastinput = lastinput.replaceAll("\\W", "");
                 int anzahlArg = lastinput.length();
                 if (anzahlArg == Integer.parseInt(taskinformation[4])) {
                     Toast.makeText(getApplication(), "Ergebnis ist korrekt!", Toast.LENGTH_LONG).show();
 
-                    Cursor cursor = db.query(db.getWritableDatabase(),"UPDATE Aufgabenzustand SET Status = 'Richtig', Anzahl_der_Bearbeitungen = Anzahl_der_Bearbeitungen + 1 WHERE ID = " + taskinformation[5] );
+                    Cursor cursor = db.query(db.getWritableDatabase(), "UPDATE Aufgabenzustand SET Status = 'Richtig', Anzahl_der_Bearbeitungen = Anzahl_der_Bearbeitungen + 1 WHERE ID = " + taskinformation[5]);
                     cursor.moveToFirst();
                     cursor.close();
 
                     ChooseTask task = new ChooseTask(getApplicationContext());
                     task.nextBoolTask(this);
-                }
-                else {
+                } else {
                     Toast.makeText(getApplication(), "Das Endergebnis ist falsch!", Toast.LENGTH_LONG).show();
 
-                    Cursor cursor = db.query(db.getWritableDatabase(),"UPDATE Aufgabenzustand SET Status = 'Falsch', Anzahl_der_Bearbeitungen = Anzahl_der_Bearbeitungen + 1 WHERE ID = " + taskinformation[5] );
+                    Cursor cursor = db.query(db.getWritableDatabase(), "UPDATE Aufgabenzustand SET Status = 'Falsch', Anzahl_der_Bearbeitungen = Anzahl_der_Bearbeitungen + 1 WHERE ID = " + taskinformation[5]);
                     cursor.moveToFirst();
                     cursor.close();
                 }
+            } else {
+                Toast.makeText(getApplication(), "Keine Umformung bisher vorgenommen. Abgabe der Aufgabe ist noch nicht möglich!", Toast.LENGTH_SHORT).show();
+            }
         }
-    }}
+    }
+
     //Korrektheit der Umformung prüfen
     private void checkInput() {
         if (!result.getText().toString().isEmpty() & !result.getText().toString().contains("→") & !result.getText().toString().contains("⟷")) {
@@ -323,7 +324,7 @@ public class NormalformenTask extends AppCompatActivity implements OnClickListen
             if (result.getText().toString().isEmpty()) {
                 Toast.makeText(getApplication(), "Textfeld leer - bitte befüllen!", Toast.LENGTH_SHORT).show();
             }
-            if(result.getText().toString().contains("→") | result.getText().toString().contains("⟷")){
+            if (result.getText().toString().contains("→") | result.getText().toString().contains("⟷")) {
 
                 //Wenn eine Eingabe eine Implikation oder eine Äquivalenz enthält kann sie zwar nicht geprüft werden
                 // aber die Möglichkeit des Bestätigens der Eingabe muss trotzdem gegeben sein.
@@ -364,7 +365,10 @@ public class NormalformenTask extends AppCompatActivity implements OnClickListen
         float textsize = sp * getResources().getDisplayMetrics().scaledDensity;
         return (int) textsize;
     }
-    @Override public void onBackPressed() {
-        if( mCustomKeyboard.isCustomKeyboardVisible() ) mCustomKeyboard.hideCustomKeyboard(); else this.finish();
+
+    @Override
+    public void onBackPressed() {
+        if (mCustomKeyboard.isCustomKeyboardVisible()) mCustomKeyboard.hideCustomKeyboard();
+        else this.finish();
     }
 }

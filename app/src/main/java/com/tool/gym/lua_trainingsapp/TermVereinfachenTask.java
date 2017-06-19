@@ -274,6 +274,10 @@ public class TermVereinfachenTask extends AppCompatActivity implements OnClickLi
                     cursor.close();
                 }
             }
+            else
+            {
+                Toast.makeText(getApplication(), "Keine Vereinfachung bisher vorgenommen. Abgabe der Aufgabe ist noch nicht möglich!", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
