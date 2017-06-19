@@ -263,8 +263,10 @@ public class NormalformenTask extends AppCompatActivity implements OnClickListen
                     cursor.moveToFirst();
                     cursor.close();
                 }
-            } else {
-                Toast.makeText(getApplication(), "Keine Umformung bisher vorgenommen. Abgabe der Aufgabe ist noch nicht möglich!", Toast.LENGTH_SHORT).show();
+            }
+            if(lastinput.isEmpty()){
+                ChooseTask task = new ChooseTask(getApplicationContext());
+                task.nextBoolTask(this);
             }
         }
     }
